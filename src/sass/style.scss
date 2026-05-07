@@ -1,0 +1,199 @@
+@use "sass:map";
+
+@import url("https://fonts.cdnfonts.com/css/ibm-plex-mono-3");
+
+$breakpoints: (
+  "mobile": 600px,
+  "tablet": 900px,
+  "laptop": 1200px,
+  "big-screen": 2000px,
+);
+
+@mixin bp($name, $direction: "down") {
+  $size: map.get($breakpoints, $name);
+
+  @if $direction == "down" {
+    @media (max-width: $size) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $size) {
+      @content;
+    }
+  }
+}
+
+#root {
+  font-family: "IBM Plex Mono", sans-serif;
+  color: white;
+  letter-spacing: 1px;
+  line-height: 140%;
+  @include bp("big-screen", "up") {
+    line-height: 150%;
+  }
+
+  font-weight: 300;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 14px;
+
+  &-main {
+    width: 35%;
+    padding: 60px 0;
+
+    @include bp("big-screen", "up") {
+      width: 20%;
+    }
+
+    @include bp("laptop") {
+      width: 60%;
+    }
+
+    @include bp("tablet") {
+      width: 85%;
+      padding: 30px 0;
+    }
+
+    @include bp("mobile") {
+      width: 90%;
+    }
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 400;
+    font-family: "IBM Plex Mono SemiBold", sans-serif;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  hr {
+    color: white;
+  }
+  p {
+    margin: 10px 0 20px 0;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    &.link-button {
+      padding: 10px 30px;
+      border: white 1px solid;
+      border-radius: 30px;
+      font-size: 14px;
+      background-color: rgba(255, 255, 255, 0.15);
+      transition: all 150ms ease-in-out;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+      }
+    }
+  }
+
+  &-list {
+    margin: 25px 0;
+
+    & hr {
+      width: 70%;
+      margin-left: 0;
+    }
+    & ul {
+      margin-left: 30px;
+      list-style-type: disc;
+      & li {
+        margin: 2px 0;
+        font-size: 14px;
+        & a {
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
+
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: black;
+  z-index: -1;
+
+  &-gradient {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.6;
+    background: linear-gradient(
+      145deg,
+      rgba(22, 122, 179, 1) 0%,
+      rgba(186, 95, 177, 1) 100%
+    );
+    mix-blend-mode: color;
+  }
+
+  &-video {
+    position: fixed;
+    top: 0;
+    right: 0;
+    opacity: 0.6;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: right center; // ← ancre le côté droit
+  }
+  &-blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 200%);
+    mask-image: linear-gradient(to top, black 0%, transparent 200%);
+    pointer-events: none;
+  }
+}
+
+.flex-hori {
+  display: flex;
+  margin-top: 15px;
+  gap: 10px;
+
+  & a {
+    // flex-grow: 1; ← retire ça si tu veux qu'ils aient leur taille naturelle
+    text-align: center;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255, 255, 255) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 10px;
+  }
+}
+
+html {
+  background-color: black;
+}
