@@ -125,16 +125,13 @@ $breakpoints: (
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100dvh;
   width: 100%;
   background-color: black;
   z-index: -1;
 
   &-gradient {
-    position: fixed;
-    top: 0;
     height: 100%;
-    width: 100%;
     opacity: 0.6;
     background: linear-gradient(
       145deg,
@@ -145,25 +142,26 @@ $breakpoints: (
   }
 
   &-video {
-    position: fixed;
-    top: 0;
     right: 0;
     opacity: 0.6;
-    height: 100%;
-    width: 100%;
     object-fit: cover;
-    object-position: right center; // ← ancre le côté droit
+    object-position: right center;
   }
   &-blur {
-    position: fixed;
-    top: 0;
     left: 0;
-    height: 100%;
-    width: 100%;
     backdrop-filter: blur(10px);
     -webkit-mask-image: linear-gradient(to top, black 0%, transparent 200%);
     mask-image: linear-gradient(to top, black 0%, transparent 200%);
     pointer-events: none;
+  }
+
+  &-gradient,
+  &-video,
+  &-blur {
+    width: 100%;
+    top: 0;
+    position: fixed;
+    height: 100dvh;
   }
 }
 

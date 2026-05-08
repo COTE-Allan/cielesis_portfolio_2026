@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <section className="bg">
-        <video className="bg-video" autoPlay src={videobg}></video>
+        <video className="bg-video" autoPlay loop src={videobg}></video>
         <div className="bg-gradient"></div>
         <div className="bg-blur"></div>
       </section>
