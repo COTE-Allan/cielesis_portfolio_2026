@@ -3,6 +3,7 @@ import 'animate.css';
 import {RoundIcon} from '../icons/RoundIcon';
 import {t} from '../../i18n/i18n';
 import {setSetting, useSettings} from '../settings/settings';
+import {playSound} from '../sound/sound';
 import './BootScreen.scss';
 
 export function BootScreen({onDone}) {
@@ -10,11 +11,13 @@ export function BootScreen({onDone}) {
   const dark = useSettings().theme === 'dark';
 
   const start = () => {
-    if (!leaving) setLeaving(true);
+    if (leaving) return;
+    setLeaving(true);
   };
 
   const toggleTheme = (event) => {
     event.stopPropagation();
+    playSound('theme_swap');
     setSetting('theme', dark ? 'light' : 'dark');
   };
 

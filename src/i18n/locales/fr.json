@@ -44,6 +44,21 @@
     "zoomIn": "",
     "zoomInFull": ""
   },
+  "music": {
+    "title": "",
+    "empty": "",
+    "controls": "",
+    "play": "",
+    "pause": "",
+    "next": "",
+    "previous": "",
+    "shuffle": "",
+    "loop": "",
+    "mute": "",
+    "volume": "",
+    "seek": "",
+    "tracks": ""
+  },
   "menu": {
     "folder": "",
     "folderName": "",
@@ -122,6 +137,13 @@
       "contrastDescription": "",
       "background": "",
       "backgroundDescription": ""
+    },
+    "sound": {
+      "title": "",
+      "enabled": "",
+      "enabledDescription": "",
+      "volume": "",
+      "volumeDescription": ""
     },
     "accessibility": {
       "title": "",

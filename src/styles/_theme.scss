@@ -168,6 +168,71 @@ $tablet: 1024px;
   }
 }
 
+// <input type="range">: a sunken track, teal up to the value (--value, a percentage
+// set inline by the component), with a glossy knob.
+@mixin glossy-range($height: 30px, $knob: 24px, $track: 10px) {
+  height: $height;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  appearance: none;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: $track;
+    border-radius: $radius-pill;
+    background: linear-gradient(to right, $teal var(--value), var(--surface-edge) var(--value));
+    box-shadow: $shadow-hole;
+  }
+
+  &::-moz-range-track {
+    height: $track;
+    border-radius: $radius-pill;
+    background: linear-gradient(to right, $teal var(--value), var(--surface-edge) var(--value));
+    box-shadow: $shadow-hole;
+  }
+
+  &::-webkit-slider-thumb {
+    width: $knob;
+    height: $knob;
+    margin-top: calc((#{$track} - #{$knob}) / 2);
+    border: none;
+    border-radius: 50%;
+    background: $gradient-white;
+    box-shadow: 0 2px 3px rgba($black, 0.35);
+    appearance: none;
+  }
+
+  &::-moz-range-thumb {
+    width: $knob;
+    height: $knob;
+    border: none;
+    border-radius: 50%;
+    background: $gradient-white;
+    box-shadow: 0 2px 3px rgba($black, 0.35);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $teal;
+    outline-offset: 3px;
+    border-radius: $radius-pill;
+  }
+}
+
+// content of a panel, scrolling when too tall (the panel can't scroll itself: it would clip its tab).
+// the padding puts a gap between the content and the scrollbar; the negative margin pushes both
+// into the panel's own padding, so the content keeps its width and place.
+@mixin panel-scroll($gap: 12px) {
+  max-height: calc(100vh - 120px);
+  margin-right: -$gap;
+  padding-right: $gap;
+  overflow-y: auto;
+}
+
 @mixin cover {
   content: '';
   position: absolute;

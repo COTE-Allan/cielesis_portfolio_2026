@@ -2,6 +2,7 @@ import {useEffect, useId, useState} from 'react';
 import {LANGUAGES, setLanguage, t, useLanguage} from '../../i18n/i18n';
 import {Button} from '../button/Button';
 import {RoundIcon} from '../icons/RoundIcon';
+import {playSound} from '../sound/sound';
 import {Panel, PanelHeader} from '../menu_system/Panel';
 import {reducesMotion, resetSettings, setSetting, useSettings} from './settings';
 import './SettingsModal.scss';
@@ -24,7 +25,8 @@ function Row({label, description, children}) {
   );
 }
 
-function Toggle({label, description, checked, onChange}) {
+// `sound`: played on click (sound.js), null for none.
+function Toggle({label, description, checked, onChange, sound = 'click'}) {
   return (
     <Row label={label} description={description}>
       {({labelledBy, describedBy}) => (
@@ -35,7 +37,10 @@ function Toggle({label, description, checked, onChange}) {
           aria-labelledby={labelledBy}
           aria-describedby={describedBy}
           className="settings-switch"
-          onClick={() => onChange(!checked)}
+          onClick={() => {
+            if (sound) playSound(sound);
+            onChange(!checked);
+          }}
         >
           <span className="settings-switch-knob" aria-hidden="true" />
         </button>
@@ -56,7 +61,10 @@ function LanguageSelect() {
             value={language}
             aria-labelledby={labelledBy}
             aria-describedby={describedBy}
-            onChange={(event) => setLanguage(event.target.value)}
+            onChange={(event) => {
+              playSound('click');
+              setLanguage(event.target.value);
+            }}
           >
             {LANGUAGES.map(({code, name}) => (
               <option key={code} value={code} lang={code}>{name}</option>
@@ -64,6 +72,35 @@ function LanguageSelect() {
           </select>
           <RoundIcon name="expand_more" className="settings-select-arrow" />
         </span>
+      )}
+    </Row>
+  );
+}
+
+// volume of the sounds, in steps of 5%. a click plays at the new volume once the slider is let go.
+function VolumeSlider({volume, disabled}) {
+  const percent = Math.round(volume * 100);
+  const preview = () => playSound('click');
+
+  return (
+    <Row label={t('settings.sound.volume')} description={t('settings.sound.volumeDescription')}>
+      {({labelledBy, describedBy}) => (
+        <input
+          type="range"
+          min={0}
+          max={100}
+          step={5}
+          value={percent}
+          disabled={disabled}
+          aria-labelledby={labelledBy}
+          aria-describedby={describedBy}
+          aria-valuetext={`${percent}%`}
+          className="settings-range"
+          style={{'--value': `${percent}%`}}
+          onChange={(event) => setSetting('soundVolume', Number(event.target.value) / 100)}
+          onPointerUp={preview}
+          onKeyUp={preview}
+        />
       )}
     </Row>
   );
@@ -143,6 +180,7 @@ export function SettingsModal({modal, onResetLayout}) {
               label={t('common.darkMode')}
               description={t('settings.display.darkDescription')}
               checked={settings.theme === 'dark'}
+              sound="theme_swap"
               onChange={(dark) => setSetting('theme', dark ? 'dark' : 'light')}
             />
             <Toggle
@@ -157,6 +195,21 @@ export function SettingsModal({modal, onResetLayout}) {
               checked={settings.plainBackground}
               onChange={toggle('plainBackground')}
             />
+          </Group>
+
+          <Group icon="volume_up" title={t('settings.sound.title')}>
+            {/* the click plays once the sounds are on, so turning them on is heard. */}
+            <Toggle
+              label={t('settings.sound.enabled')}
+              description={t('settings.sound.enabledDescription')}
+              checked={settings.sounds}
+              sound={null}
+              onChange={(on) => {
+                setSetting('sounds', on);
+                playSound('click');
+              }}
+            />
+            <VolumeSlider volume={settings.soundVolume} disabled={!settings.sounds} />
           </Group>
 
           <Group icon="accessibility_new" title={t('settings.accessibility.title')}>

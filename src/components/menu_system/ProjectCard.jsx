@@ -47,7 +47,13 @@ export function ProjectCard({modal, onClose, item}) {
                 <RoundIcon name="arrow_left" />
               </Button>
               {item.link && (
-                <Button href={item.link} className="project-open" target="_blank" rel="noopener noreferrer">
+                <Button
+                  href={item.link}
+                  className="project-open"
+                  sound="launch_app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {t('menu.openProject')}
                 </Button>
               )}

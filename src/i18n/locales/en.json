@@ -44,6 +44,21 @@
     "zoomIn": "Zoom in",
     "zoomInFull": "Too many icons to zoom in"
   },
+  "music": {
+    "title": "Music",
+    "empty": "No songs yet.",
+    "controls": "Player controls",
+    "play": "Play",
+    "pause": "Pause",
+    "next": "Next song",
+    "previous": "Previous song",
+    "shuffle": "Shuffle",
+    "loop": "Repeat this song",
+    "mute": "Mute",
+    "volume": "Music volume",
+    "seek": "Position in the song",
+    "tracks": "Songs"
+  },
   "menu": {
     "folder": "Folder {number}",
     "folderName": "Folder name",
@@ -92,6 +107,13 @@
       "contrastDescription": "Stronger text colours.",
       "background": "Plain background",
       "backgroundDescription": "Hides the moving tiles behind the menu."
+    },
+    "sound": {
+      "title": "Sound",
+      "enabled": "Sound effects",
+      "enabledDescription": "Clicks and sounds of the menu.",
+      "volume": "Volume",
+      "volumeDescription": "Loudness of the sound effects."
     },
     "accessibility": {
       "title": "Accessibility",

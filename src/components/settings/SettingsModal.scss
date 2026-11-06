@@ -11,9 +11,7 @@ $knob: $switch-height - 2 * $knob-gap;
   gap: 18px;
   width: $card-width;
   max-width: 100%;
-  // the panel can't scroll itself (it would clip its tab): the content does.
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
+  @include panel-scroll;
   color: $ink;
   text-align: left;
 
@@ -164,6 +162,17 @@ $knob: $switch-height - 2 * $knob-gap;
       color: $ink-soft;
       font-size: 22px;
       pointer-events: none;
+    }
+  }
+
+  // volume: a sunken track like the switch, with the same glossy knob.
+  &-range {
+    flex: none;
+    width: 140px;
+    @include glossy-range($switch-height, $knob);
+
+    @include mobile {
+      width: 110px;
     }
   }
 

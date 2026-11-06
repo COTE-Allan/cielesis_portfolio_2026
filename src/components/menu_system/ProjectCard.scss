@@ -153,6 +153,38 @@
     }
   }
 
+  // burger and cross stacked on the same cell: on toggling, one turns away and shrinks
+  // while the other turns in (same motion as the toolbar's theme button, Toolbar.scss).
+  &-menu-icon {
+    display: grid;
+
+    .round-icon {
+      grid-area: 1 / 1;
+      transition: transform 300ms ease, opacity 300ms ease;
+    }
+
+    &-close {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.4);
+    }
+
+    &-open &-burger {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.4);
+    }
+
+    &-open &-close {
+      opacity: 1;
+      transform: none;
+    }
+
+    @include reduced-motion {
+      .round-icon {
+        transition: none;
+      }
+    }
+  }
+
   // above the description (z-index 1, same stacking context: .project-content),
   // aligned on the right edge of the controls.
   &-menu-list {
@@ -170,6 +202,11 @@
     border-radius: $radius-lg;
     background: $gradient-white;
     box-shadow: $shadow-card;
+
+    // closing: its links can no longer be clicked while it fades out.
+    &[data-closing] {
+      pointer-events: none;
+    }
   }
 
   &-menu-link {

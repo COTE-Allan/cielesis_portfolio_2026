@@ -1,5 +1,16 @@
 @use 'theme' as *;
 
+@keyframes toolbar-music-beat {
+  0%,
+  100% {
+    transform: none;
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(-8deg) scale(1.06);
+  }
+}
+
 .toolbar {
   display: flex;
   align-items: center;
@@ -99,6 +110,15 @@
 
     &.music {
       color: $teal
+    }
+
+    // the note bobs while the music plays.
+    &-playing .round-icon {
+      animation: toolbar-music-beat 0.9s ease-in-out infinite;
+
+      @include reduced-motion {
+        animation: none;
+      }
     }
     &.brush {
       color: $red;

@@ -1,0 +1,307 @@
+@use 'theme' as *;
+
+$disc: 84px;
+$control: 40px;
+$play: 56px;
+$list-height: 200px;
+
+// white gloss on the top half of a glossy button.
+$gloss: linear-gradient(180deg, rgba($white, 0.75) 0%, rgba($white, 0.15) 50%, rgba($white, 0) 51%);
+
+@keyframes music-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.music {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: $card-width;
+  max-width: 100%;
+  @include panel-scroll;
+  color: $ink;
+  text-align: left;
+
+  p {
+    margin: 0;
+  }
+
+  // the panel header has its own bottom margin, the gap is enough here.
+  .panel-header {
+    margin-bottom: 0;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $ink-strong;
+    font-size: 20px;
+
+    .round-icon {
+      color: $teal;
+    }
+  }
+
+  &-empty {
+    padding: 14px 18px;
+    border-radius: $radius-md;
+    background: $gradient-grey;
+    box-shadow: $shadow-hole;
+    color: $ink-soft;
+    font-weight: 400;
+  }
+
+  // the song playing: a glossy disc, spinning while it plays, and its title.
+  &-now {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &-disc {
+    position: relative;
+    flex: none;
+    width: $disc;
+    height: $disc;
+    border-radius: 50%;
+    box-shadow: $shadow-icon;
+
+    // the gloss stays still over the spinning face.
+    &::after {
+      @include cover;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba($white, 0.7) 0%, rgba($white, 0) 50%);
+    }
+
+    &-face {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, var(--surface-mid) 0 13%, rgba($white, 0.9) 14% 17%, transparent 18%),
+        conic-gradient($teal, $blue, #b49ae0, $teal, #a4ecd0, $blue, $teal);
+      box-shadow: inset 0 0 0 2px rgba($white, 0.6);
+      animation: music-spin 5s linear infinite paused;
+
+      &-playing {
+        animation-play-state: running;
+      }
+
+      @include reduced-motion {
+        animation: none;
+      }
+    }
+  }
+
+  &-song {
+    min-width: 0;
+
+    &-title {
+      overflow: hidden;
+      color: $ink-strong;
+      font: 600 20px $font-extended;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-artist {
+      color: $ink-soft;
+      font-size: 15px;
+    }
+  }
+
+  &-range {
+    flex: 1;
+    min-width: 0;
+    @include glossy-range(24px, 18px, 8px);
+  }
+
+  &-progress,
+  &-volume {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &-time {
+    flex: none;
+    min-width: 36px;
+    color: $ink-soft;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  &-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  // raised glossy round buttons; the toggles sink and turn teal when on.
+  &-control {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: $control;
+    height: $control;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: $gradient-white;
+    box-shadow: $shadow-icon;
+    color: $ink-soft;
+    cursor: pointer;
+    transition: transform $fast, color $fast, box-shadow $fast;
+
+    .round-icon {
+      font-size: 24px;
+    }
+
+    &:hover {
+      color: $ink-hover;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $teal;
+      outline-offset: 3px;
+    }
+  }
+
+  &-toggle[aria-pressed='true'] {
+    background: $gradient-grey;
+    box-shadow: $shadow-hole;
+    color: $teal;
+
+    &:hover {
+      color: $teal;
+      transform: none;
+    }
+  }
+
+  // the mute button shows the volume level: red when muted, not teal.
+  &-mute[aria-pressed='true'],
+  &-mute[aria-pressed='true']:hover {
+    color: $red;
+  }
+
+  &-play {
+    width: $play;
+    height: $play;
+    background: $gloss, $gradient-teal;
+    box-shadow: $shadow-icon, inset 0 0 0 1px rgba($white, 0.5);
+    color: $white;
+
+    .round-icon {
+      font-size: 34px;
+    }
+
+    &:hover {
+      color: $white;
+    }
+  }
+
+  // the songs, in a well; scrolls past a few of them.
+  &-list {
+    max-height: $list-height;
+    margin: 0;
+    padding: 6px;
+    overflow-y: auto;
+    border-radius: $radius-md;
+    background: $gradient-grey;
+    box-shadow: $shadow-hole;
+    list-style: none;
+  }
+
+  &-track {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-radius: $radius-sm;
+    background: none;
+    color: $ink;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color $fast;
+
+    &:hover {
+      background: $hole-over;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $teal;
+      outline-offset: -2px;
+    }
+
+    &[aria-current] {
+      background: $hole-over;
+      color: $ink-strong;
+    }
+
+    &-number {
+      display: grid;
+      flex: none;
+      place-items: center;
+      width: 24px;
+      color: $ink-soft;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+
+      .round-icon {
+        color: $teal;
+        font-size: 20px;
+      }
+    }
+
+    &-title {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      font-size: 15px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-artist {
+      flex: none;
+      max-width: 40%;
+      overflow: hidden;
+      color: $ink-soft;
+      font-size: 13px;
+      font-weight: 400;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  @include mobile {
+    gap: 14px;
+
+    &-controls {
+      gap: 8px;
+    }
+
+    &-disc {
+      width: 64px;
+      height: 64px;
+    }
+
+    &-song-title {
+      font-size: 17px;
+    }
+  }
+}

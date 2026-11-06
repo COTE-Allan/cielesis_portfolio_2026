@@ -1,6 +1,7 @@
 import {useRef, useState} from 'react';
 import {useDraggable} from '@dnd-kit/react';
 import {RoundIcon} from '../icons/RoundIcon';
+import {playSound} from '../sound/sound';
 import {Tooltip} from '../tooltip/Tooltip';
 import {BADGE_TYPE} from './BadgePin';
 import "./Icon.scss";
@@ -35,7 +36,12 @@ export function Icon({id, label, image, symbol, isFolder, isBadge, isLink, pinne
       data-dragging={isDragging ? '' : undefined}
       role={isLink ? 'link' : undefined}
       aria-label={label}
-      onPointerEnter={(event) => event.pointerType === 'mouse' && showHint(event)}
+      onPointerEnter={(event) => {
+        if (event.pointerType !== 'mouse') return;
+        showHint(event);
+        // silent while an item is being dragged over the icons.
+        if (!document.querySelector('[data-dragging]')) playSound('hover');
+      }}
       onPointerLeave={hideHint}
       onFocus={(event) => event.currentTarget.matches(':focus-visible') && showHint(event)}
       onBlur={hideHint}

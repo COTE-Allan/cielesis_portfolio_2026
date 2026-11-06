@@ -11,11 +11,15 @@ const DEFAULTS = {
   plainBackground: false,
   strongFocus: false,
   bootScreen: true,
+  sounds: true,
+  // between 0 and 1.
+  soundVolume: 0.5,
 };
 
 const systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const isBoolean = (value) => typeof value === 'boolean';
+const isVolume = (value) => typeof value === 'number' && value >= 0 && value <= 1;
 
 function load() {
   const saved = read(SETTINGS_KEY) ?? {};
@@ -28,6 +32,8 @@ function load() {
     plainBackground: pick('plainBackground', isBoolean),
     strongFocus: pick('strongFocus', isBoolean),
     bootScreen: pick('bootScreen', isBoolean),
+    sounds: pick('sounds', isBoolean),
+    soundVolume: pick('soundVolume', isVolume),
   };
 }
 

@@ -118,6 +118,71 @@ $theme-transition: ();
   }
 }
 
+// scrollbars: a thin glassy aqua pill (Aero style) on a clear track, faint until hovered.
+// the thumb is a colour gradient with a white gloss over its first half, across its width.
+$scrollbar: 10px;
+$scrollbar-gloss: rgba($white, 0.8) 0%, rgba($white, 0.3) 45%, rgba($white, 0) 55%;
+
+// `$angle`: 90deg for a vertical bar (gloss on the left), 180deg for a horizontal one (gloss on top).
+@mixin scrollbar-thumb($alpha, $angle) {
+  background:
+    linear-gradient($angle, $scrollbar-gloss) padding-box,
+    linear-gradient($angle, rgba($teal, $alpha), rgba($blue, $alpha)) padding-box;
+}
+
+// the thumb at rest, hovered and dragged.
+@mixin scrollbar-states($angle) {
+  @include scrollbar-thumb(0.45, $angle);
+
+  &:hover {
+    @include scrollbar-thumb(0.8, $angle);
+  }
+
+  &:active {
+    @include scrollbar-thumb(1, $angle);
+  }
+}
+
+::-webkit-scrollbar {
+  width: $scrollbar;
+  height: $scrollbar;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  // the transparent border leaves a gap around the pill, so it looks thinner.
+  border: 2px solid transparent;
+  border-radius: $radius-pill;
+  box-shadow:
+    inset 0 0 0 1px rgba($white, 0.45),
+    inset 0 -1px 2px rgba($blue, 0.35);
+
+  &:vertical {
+    @include scrollbar-states(90deg);
+  }
+
+  &:horizontal {
+    @include scrollbar-states(180deg);
+  }
+}
+
+// Firefox only takes colours.
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba($teal, 0.6) transparent;
+  }
+}
+
 #root {
   display: flex;
   flex-direction: column;

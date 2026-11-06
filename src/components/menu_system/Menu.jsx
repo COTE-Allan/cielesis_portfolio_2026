@@ -1,4 +1,4 @@
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {DragDropProvider} from '@dnd-kit/react';
 import {Feedback} from '@dnd-kit/dom';
 import {useModal} from '../modal/useModal';
@@ -25,6 +25,8 @@ import {
   saveNames,
   saveZoom,
 } from './layout';
+import {fadeInMusic, fadeOutMusic} from '../music/music';
+import {playSound} from '../sound/sound';
 import {playGridIntro} from './introAnimation';
 import {SWAP_DURATION, SWAP_EASING, captureIconRects, captureZoom, playSwapAnimation} from './swapAnimation';
 import './Menu.scss';
@@ -99,6 +101,12 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     snapshot.current = null;
   }, [layout, zoom]);
 
+  // the music fades out while a project is open, and comes back once it is closed.
+  useEffect(() => {
+    if (project.isOpen) fadeOutMusic();
+    else fadeInMusic();
+  }, [project.isOpen]);
+
   // the grid zooms in, then its icons one by one (before the first paint, so they never flash).
   useLayoutEffect(() => playGridIntro(gridRef.current), []);
 
@@ -111,7 +119,8 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   const columns = ZOOM_LEVELS[zoom];
   // folders and the badge case get more columns when the icons are smaller,
   // so they keep about the same width at every zoom level (3 and 6 at the default zoom).
-  const folderColumns = columns - 1;
+  // folders never go under 3 columns (the max zoom would give 2).
+  const folderColumns = Math.max(columns - 1, 3);
   const badgeCaseColumns = columns + 2;
   const dragging = dragId !== null;
   const panelOpen = folder.isOpen || badgeCase.isOpen;
@@ -156,12 +165,19 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     saveZoom(nextZoom);
   };
 
-  // badges are purely cosmetic: opening one does nothing.
+  // badges are purely cosmetic: opening one does nothing (but click).
   const openItem = guarded((id) => {
-    if (isFolder(id)) folder.show(id);
-    else if (ITEMS[id]?.isBadgeCase) badgeCase.show();
-    else if (ITEMS[id]?.isApp) project.show(id);
-    else if (ITEMS[id]?.isLink) window.open(ITEMS[id].link, '_blank', 'noopener,noreferrer');
+    if (ITEMS[id]?.isApp) {
+      playSound('open_app');
+      project.show(id);
+    } else if (ITEMS[id]?.isLink) {
+      playSound('launch_app');
+      window.open(ITEMS[id].link, '_blank', 'noopener,noreferrer');
+    } else {
+      playSound('click');
+      if (isFolder(id)) folder.show(id);
+      else if (ITEMS[id]?.isBadgeCase) badgeCase.show();
+    }
   });
 
   const handleDragMove = (event) => {
@@ -214,6 +230,7 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
 
     const created = Object.keys(next).find((id) => !Object.hasOwn(layout, id));
 
+    playSound('click');
     snapshot.current = captureIconRects(source?.id);
     setLayout(next);
     saveLayout(next);
@@ -229,6 +246,7 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     <DragDropProvider
       plugins={plugins}
       onDragStart={(event) => {
+        playSound('grab_icon');
         dragGuard.current = true;
         enteredPanel.current = false;
         setDragId(event.operation.source?.id ?? null);

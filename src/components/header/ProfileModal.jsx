@@ -2,9 +2,10 @@ import {t} from '../../i18n/i18n';
 import {RoundIcon} from '../icons/RoundIcon';
 import {Panel, PanelHeader} from '../menu_system/Panel';
 import './ProfileModal.scss';
+import ProfilePic from '../../assets/others/allan_cote_profile_picture.webp'
 
 const PROFILE = {
-  picture: 'https://picsum.photos/204',
+  picture: ProfilePic,
   name: 'Allan "Cielesis" COTE',
   infos: [
     {icon: 'location_on', key: 'profile.location'},

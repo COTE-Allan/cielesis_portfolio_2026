@@ -3,7 +3,9 @@ import { RoundIcon } from "../icons/RoundIcon";
 import { introEnd, useIntroAnimation } from "../menu_system/introAnimation";
 import { useModal } from "../modal/useModal";
 import { getLanguage, t } from "../../i18n/i18n";
+import { playSound } from "../sound/sound";
 import { ProfileModal } from "./ProfileModal";
+import ProfilePic from '../../assets/others/allan_cote_profile_picture.webp'
 import "./header.scss"
 
 const pad = (n) => String(n).padStart(2, "0");
@@ -123,6 +125,11 @@ export function Header() {
     const ref = useRef(null);
     useIntroAnimation(ref, "header");
 
+    const openProfile = () => {
+        playSound("click");
+        profile.show();
+    };
+
     // the modal is a sibling of the header, not a child: the header's transform
     // would make it the containing block of the fixed backdrop.
     return (
@@ -134,15 +141,15 @@ export function Header() {
                 tabIndex={0}
                 aria-label={t("header.openProfile")}
                 onMouseEnter={() => showWelcome()}
-                onClick={() => profile.show()}
+                onClick={openProfile}
                 onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                         event.preventDefault();
-                        profile.show();
+                        openProfile();
                     }
                 }}
             >
-                <img src="https://picsum.photos/204" alt={t("header.pictureAlt")} className="header-profile-picture" />
+                <img src={ProfilePic} alt={t("header.pictureAlt")} className="header-profile-picture" />
                 <span className="header-profile-welcome">{t("header.welcome")}</span>
             </section>
             <section className="header-system">
