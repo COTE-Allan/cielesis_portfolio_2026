@@ -1,3 +1,4 @@
+import {t} from '../../i18n/i18n';
 import {RoundIcon} from '../icons/RoundIcon';
 import {Modal} from '../modal/Modal';
 import './Panel.scss';
@@ -12,7 +13,7 @@ export function PanelHeader({onClose, children}) {
   return (
     <header className="modal-header panel-header">
       {children}
-      <button type="button" className="panel-tab" onClick={onClose} aria-label="Close">
+      <button type="button" className="panel-tab" onClick={onClose} aria-label={t('common.close')}>
         <RoundIcon name="reply" />
       </button>
     </header>

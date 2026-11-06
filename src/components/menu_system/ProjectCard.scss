@@ -73,8 +73,11 @@
 
   // entrance, one after the other: the controls slide up, then the description
   // inflates, then the logo. (on exit, all use the modal's duration.)
+  // its transform is not kept once in place (animate.css keeps it): the controls would stay
+  // a stacking context, and the menu list in it would go under the description.
   &-controls.animate__slideInUp {
     --animate-duration: 350ms;
+    animation-fill-mode: backwards;
   }
 
   &-desc.animate__zoomIn {
@@ -114,10 +117,18 @@
     font-size: 24px;
   }
 
-  // empty end of the controls, mirroring the back button.
+  // end of the controls, mirroring the back button: the menu button, or empty.
   &-end {
     flex: none;
     border-radius: 0 $radius 0 0;
+
+    // separator with the previous button.
+    &::after {
+      @include separator(left);
+    }
+  }
+
+  &-end-empty {
     cursor: default;
 
     // no hover shade: it is not a button.
@@ -125,13 +136,74 @@
       display: none;
     }
 
-    // separator with the previous button.
-    &::after {
-      @include separator(left);
+    .round-icon {
+      visibility: hidden;
+    }
+  }
+
+  // holds the menu button (stretched like the others) and the list it opens above it.
+  &-menu {
+    position: relative;
+    display: flex;
+    flex: none;
+
+    // the button fills the wrapper, which the controls stretch.
+    .project-end {
+      flex: 1;
+    }
+  }
+
+  // above the description (z-index 1, same stacking context: .project-content),
+  // aligned on the right edge of the controls.
+  &-menu-list {
+    --animate-duration: 150ms;
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 10px);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    border-radius: $radius-lg;
+    background: $gradient-white;
+    box-shadow: $shadow-card;
+  }
+
+  &-menu-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 10px 14px;
+    overflow: hidden;
+    border-radius: $radius;
+    color: $ink-strong;
+    font: 600 18px $font-title;
+    text-decoration: none;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    // darkens the link on hover, like the buttons.
+    &::before {
+      @include cover;
+      background: $hover-shade;
+      mix-blend-mode: multiply;
+      opacity: 0;
+      transition: opacity $fast ease-in;
+    }
+
+    &:hover::before,
+    &:focus-visible::before {
+      opacity: 1;
     }
 
     .round-icon {
-      visibility: hidden;
+      color: $ink-soft;
+      font-size: 1.2em;
     }
   }
 

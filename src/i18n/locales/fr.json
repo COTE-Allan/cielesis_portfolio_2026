@@ -1,0 +1,148 @@
+{
+  "common": {
+    "close": "",
+    "switchToLight": "",
+    "switchToDark": "",
+    "darkMode": ""
+  },
+  "boot": {
+    "title": "",
+    "text": "",
+    "darkQuestion": "",
+    "darkHint": "",
+    "continue": ""
+  },
+  "header": {
+    "openProfile": "",
+    "pictureAlt": "",
+    "welcome": "Bienvenue, Utilisateur !",
+    "internet": ""
+  },
+  "profile": {
+    "title": "",
+    "pictureAlt": "",
+    "role": "",
+    "bio": "",
+    "location": "",
+    "country": "",
+    "status": "",
+    "skills": {
+      "webDeveloper": "",
+      "webDesigner": "",
+      "artist": "",
+      "gameDeveloper": ""
+    }
+  },
+  "toolbar": {
+    "label": "",
+    "music": "",
+    "drawing": "",
+    "notes": "",
+    "settings": "",
+    "size": "",
+    "zoomOut": "",
+    "zoomIn": "",
+    "zoomInFull": ""
+  },
+  "menu": {
+    "folder": "",
+    "folderName": "",
+    "pinHint": "",
+    "badges": "",
+    "closeProject": "",
+    "openProject": "",
+    "projectMenu": ""
+  },
+  "folders": {
+    "folder-games": "",
+    "folder-socials": ""
+  },
+  "items": {
+    "icon-VN": {
+      "label": "",
+      "desc": ""
+    },
+    "icon-TAKES": {
+      "label": ""
+    },
+    "icon-3": {
+      "label": ""
+    },
+    "icon-4": {
+      "label": ""
+    },
+    "icon-5": {
+      "label": ""
+    },
+    "icon-6": {
+      "label": ""
+    },
+    "icon-7": {
+      "label": ""
+    },
+    "icon-8": {
+      "label": ""
+    },
+    "icon-linkedin": {
+      "label": ""
+    },
+    "icon-malt": {
+      "label": ""
+    },
+    "icon-youtube": {
+      "label": ""
+    },
+    "icon-twitch": {
+      "label": ""
+    },
+    "icon-x": {
+      "label": ""
+    },
+    "icon-behance": {
+      "label": ""
+    },
+    "icon-github": {
+      "label": ""
+    },
+    "icon-badge-case": {
+      "label": ""
+    }
+  },
+  "settings": {
+    "title": "",
+    "language": {
+      "title": "",
+      "label": "",
+      "description": ""
+    },
+    "display": {
+      "title": "",
+      "darkDescription": "",
+      "contrast": "",
+      "contrastDescription": "",
+      "background": "",
+      "backgroundDescription": ""
+    },
+    "accessibility": {
+      "title": "",
+      "motion": "",
+      "motionDescription": "",
+      "focus": "",
+      "focusDescription": "",
+      "warning": "",
+      "warningDescription": ""
+    },
+    "reset": {
+      "title": "",
+      "button": "",
+      "confirm": "",
+      "layout": "",
+      "layoutDescription": "",
+      "settings": "",
+      "settingsDescription": ""
+    }
+  },
+  "footer": {
+    "name": ""
+  }
+}

@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useIntroAnimation } from "../menu_system/introAnimation";
+import { t } from "../../i18n/i18n";
 import "./footer.scss"
 
 export function Footer() {
@@ -9,7 +10,7 @@ export function Footer() {
     return (
         <footer ref={ref} className="footer">
             <span className="footer-name">
-                Portfolio
+                {t("footer.name")}
             </span>
             <span className="footer-credit">
                 Allan "Cielesis" COTE - v1.0.0

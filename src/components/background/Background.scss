@@ -78,9 +78,16 @@ $strip-height: 280vh;
   background-position: calc(var(--i) * -1 * $strip-width) center;
   animation: background-scroll var(--duration) linear infinite var(--direction);
   will-change: transform;
+  transition: opacity $theme-change ease;
 
-  @media (prefers-reduced-motion: reduce) {
+  @include reduced-motion {
     animation: none;
+  }
+
+  // "plain background" setting: the tiles fade out and stop.
+  :root[data-background='plain'] & {
+    opacity: 0;
+    animation-play-state: paused;
   }
 }
 

@@ -1,3 +1,4 @@
+import {t} from '../../i18n/i18n';
 import {RoundIcon} from '../icons/RoundIcon';
 import {BadgePin} from './BadgePin';
 import {Icon} from './Icon';
@@ -35,12 +36,12 @@ export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout,
                   isBadge
                 />
               ) : (
-                <RoundIcon name="push_pin" title="Drop a badge here to pin it on this folder" />
+                <RoundIcon name="push_pin" title={t('menu.pinHint')} />
               )}
             </BadgePin>
             <input
               className="folder-name"
-              aria-label="Folder name"
+              aria-label={t('menu.folderName')}
               maxLength={MAX_NAME_LENGTH}
               placeholder={defaultFolderLabel(folderId)}
               value={names[folderId] ?? ''}

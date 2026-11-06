@@ -24,11 +24,31 @@ $tiles-dark: 0.25;
   initial-value: $tiles-light;
 }
 
-@mixin theme($colors, $tiles) {
+// colours of the high contrast setting, over the ones of the theme.
+$contrast-light: (
+  text: $dark,
+  border: $grey,
+  ink: $black,
+  ink-soft: $dark-2,
+  chip: $black,
+);
+
+$contrast-dark: (
+  text: rgb(235, 235, 240),
+  border: $grey-3,
+  ink: $white,
+  ink-soft: rgb(215, 215, 222),
+  chip: rgb(20, 20, 24),
+);
+
+@mixin colors($colors) {
   @each $name, $value in $colors {
     --#{$name}: #{$value};
   }
+}
 
+@mixin theme($colors, $tiles) {
+  @include colors($colors);
   --tiles: #{$tiles};
 }
 
@@ -57,15 +77,44 @@ $theme-transition: ();
     font-size: 16px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
+  // the settings set these attributes (settings.js; index.html restores them before the first paint).
 
-  // the toolbar's theme button sets data-theme (index.html restores it before the first paint);
   // light until dark is chosen, whatever the system's theme.
   &[data-theme='dark'] {
     @include theme($theme-dark, $tiles-dark);
     color-scheme: dark;
+  }
+
+  // after the theme, so it overrides its colours.
+  &[data-contrast='high'] {
+    @include colors($contrast-light);
+  }
+
+  &[data-theme='dark'][data-contrast='high'] {
+    @include colors($contrast-dark);
+  }
+
+  // every animation and transition ends at once (still firing their end events,
+  // which the modals and the boot screen wait for).
+  &[data-motion='reduce'] {
+    transition: none;
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+      transition-delay: 0s !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  // over the outlines of the components.
+  &[data-focus='strong'] :focus-visible {
+    outline: 3px solid $orange !important;
+    outline-offset: 3px !important;
   }
 }
 

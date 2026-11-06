@@ -1,3 +1,5 @@
+import {reducedMotion} from './introAnimation';
+
 // FLIP animation: icons slide (and resize) from their old position to the new one
 // after a drop or a zoom change.
 
@@ -21,7 +23,7 @@ export function captureIconRects(skipId) {
 export const captureZoom = (grid, skipId) => ({...captureIconRects(skipId), duration: ZOOM_DURATION, grid});
 
 export function playSwapAnimation(snapshot) {
-  if (!snapshot) return;
+  if (!snapshot || reducedMotion()) return;
 
   const {duration} = snapshot;
 

@@ -1,24 +1,21 @@
 import {useState} from 'react';
 import 'animate.css';
 import {RoundIcon} from '../icons/RoundIcon';
-import {loadTheme, saveTheme} from '../menu_system/layout';
+import {t} from '../../i18n/i18n';
+import {setSetting, useSettings} from '../settings/settings';
 import './BootScreen.scss';
 
 export function BootScreen({onDone}) {
   const [leaving, setLeaving] = useState(false);
-  const [theme, setTheme] = useState(loadTheme);
-  const dark = theme === 'dark';
+  const dark = useSettings().theme === 'dark';
 
   const start = () => {
     if (!leaving) setLeaving(true);
   };
 
   const toggleTheme = (event) => {
-    event.stopPropagation(); 
-    const next = dark ? 'light' : 'dark';
-    setTheme(next);
-    saveTheme(next);
-    document.documentElement.dataset.theme = next; 
+    event.stopPropagation();
+    setSetting('theme', dark ? 'light' : 'dark');
   };
 
   return (
@@ -38,20 +35,16 @@ export function BootScreen({onDone}) {
       <div className="boot-content">
         <h1 className="boot-title">
           <RoundIcon name="warning" filled className="boot-title-icon" />
-          Warning - Epilepsy and safety
+          {t('boot.title')}
         </h1>
 
-        <p className="boot-text">
-          This website contains flashing colors
-          <br />
-          and large areas of bright white.
-        </p>
+        <p className="boot-text">{t('boot.text')}</p>
 
-        <p className="boot-note">Prefer dark mode?</p>
-        <p className="boot-note-strong">Switch to the moon at the bottom of the screen.</p>
+        <p className="boot-note">{t('boot.darkQuestion')}</p>
+        <p className="boot-note-strong">{t('boot.darkHint')}</p>
 
         <button type="button" className="boot-hint" autoFocus disabled={leaving}>
-          Click anywhere to continue.
+          {t('boot.continue')}
         </button>
       </div>
 
@@ -59,8 +52,8 @@ export function BootScreen({onDone}) {
         type="button"
         role="switch"
         aria-checked={dark}
-        aria-label="Dark mode"
-        title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+        aria-label={t('common.darkMode')}
+        title={dark ? t('common.switchToLight') : t('common.switchToDark')}
         className={`boot-theme${dark ? ' boot-theme-dark' : ''}`}
         disabled={leaving}
         onClick={toggleTheme}

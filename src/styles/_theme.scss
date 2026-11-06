@@ -160,6 +160,14 @@ $tablet: 1024px;
   justify-content: center;
 }
 
+// styles for when animations are reduced: the "reduce motion" setting,
+// or the system's preference when it is not set (data-motion, set by settings.js).
+@mixin reduced-motion {
+  :root[data-motion='reduce'] & {
+    @content;
+  }
+}
+
 @mixin cover {
   content: '';
   position: absolute;

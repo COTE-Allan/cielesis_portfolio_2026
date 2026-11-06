@@ -7,10 +7,12 @@ import {FolderModal} from './FolderModal';
 import {ProjectCard} from './ProjectCard';
 import {SlotGrid} from './SlotGrid';
 import {Toolbar} from './Toolbar';
-import {BADGE_CASE, DEFAULT_LAYOUT, DEFAULT_NAMES, ITEMS, MAIN, ZOOM_LEVELS} from './menuData';
+import {BADGE_CASE, DEFAULT_LAYOUT, ITEMS, MAIN, ZOOM_LEVELS} from './menuData';
 import {
   applyDrop,
   fitMain,
+  getItem,
+  initialLayout,
   isBadge,
   isFolder,
   itemAt,
@@ -65,14 +67,14 @@ function isOutside(element, {x, y}) {
   return Boolean(rect) && (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom);
 }
 
-export function Menu({defaultLayout = DEFAULT_LAYOUT, defaultNames = DEFAULT_NAMES}) {
+export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   const [initial] = useState(() => {
     const loaded = loadLayout(defaultLayout);
     const zoom = fittingZoom(loaded, loadZoom(ZOOM_LEVELS.length, DEFAULT_ZOOM));
     return {zoom, layout: fitMain(loaded, capacity(zoom))};
   });
   const [layout, setLayout] = useState(initial.layout);
-  const [names, setNames] = useState(() => loadNames(layout, defaultNames));
+  const [names, setNames] = useState(() => loadNames(layout));
   const [zoom, setZoom] = useState(initial.zoom);
   // content width of the main grid: smaller than GRID_WIDTH on small screens.
   const [gridWidth, setGridWidth] = useState(GRID_WIDTH);
@@ -138,6 +140,20 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT, defaultNames = DEFAULT_NAM
 
     setZoom(next);
     saveZoom(next);
+  };
+
+  // back to the menu of a first visit: default layout, folder names and zoom.
+  const resetLayout = () => {
+    const fresh = initialLayout(defaultLayout);
+    const nextZoom = fittingZoom(fresh, DEFAULT_ZOOM);
+    const fitted = fitMain(fresh, capacity(nextZoom));
+
+    snapshot.current = captureZoom(gridRef.current);
+    setLayout(fitted);
+    saveLayout(fitted);
+    updateNames({});
+    setZoom(nextZoom);
+    saveZoom(nextZoom);
   };
 
   // badges are purely cosmetic: opening one does nothing.
@@ -228,6 +244,7 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT, defaultNames = DEFAULT_NAM
             zoom={zoom}
             maxZoom={fittingZoom(layout, ZOOM_LEVELS.length - 1)}
             onZoom={updateZoom}
+            onResetLayout={resetLayout}
           />
 
           <SlotGrid
@@ -272,7 +289,7 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT, defaultNames = DEFAULT_NAM
         <ProjectCard
           modal={project}
           onClose={guarded(project.hide)}
-          item={project.data && ITEMS[project.data]}
+          item={project.data && getItem(project.data, names)}
         />
       </div>
     </DragDropProvider>

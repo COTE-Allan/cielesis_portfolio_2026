@@ -1,9 +1,6 @@
+import {hasText, t} from '../../i18n/i18n';
+import {read, write} from '../tools/storage';
 import {BADGES, BADGE_CASE, BADGE_CASE_ICON, ITEMS, MAIN, MAX_MAIN_SLOTS, PINS} from './menuData';
-
-// a layout maps container ids to slot arrays, plus the badges pinned on folders:
-// { main: [itemId | null, ...], 'folder-1': [itemId, ...], 'badge-case': [badgeId, ...],
-//   pins: { 'folder-1': badgeId } }
-// main has no empty slots at its end: the grid adds them back to fill its rows.
 
 const MIN_FOLDER_ITEMS = 2;
 const SLOT_SEPARATOR = ':';
@@ -14,7 +11,6 @@ const FOLDER_PATTERN = /^folder-[\w-]+$/;
 const LAYOUT_KEY = 'home-menu-layout';
 const NAMES_KEY = 'home-menu-folder-names';
 const ZOOM_KEY = 'home-menu-zoom';
-const THEME_KEY = 'theme';
 
 export const MAX_NAME_LENGTH = 20;
 
@@ -33,12 +29,26 @@ const folderIds = (layout) => Object.keys(layout).filter(isFolder);
 
 const containerIds = (layout) => [MAIN, BADGE_CASE, ...folderIds(layout)];
 
+// name of a folder until the visitor renames it: its predefined name (folders.<id>),
+// or "Folder 1", "Folder 2"... for the created ones.
 export const defaultFolderLabel = (folderId) =>
-  `Folder ${folderId.slice(FOLDER_PREFIX.length)}`;
+  hasText(`folders.${folderId}`)
+    ? t(`folders.${folderId}`)
+    : t('menu.folder', {number: folderId.slice(FOLDER_PREFIX.length)});
 
+// what a slot shows, with its texts in the current language.
 export function getItem(id, names) {
   if (isBadge(id)) return BADGES[id];
-  if (!isFolder(id)) return ITEMS[id];
+  if (!isFolder(id)) {
+    if (!ITEMS[id]) return undefined;
+    const desc = `items.${id}.desc`;
+    // menu entries: their text is items.<id>.menu.<entry id>, or their `label` when it has none.
+    const menu = ITEMS[id].menu?.map((entry) => {
+      const key = `items.${id}.menu.${entry.id}`;
+      return {...entry, label: hasText(key) ? t(key) : entry.label ?? entry.id};
+    });
+    return {...ITEMS[id], label: t(`items.${id}.label`), desc: hasText(desc) ? t(desc) : undefined, menu};
+  }
 
   return {label: names[id]?.trim() || defaultFolderLabel(id), isFolder: true};
 }
@@ -286,26 +296,12 @@ export function pickNames(names, layout) {
 
 // --- STORAGE ---
 
-function read(key) {
-  try {
-    return JSON.parse(window.localStorage.getItem(key));
-  } catch {
-    return null;
-  }
-}
-
-function write(key, value) {
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    // storage unavailable (private mode, quota...): keep the in-memory state.
-  }
-}
-
 export const loadLayout = (defaults) => normalizeLayout(read(LAYOUT_KEY) ?? defaults);
+// the layout as it is on a first visit, whatever was saved.
+export const initialLayout = (defaults) => normalizeLayout(defaults);
 export const saveLayout = (layout) => write(LAYOUT_KEY, layout);
-// `defaults` are used until names are saved for the first time.
-export const loadNames = (layout, defaults) => pickNames(read(NAMES_KEY) ?? defaults, layout);
+// only the names given by the visitor: the others come from defaultFolderLabel.
+export const loadNames = (layout) => pickNames(read(NAMES_KEY) ?? {}, layout);
 export const saveNames = (names) => write(NAMES_KEY, names);
 
 // zoom is an index in the menu's zoom levels, `fallback` until one is saved.
@@ -315,10 +311,3 @@ export function loadZoom(levelCount, fallback) {
 }
 
 export const saveZoom = (zoom) => write(ZOOM_KEY, zoom);
-
-// 'light' or 'dark': light until one is saved.
-export function loadTheme() {
-  return read(THEME_KEY) === 'dark' ? 'dark' : 'light';
-}
-
-export const saveTheme = (theme) => write(THEME_KEY, theme);

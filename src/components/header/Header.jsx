@@ -2,11 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { RoundIcon } from "../icons/RoundIcon";
 import { introEnd, useIntroAnimation } from "../menu_system/introAnimation";
 import { useModal } from "../modal/useModal";
+import { getLanguage, t } from "../../i18n/i18n";
 import { ProfileModal } from "./ProfileModal";
 import "./header.scss"
 
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const pad = (n) => String(n).padStart(2, "0");
+// short name of the day in the current language (Sun, dim., So...).
+const weekday = (date) => new Intl.DateTimeFormat(getLanguage(), { weekday: "short" }).format(date);
 
 // current date, refreshed at each new minute
 function useClock() {
@@ -130,7 +132,7 @@ export function Header() {
                 className={`header-profile${welcomeOpen ? " header-profile-open" : ""}`}
                 role="button"
                 tabIndex={0}
-                aria-label="Open profile"
+                aria-label={t("header.openProfile")}
                 onMouseEnter={() => showWelcome()}
                 onClick={() => profile.show()}
                 onKeyDown={(event) => {
@@ -140,14 +142,14 @@ export function Header() {
                     }
                 }}
             >
-                <img src="https://picsum.photos/204" alt="profile picture of the creator of the website" className="header-profile-picture" />
-                <span className="header-profile-welcome">Welcome, User!</span>
+                <img src="https://picsum.photos/204" alt={t("header.pictureAlt")} className="header-profile-picture" />
+                <span className="header-profile-welcome">{t("header.welcome")}</span>
             </section>
             <section className="header-system">
                 <div className="header-wifi">
                     <RoundIcon name={wifiIcon} className="header-icon-wifi" />
                     <span className="header-wifi-label">
-                        Internet
+                        {t("header.internet")}
                     </span>
                 </div>
                 <div className="header-battery">
@@ -155,7 +157,7 @@ export function Header() {
                     <RoundIcon name={batteryIcon(battery)} className={`header-icon-battery header-icon-battery-${batteryTone(battery)}`}/>
                 </div>
                 <div className="header-clock">
-                    <span className="header-date">{pad(now.getDate())}/{pad(now.getMonth() + 1)} ({WEEKDAYS[now.getDay()]})</span>
+                    <span className="header-date">{pad(now.getDate())}/{pad(now.getMonth() + 1)} ({weekday(now)})</span>
                     <span className="header-time">{pad(now.getHours())}:{pad(now.getMinutes())}</span>
                 </div>
             </section>

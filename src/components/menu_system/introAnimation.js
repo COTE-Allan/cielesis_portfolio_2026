@@ -40,7 +40,8 @@ const STEPS = {
 // when a step is fully shown, from the page load.
 export const introEnd = (step) => (reducedMotion() ? 0 : STEPS[step].delay + STEPS[step].duration);
 
-const reducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// the "reduce motion" setting, or the system's preference when it is not set (settings.js).
+export const reducedMotion = () => document.documentElement.dataset.motion === 'reduce';
 
 function shuffle(items) {
   const shuffled = [...items];

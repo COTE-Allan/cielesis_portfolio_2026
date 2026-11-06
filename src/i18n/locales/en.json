@@ -1,0 +1,118 @@
+{
+  "common": {
+    "close": "Close",
+    "switchToLight": "Switch to light mode",
+    "switchToDark": "Switch to dark mode",
+    "darkMode": "Dark mode"
+  },
+  "boot": {
+    "title": "Warning - Epilepsy and safety",
+    "text": "This website contains flashing colors\nand large areas of bright white.",
+    "darkQuestion": "Prefer dark mode?",
+    "darkHint": "Switch to the moon at the bottom of the screen.",
+    "continue": "Click anywhere to continue."
+  },
+  "header": {
+    "openProfile": "Open profile",
+    "pictureAlt": "Profile picture of the creator of the website",
+    "welcome": "Welcome, User!",
+    "internet": "Internet"
+  },
+  "profile": {
+    "title": "Profile",
+    "pictureAlt": "Profile picture of {name}",
+    "role": "Digital creator",
+    "bio": "I’m a developer and designer specialized in web and video games, i love doing creative things for the internet. Open to work and collaborations.",
+    "location": "Le Havre",
+    "country": "France",
+    "status": "Open to work",
+    "skills": {
+      "webDeveloper": "Web Developer",
+      "webDesigner": "Web Designer",
+      "artist": "Artist",
+      "gameDeveloper": "Game Developer"
+    }
+  },
+  "toolbar": {
+    "label": "Menu toolbar",
+    "music": "Music",
+    "drawing": "Drawing",
+    "notes": "Notes",
+    "settings": "Settings",
+    "size": "Menu size",
+    "zoomOut": "Zoom out",
+    "zoomIn": "Zoom in",
+    "zoomInFull": "Too many icons to zoom in"
+  },
+  "menu": {
+    "folder": "Folder {number}",
+    "folderName": "Folder name",
+    "pinHint": "Drop a badge here to pin it on this folder",
+    "badges": "Badges",
+    "closeProject": "Close project",
+    "openProject": "Open project",
+    "projectMenu": "Project links"
+  },
+  "folders": {
+    "folder-games": "My games",
+    "folder-socials": "Socials"
+  },
+  "items": {
+    "icon-VN": {
+      "label": "Void Nebula",
+      "desc": "One my biggest project, this is a video-game made from scratch, with over 2000 hours of work. This game is a sci-fi roguelike deckbuilding game with card customisation elements."
+    },
+    "icon-TAKES": {"label": "TAKES"},
+    "icon-3": {"label": "Shop"},
+    "icon-4": {"label": "Notes"},
+    "icon-5": {"label": "Music"},
+    "icon-6": {"label": "Games"},
+    "icon-7": {"label": "Web"},
+    "icon-8": {"label": "Set"},
+    "icon-linkedin": {"label": "LinkedIn"},
+    "icon-malt": {"label": "Malt"},
+    "icon-youtube": {"label": "YouTube"},
+    "icon-twitch": {"label": "Twitch"},
+    "icon-x": {"label": "Twitter/X"},
+    "icon-behance": {"label": "Behance"},
+    "icon-github": {"label": "GitHub"},
+    "icon-badge-case": {"label": "Badges"}
+  },
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "title": "Language",
+      "label": "Language",
+      "description": "Missing translations are shown in English."
+    },
+    "display": {
+      "title": "Display",
+      "darkDescription": "Dark colours, easier on the eyes at night.",
+      "contrast": "High contrast",
+      "contrastDescription": "Stronger text colours.",
+      "background": "Plain background",
+      "backgroundDescription": "Hides the moving tiles behind the menu."
+    },
+    "accessibility": {
+      "title": "Accessibility",
+      "motion": "Reduce motion",
+      "motionDescription": "Turns off animations. Follows your system until changed.",
+      "focus": "Highlight focus",
+      "focusDescription": "A bold outline around the element selected with the keyboard.",
+      "warning": "Safety warning",
+      "warningDescription": "Shows the flashing lights warning when the site opens."
+    },
+    "reset": {
+      "title": "Reset",
+      "button": "Reset",
+      "confirm": "Sure?",
+      "layout": "Menu layout",
+      "layoutDescription": "Puts icons, folders and badges back in place.",
+      "settings": "Settings",
+      "settingsDescription": "Back to the default settings, except the theme and the language."
+    }
+  },
+  "footer": {
+    "name": "Portfolio"
+  }
+}

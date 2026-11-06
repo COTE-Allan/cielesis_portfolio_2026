@@ -1,0 +1,188 @@
+@use 'theme' as *;
+
+$switch-width: 52px;
+$switch-height: 30px;
+$knob-gap: 3px;
+$knob: $switch-height - 2 * $knob-gap;
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: $card-width;
+  max-width: 100%;
+  // the panel can't scroll itself (it would clip its tab): the content does.
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  color: $ink;
+  text-align: left;
+
+  // the panel header has its own bottom margin, the gap is enough here.
+  .panel-header {
+    margin-bottom: 0;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $ink-strong;
+    font-size: 20px;
+  }
+
+  &-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: $ink-soft;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+
+      .round-icon {
+        color: $teal;
+        font-size: 20px;
+      }
+    }
+  }
+
+  // the rows sit in a well, like the bio of the profile.
+  &-list {
+    margin: 0;
+    padding: 4px 16px;
+    border-radius: $radius-md;
+    background: $gradient-grey;
+    box-shadow: $shadow-hole;
+    list-style: none;
+  }
+
+  &-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+
+    & + & {
+      border-top: 1px solid rgba($black, 0.12);
+    }
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    &-label {
+      color: $ink-strong;
+      font-size: 16px;
+    }
+
+    &-description {
+      color: $ink-soft;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+  }
+
+  // on/off pill: a sunken track, teal when on, with a glossy knob sliding in it.
+  &-switch {
+    position: relative;
+    flex: none;
+    width: $switch-width;
+    height: $switch-height;
+    padding: 0;
+    border: none;
+    border-radius: $radius-pill;
+    background: var(--surface-edge);
+    box-shadow: $shadow-hole;
+    cursor: pointer;
+    transition: background-color $normal ease;
+
+    &[aria-checked='true'] {
+      background: $teal;
+    }
+
+    &-knob {
+      position: absolute;
+      top: $knob-gap;
+      left: $knob-gap;
+      width: $knob;
+      height: $knob;
+      border-radius: 50%;
+      background: $gradient-white;
+      box-shadow: 0 2px 3px rgba($black, 0.35);
+      transition: transform $normal ease;
+    }
+
+    &[aria-checked='true'] &-knob {
+      transform: translateX($switch-width - $knob - 2 * $knob-gap);
+    }
+
+    &:focus-visible {
+      outline: 2px solid $teal;
+      outline-offset: 3px;
+    }
+  }
+
+  // native select (keyboard and phone pickers for free), dressed as a glossy pill.
+  &-select {
+    position: relative;
+    flex: none;
+    display: grid;
+    align-items: center;
+
+    select {
+      grid-area: 1 / 1;
+      min-width: 140px;
+      padding: 7px 36px 7px 16px;
+      border: none;
+      border-radius: $radius-pill;
+      background: $gradient-white;
+      box-shadow: $shadow-icon;
+      color: $ink-strong;
+      font: 600 15px $font-ui;
+      cursor: pointer;
+      appearance: none;
+
+      &:focus-visible {
+        outline: 2px solid $teal;
+        outline-offset: 3px;
+      }
+    }
+
+    &-arrow.round-icon {
+      grid-area: 1 / 1;
+      justify-self: end;
+      margin-right: 10px;
+      color: $ink-soft;
+      font-size: 22px;
+      pointer-events: none;
+    }
+  }
+
+  &-reset {
+    flex: none;
+    min-width: 90px;
+    font-size: 14px;
+    box-shadow: $shadow-icon;
+
+    &-armed {
+      color: $red;
+    }
+  }
+
+  @include mobile {
+    gap: 14px;
+
+    &-list {
+      padding: 2px 12px;
+    }
+  }
+}

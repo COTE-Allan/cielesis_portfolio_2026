@@ -1,7 +1,10 @@
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useRef} from 'react';
 import {RoundIcon} from '../icons/RoundIcon';
+import {t} from '../../i18n/i18n';
+import {useModal} from '../modal/useModal';
+import {SettingsModal} from '../settings/SettingsModal';
+import {setSetting, useSettings} from '../settings/settings';
 import {useIntroAnimation} from './introAnimation';
-import {loadTheme, saveTheme} from './layout';
 import './Toolbar.scss';
 
 function ToolButton({icon, label, className, children, ...props}) {
@@ -13,28 +16,24 @@ function ToolButton({icon, label, className, children, ...props}) {
 }
 
 
-export function Toolbar({zoom, maxZoom, onZoom}) {
-  const [theme, setTheme] = useState(loadTheme);
-  const dark = theme === 'dark';
+// `onResetLayout` puts the menu back as it is on a first visit (from the settings).
+export function Toolbar({zoom, maxZoom, onZoom, onResetLayout}) {
+  const dark = useSettings().theme === 'dark';
+  const settings = useModal();
   const ref = useRef(null);
   useIntroAnimation(ref, 'toolbar');
 
-  // global.scss picks the page colours from data-theme.
-  useLayoutEffect(() => {
-    document.documentElement.dataset.theme = theme;
-  }, [theme]);
+  // global.scss picks the page colours from data-theme (set by settings.js).
+  const toggleTheme = () => setSetting('theme', dark ? 'light' : 'dark');
 
-  const toggleTheme = () => {
-    const next = dark ? 'light' : 'dark';
-    setTheme(next);
-    saveTheme(next);
-  };
-
+  // the settings modal is a sibling of the toolbar: the toolbar's intro transform
+  // would make it the containing block of the fixed backdrop.
   return (
-    <nav ref={ref} className="toolbar" aria-label="Menu toolbar">
+    <>
+    <nav ref={ref} className="toolbar" aria-label={t('toolbar.label')}>
       {/* both icons stay mounted so one can turn out while the other turns in (Toolbar.scss) */}
       <ToolButton
-        label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+        label={dark ? t('common.switchToLight') : t('common.switchToDark')}
         className={`toolbar-theme${dark ? ' toolbar-theme-dark' : ''}`}
         onClick={toggleTheme}
       >
@@ -43,28 +42,36 @@ export function Toolbar({zoom, maxZoom, onZoom}) {
       </ToolButton>
 
       <div className="toolbar-tools">
-        <ToolButton icon="music_note" label="Music" className="toolbar-tool music" />
-        <ToolButton icon="brush" label="Drawing" className="toolbar-tool brush" />
-        <ToolButton icon="note_stack" label="Notes" className="toolbar-tool notes" />
-        <ToolButton icon="settings" label="Settings" className="toolbar-tool settings" />
+        <ToolButton icon="music_note" label={t('toolbar.music')} className="toolbar-tool music" />
+        <ToolButton icon="brush" label={t('toolbar.drawing')} className="toolbar-tool brush" />
+        <ToolButton icon="note_stack" label={t('toolbar.notes')} className="toolbar-tool notes" />
+        <ToolButton
+          icon="settings"
+          label={t('toolbar.settings')}
+          className="toolbar-tool settings"
+          aria-haspopup="dialog"
+          onClick={() => settings.show()}
+        />
       </div>
 
-      <div className="toolbar-zoom" role="group" aria-label="Menu size">
+      <div className="toolbar-zoom" role="group" aria-label={t('toolbar.size')}>
         <ToolButton
           icon="zoom_out"
-          label="Zoom out"
+          label={t('toolbar.zoomOut')}
           className="toolbar-zoom-button"
           disabled={zoom <= 0}
           onClick={() => onZoom(zoom - 1)}
         />
         <ToolButton
           icon="zoom_in"
-          label={zoom < maxZoom ? 'Zoom in' : 'Too many icons to zoom in'}
+          label={zoom < maxZoom ? t('toolbar.zoomIn') : t('toolbar.zoomInFull')}
           className="toolbar-zoom-button"
           disabled={zoom >= maxZoom}
           onClick={() => onZoom(zoom + 1)}
         />
       </div>
     </nav>
+    <SettingsModal modal={settings} onResetLayout={onResetLayout} />
+    </>
   );
 }
