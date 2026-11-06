@@ -1,0 +1,43 @@
+@use 'theme' as *;
+
+$tab-height: 32px;
+
+.panel {
+  position: relative;
+  // room for the tab, so the panel and its tab are centred together
+  margin-top: $tab-height;
+  max-height: calc(100vh - #{$tab-height});
+  padding: 24px;
+
+  &-header {
+    margin-bottom: 16px;
+  }
+
+  // close button sticking out of the top edge of the panel, like a folder tab
+  &-tab {
+    position: absolute;
+    bottom: 100%;
+    right: 24px;
+    height: $tab-height;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border: none;
+    border-radius: $radius-md $radius-md 0 0;
+    background: $modal-top;
+    box-shadow: $shadow-rim;
+    color: $ink;
+    font: inherit;
+    cursor: pointer;
+    transition: color $fast;
+
+    .round-icon {
+      font-size: 26px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: $red;
+    }
+  }
+}

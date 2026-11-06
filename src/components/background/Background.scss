@@ -1,0 +1,91 @@
+@use 'sass:math';
+@use 'theme' as *;
+
+
+$step: 5deg;
+$radius: 100vw;
+$strip-width: 2 * $radius * math.sin(math.div($step, 2));
+$apothem: $radius * math.cos(math.div($step, 2));
+$strip-height: 280vh;
+
+@function tiles($period, $size, $radius, $opacity) {
+  $offset: math.div($period - $size, 2);
+  @return url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='#{$period}' height='#{$period}'%3E%3Crect x='#{$offset}' y='#{$offset}' width='#{$size}' height='#{$size}' rx='#{$radius}' fill='white' fill-opacity='#{$opacity}' stroke='black' stroke-opacity='0.06' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: $scene;
+  perspective: 40vw;
+  pointer-events: none;
+  opacity: .6;
+
+  &::after {
+    @include cover;
+    background: radial-gradient(ellipse at center, color-mix(in srgb, $scene 80%, transparent) 0%, transparent 65%);
+  }
+}
+
+.background-layer {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+
+  &-back {
+    --period: 110px;
+    --duration: 14s;
+    --direction: reverse;
+    transform: translateZ(-15vw);
+
+    .background-tiles {
+      background-image: tiles(110, 82, 20, 0.45);
+    }
+  }
+
+  &-front {
+    --period: 150px;
+    --duration: 10s;
+    --direction: normal;
+
+    .background-tiles {
+      background-image: tiles(150, 112, 26, 0.85);
+    }
+  }
+}
+
+.background-strip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc($strip-width + 1px);
+  height: $strip-height;
+  margin: math.div(-$strip-height, 2) 0 0 math.div(-$strip-width, 2);
+  overflow: hidden;
+  transform:
+    translateZ(calc($radius * cos(var(--count) * $step / 2)))
+    rotateY(calc(((var(--strips) - 1) / 2 - var(--i)) * $step))
+    translateZ(-$apothem);
+}
+
+.background-tiles {
+  position: absolute;
+  inset: 0 calc(-1 * var(--period));
+  // dimmer on the dark theme (global.scss).
+  opacity: var(--tiles);
+  background-position: calc(var(--i) * -1 * $strip-width) center;
+  animation: background-scroll var(--duration) linear infinite var(--direction);
+  will-change: transform;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes background-scroll {
+  from {
+    transform: translateX(calc(-1 * var(--period)));
+  }
+}

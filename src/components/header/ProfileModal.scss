@@ -1,0 +1,123 @@
+@use 'theme' as *;
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: $card-width;
+  max-width: 100%;
+  // the panel can't scroll itself (it would clip its tab): the content does.
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  color: $ink;
+  text-align: left;
+
+  p {
+    margin: 0;
+  }
+
+  // the panel header has its own bottom margin, the gap is enough here.
+  .panel-header {
+    margin-bottom: 0;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $ink-strong;
+    font-size: 20px;
+  }
+  
+  &-identity {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  &-picture {
+    flex: none;
+    width: 80px;
+    height: 80px;
+    border: 3px solid $white;
+    border-radius: 100%;
+    box-shadow: $shadow-icon;
+  }
+
+  &-name {
+    color: $ink-strong;
+    font: 600 24px $font-extended;
+  }
+
+  &-role {
+    color: $ink-soft;
+    font-size: 16px;
+  }
+
+  &-bio {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: $radius-md;
+    background: $gradient-grey;
+    box-shadow: $shadow-hole;
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 15px;
+  }
+
+  &-infos,
+  &-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &-info {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: 8px;
+    color: $ink-soft;
+
+    .round-icon {
+      color: $teal;
+      font-size: 20px;
+    }
+  }
+
+  &-skill {
+    padding: 4px 12px;
+    border-radius: $radius-pill;
+    background: $chip;
+    color: $white;
+    font-size: 13px;
+  }
+
+  &-links {
+    display: flex;
+    gap: 8px;
+
+    .button {
+      flex: 1;
+      font-size: 16px;
+    }
+  }
+
+  @include mobile {
+    gap: 14px;
+
+    &-picture {
+      width: 60px;
+      height: 60px;
+    }
+
+    &-name {
+      font-size: 20px;
+    }
+  }
+}

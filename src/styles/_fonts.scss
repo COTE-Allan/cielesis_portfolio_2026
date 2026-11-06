@@ -1,0 +1,28 @@
+// Waukegan LDO, grouped into two families so font-weight / font-style pick the right file.
+// 400 = regular, 700 = bold, 900 = black; italic = oblique.
+
+$waukegan-dir: '../assets/fonts/waukegan';
+
+@mixin waukegan($family, $file, $weight, $style: normal) {
+  @font-face {
+    font-family: $family;
+    font-style: $style;
+    font-weight: $weight;
+    font-display: swap;
+    src: url('#{$waukegan-dir}/#{$file}.woff') format('woff');
+  }
+}
+
+@include waukegan('Waukegan LDO', 'Waukegan LDO', 400);
+@include waukegan('Waukegan LDO', 'Waukegan LDO Oblique', 400, italic);
+@include waukegan('Waukegan LDO', 'Waukegan LDO Bold', 700);
+@include waukegan('Waukegan LDO', 'Waukegan LDO Bold Oblique', 700, italic);
+@include waukegan('Waukegan LDO', 'Waukegan LDO Black', 900);
+@include waukegan('Waukegan LDO', 'Waukegan LDO Black Oblique', 900, italic);
+
+@include waukegan('Waukegan LDO Extended', 'Waukegan LDO Extended', 400);
+@include waukegan('Waukegan LDO Extended', 'Waukegan LDO Extended Oblique', 400, italic);
+@include waukegan('Waukegan LDO Extended', 'Waukegan LDO Extended Bold', 700);
+@include waukegan('Waukegan LDO Extended', 'Waukegan LDO Extended Bold Oblique', 700, italic);
+@include waukegan('Waukegan LDO Extended', 'Waukegan LDO Extended Black', 900);
+@include waukegan('Waukegan LDO Extended', 'Waukegan LDO Extended Black Oblique', 900, italic);

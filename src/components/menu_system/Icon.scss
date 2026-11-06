@@ -1,0 +1,150 @@
+@use 'theme' as *;
+
+.icon {
+  position: relative;
+  grid-area: 1 / 1;
+  @include center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: $radius-md;
+  background: $gradient-white;
+  box-shadow: $shadow-icon;
+  color: $white;
+  font: 600 z(14px) $font-ui;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: transform $normal, box-shadow $normal;
+
+  &::before {
+    @include cover;
+    border-radius: z($radius);
+    box-shadow: $shadow-rim;
+  }
+
+  &:hover:not([data-dragging]) {
+    transform: scale(1.1);
+  }
+
+  &[data-dragging] {
+    cursor: grabbing;
+    box-shadow: $shadow-lift;
+  }
+
+  &-content {
+    @include center;
+    width: 75%;
+    height: 75%;
+    border-radius: z($radius);
+  }
+
+  &-img {
+    width: 100%;
+    height: 100%;
+    border-radius: z($radius);
+    object-fit: cover;
+  }
+
+  &-symbol {
+    font-size: z(36px);
+    color: $gold;
+  }
+
+  // badge pinned on a folder, over its name.
+  &-pinned {
+    position: absolute;
+    top: 25%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    box-sizing: border-box;
+    border: 2px solid $white;
+    border-radius: 50%;
+    box-shadow: $shadow-pinned;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  // drawn as a flat folder: its body with a tab, the name on the body.
+  &-folder {
+    isolation: isolate;
+    background: none;
+    box-shadow: none;
+    filter: drop-shadow($shadow-icon);
+    transition: transform $normal, filter $normal;
+
+    &[data-dragging] {
+      box-shadow: none;
+      filter: drop-shadow($shadow-lift);
+    }
+
+    // body
+    &::before {
+      inset: 22% 6% 10%;
+      border-radius: 0 z($radius-sm) z($radius-sm) z($radius-sm);
+      background: $teal;
+      box-shadow: none;
+    }
+
+    // tab, overlapping the body a little so no seam shows
+    &::after {
+      content: '';
+      position: absolute;
+      top: 14%;
+      left: 6%;
+      width: 42%;
+      height: 9%;
+      border-radius: z($radius-sm) 0 0 0;
+      background: $teal;
+      clip-path: polygon(0 0, 75% 0, 100% 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .icon-content {
+      position: absolute;
+      inset: 22% 6% 10%;
+      z-index: 1;
+      width: auto;
+      height: auto;
+    }
+
+    .icon-pinned {
+      z-index: 2;
+    }
+  }
+
+  // no icon shadows (resting, rim or lifted): only the badge image keeps its own.
+  &-badge {
+    border-radius: 50%;
+    background: none;
+    box-shadow: none;
+    transition: transform $fast;
+
+    &::before {
+      box-shadow: none;
+    }
+
+    &[data-dragging] {
+      box-shadow: none;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    .icon-content {
+      width: 85%;
+      height: 85%;
+      border-radius: 50%;
+    }
+
+    .icon-img {
+      box-sizing: border-box;
+      border: z(3px) solid $white;
+      border-radius: 50%;
+      box-shadow: $shadow-badge;
+    }
+  }
+}

@@ -1,0 +1,168 @@
+/* --- COLORS --- */
+
+$white: #fff;
+$black: #000;
+
+$dark: #1b1b1f;          
+$dark-2: #3a3a42;      
+$grey: #5a5a66;         
+$grey-2: #8a8a96;   
+$grey-3: #9a9aa5;
+
+$accent: #68c5a6;
+$teal: rgb(101, 209, 202);
+$blue: rgb(77, 137, 184);
+$gold: #e0a526;
+$orange: rgb(214, 139, 0);
+$green: rgb(56, 197, 56);
+$red: rgb(224, 0, 0);
+
+$backdrop: rgba($black, 0.55);
+$hover-shade: rgba(211, 211, 211, 0.5);
+
+
+/* --- THEME COLORS --- */
+
+
+$theme-light: (
+  text: #6b6375,
+  bg: rgb(170, 170, 170),
+  border: #e5e4e7,
+  scene: rgb(196, 196, 201),        
+  surface-top: rgb(237, 237, 237),  
+  surface-mid: rgb(214, 214, 214),
+  surface-edge: rgb(145, 145, 145),
+  well-top: rgb(230, 230, 230),     
+  well-bottom: rgb(210, 210, 210),
+  ink: $dark-2,                     
+  ink-strong: $black,
+  ink-soft: $grey,
+  ink-hover: $dark,
+  card: $white,
+  chip: $dark-2,
+  hole: rgba($white, 0.3),
+  hole-over: rgba($white, 0.5),
+);
+
+$theme-dark: (
+  text: #9ca3af,
+  bg: rgb(8, 8, 10),
+  border: #2e303a,
+  scene: rgb(16, 16, 19),
+  surface-top: rgb(54, 54, 60),
+  surface-mid: rgb(36, 36, 41),
+  surface-edge: rgb(10, 10, 12),
+  well-top: rgb(32, 32, 37),
+  well-bottom: rgb(22, 22, 26),
+  ink: rgb(228, 228, 234),
+  ink-strong: $white,
+  ink-soft: $grey-3,
+  ink-hover: $white,
+  card: rgb(40, 40, 46),
+  chip: rgb(72, 72, 80),
+  hole: rgba($white, 0.06),
+  hole-over: rgba($white, 0.14),
+);
+
+$scene: var(--scene);
+$ink: var(--ink);
+$ink-strong: var(--ink-strong);
+$ink-soft: var(--ink-soft);
+$ink-hover: var(--ink-hover);
+$card: var(--card);
+$chip: var(--chip);
+$hole: var(--hole);
+$hole-over: var(--hole-over);
+
+
+/* --- GRADIENTS --- */
+
+$modal-top: var(--surface-top); 
+
+$gradient-white: linear-gradient(0deg, var(--surface-edge) 0%, var(--surface-mid) 5%, $modal-top 100%);
+$gradient-grey: linear-gradient(0deg, var(--well-bottom) 0%, var(--well-top) 100%);
+$gradient-teal: linear-gradient(0deg, $blue 0%, $teal 5%);
+
+
+/* --- SHADOWS --- */
+
+$shadow-grid: 0 5px 3px rgba($black, 0.4);
+$shadow-icon: 0 5px 3px rgba($black, 0.3);
+$shadow-lift: 0 8px 10px rgba($black, 0.3);  
+$shadow-modal: 0 16px 48px rgba($black, 0.5);
+$shadow-card: 0 0 10px rgba($black, 0.4);
+$shadow-badge: 1px 3px 6px rgba($black, 0.45);
+$shadow-pinned: 1px 2px 4px rgba($black, 0.4);
+$shadow-rim: 0 -2px 2px rgba($black, 0.1);     
+$shadow-hole: inset 0 2px 2px rgba($black, 0.4);
+
+
+/* --- FONTS --- */
+
+$font-ui: 'Waukegan LDO', system-ui, 'Segoe UI', Roboto, sans-serif;
+$font-title: 'Waukegan LDO', sans-serif;
+$font-extended: 'Waukegan LDO Extended', $font-title;
+$font-icons: 'Material Symbols Rounded';
+
+
+/* --- RADII --- */
+
+$radius-sm: 8px;
+$radius: 10px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$radius-pill: 999px;
+
+
+/* --- DURATIONS --- */
+
+$fast: 120ms;
+$normal: 150ms;
+$theme-change: 600ms;
+
+
+/* --- SIZES --- */
+
+$site-width: 100%;
+$cell: 96px;          
+$cell-min: 64px;       
+$slot: 75px;          
+$menu-grid: 520px;   
+$card-width: 500px;   
+$controls-width: 600px;
+
+
+/* --- BREAKPOINTS --- */
+
+$mobile: 520px;
+$tablet: 1024px;
+
+@mixin mobile {
+  @media (max-width: $mobile) { @content; }
+}
+
+@mixin tablet {
+  @media (max-width: $tablet) { @content; }
+}
+
+
+/* --- HELPERS --- */
+
+// scales a size with the menu zoom (--zoom, set on .home by Menu.jsx).
+@function z($value) {
+  @return calc($value * var(--zoom, 1));
+}
+
+@mixin center($direction: row) {
+  display: flex;
+  @if $direction != row { flex-direction: $direction; }
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin cover {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}

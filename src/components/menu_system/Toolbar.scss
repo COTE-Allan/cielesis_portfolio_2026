@@ -1,0 +1,134 @@
+@use 'theme' as *;
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(#{$menu-grid} + 48px, 100%);
+  height: 60px;
+  padding-right: 10px;
+  border-radius: $radius-lg;
+  background: $gradient-white;
+  box-shadow: $shadow-grid;
+  overflow: hidden;
+
+  &-button {
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    transition: transform $fast, opacity $fast, color $fast;
+
+    &:hover:enabled {
+      transform: translateY(-2px);
+    }
+
+    &:active:enabled {
+      transform: translateY(1px);
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  // set apart on the left, like a tab of the bar
+  &-theme {
+    align-self: stretch;
+    width: 64px;
+    border-radius: 0 $radius-lg $radius-lg 0;
+    background: $gradient-grey;
+    box-shadow: inset -2px 0 2px rgba($black, 0.15);
+    color: $ink-soft;
+
+    .round-icon {
+      grid-area: 1 / 1; // sun and moon stacked on the same cell
+      font-size: 28px;
+      transition: transform $theme-change ease, opacity $theme-change ease;
+    }
+
+    // the sun shows in light mode; on switching it turns away and shrinks while the moon turns in,
+    // in step with the page colours.
+    &-moon {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.4);
+    }
+
+    &-dark &-sun {
+      opacity: 0;
+      transform: rotate(90deg) scale(0.4);
+    }
+
+    &-dark &-moon {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .round-icon {
+        transition: none;
+      }
+    }
+
+    &:hover:enabled {
+      transform: none;
+      color: $teal;
+    }
+  }
+
+  &-tools {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  &-tool {
+    width: 38px;
+    height: 38px;
+    border-radius: $radius;
+    background: none;
+    color: $white;
+
+    .round-icon {
+      font-size: 34px;
+    }
+
+    &.music {
+      color: $teal
+    }
+    &.brush {
+      color: $red;
+    }
+    &.settings {
+      color: $orange
+    }
+    &.notes {
+      color: $green
+    }
+  }
+
+  &-zoom {
+    display: flex;
+    gap: 6px;
+
+    &-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: $gradient-grey;
+      box-shadow: $shadow-hole;
+      color: $ink-soft;
+
+      .round-icon {
+        font-size: 20px;
+      }
+
+      &:hover:enabled {
+        color: $ink-hover;
+      }
+    }
+  }
+}

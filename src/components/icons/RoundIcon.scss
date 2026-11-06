@@ -1,0 +1,23 @@
+@use 'theme' as *;
+
+.round-icon {
+  display: inline-block;
+  font-family: $font-icons;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.5em;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  font-variation-settings: 'FILL' 0;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+
+  &[data-filled] {
+    font-variation-settings: 'FILL' 1;
+  }
+}

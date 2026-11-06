@@ -1,0 +1,81 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'theme' as *;
+@use 'reset';
+@use 'fonts';
+
+// opacity of the background tiles.
+$tiles-light: 1;
+$tiles-dark: 0.25;
+
+// registered, so the browser can animate them (and the gradients made of them)
+// from one theme to the other.
+@each $name, $value in $theme-light {
+  @property --#{$name} {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: $value;
+  }
+}
+
+@property --tiles {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: $tiles-light;
+}
+
+@mixin theme($colors, $tiles) {
+  @each $name, $value in $colors {
+    --#{$name}: #{$value};
+  }
+
+  --tiles: #{$tiles};
+}
+
+$theme-transition: ();
+@each $name in list.append(map.keys($theme-light), tiles) {
+  $theme-transition: list.append($theme-transition, --#{$name} $theme-change ease, $separator: comma);
+}
+
+:root {
+  @include theme($theme-light, $tiles-light);
+
+  font: 18px/145% $font-ui;
+  font-family: $font-title;
+  letter-spacing: 0.18px;
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // every element inherits the animated colours.
+  transition: $theme-transition;
+
+  @include tablet {
+    font-size: 16px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  // the toolbar's theme button sets data-theme (index.html restores it before the first paint);
+  // light until dark is chosen, whatever the system's theme.
+  &[data-theme='dark'] {
+    @include theme($theme-dark, $tiles-dark);
+    color-scheme: dark;
+  }
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: $site-width;
+  max-width: 100%;
+  min-height: 100svh;
+  margin: 0 auto;
+  text-align: center;
+}

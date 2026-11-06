@@ -1,0 +1,55 @@
+@use 'theme' as *;
+
+.badge-pin {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: $white;
+  transition: transform $fast, background $fast, border-color $fast;
+
+  .round-icon {
+    font-size: inherit;
+  }
+
+  &[data-over] {
+    transform: scale(1.2);
+    background: $accent;
+    border-color: $white;
+  }
+
+  // shown on folder tiles while a badge is dragged.
+  &-tile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    width: 42%;
+    height: 42%;
+    border: 2px dashed $accent;
+    background: rgba($dark, 0.85);
+    font-size: z(16px);
+    animation: badge-pin-in $normal ease-out;
+  }
+
+  // in the header of an open folder: holds the pinned badge.
+  &-header {
+    flex: none;
+    width: z(48px);
+    height: z(48px);
+    border: 2px dashed $grey;
+    color: $grey-2;
+    font-size: z(22px);
+
+    &:has(.icon) {
+      border-color: transparent;
+    }
+  }
+}
+
+@keyframes badge-pin-in {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}

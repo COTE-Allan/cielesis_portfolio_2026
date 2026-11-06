@@ -1,0 +1,35 @@
+@use 'theme' as *;
+
+.button {
+  position: relative;
+  @include center;
+  min-height: 30px;
+  padding: 7px 20px;
+  overflow: hidden;
+  border: none;
+  border-radius: $radius;
+  background: $gradient-white;
+  color: $ink-strong;
+  font: 600 18px $font-title;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  // darkens the button on hover.
+  &::before {
+    @include cover;
+    background: $hover-shade;
+    mix-blend-mode: multiply;
+    opacity: 0;
+    transition: opacity $fast ease-in;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  .round-icon {
+    @include center;
+    min-height: 30px;
+  }
+}

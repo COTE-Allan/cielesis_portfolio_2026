@@ -1,0 +1,23 @@
+@use 'theme' as *;
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    color: $ink-strong;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    & > * {
+        opacity: .7;
+        margin-top: 5px;
+    }
+    & a {
+        text-decoration: none;
+        color: $ink-strong;
+        transition: 250ms ease-in;
+        &:hover {
+            opacity: 1;
+        }
+    }
+}

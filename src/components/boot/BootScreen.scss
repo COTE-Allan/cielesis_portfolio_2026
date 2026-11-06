@@ -1,0 +1,211 @@
+@use 'sass:list';
+@use 'theme' as *;
+
+
+.boot {
+  --boot-bg: #{$black};
+  --boot-fg: #{$white};
+  --boot-dim: #{$grey-3};
+
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  @include center(column);
+  padding: 24px 16px 120px;
+  background: var(--boot-bg);
+  color: var(--boot-fg);
+  font: 400 18px $font-ui;
+  letter-spacing: 0.02em;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color $theme-change ease, color $theme-change ease;
+  --animate-duration: 500ms;
+
+  &-content {
+    position: relative;
+    @include center(column);
+    max-width: 900px;
+  }
+
+  &-title {
+    @include center;
+    gap: 0.25em;
+    margin: 0 0 1.6em;
+    font: 700 clamp(22px, 3vw, 38px) / 1.1 $font-title;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+
+    &-icon.round-icon {
+      font-size: 1.35em;
+      transform: translateY(-0.04em);
+    }
+  }
+
+  &-text {
+    margin: 0 0 1.8em;
+    font-size: clamp(16px, 2.2vw, 28px);
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  &-note {
+    margin: 0 0 0.5em;
+    font-size: clamp(14px, 1.7vw, 22px);
+  }
+
+  &-note-strong {
+    margin: 0 0 2em;
+    font-size: clamp(15px, 2vw, 26px);
+  }
+
+  &-hint {
+    padding: 0.2em 0.4em;
+    border: none;
+    border-radius: $radius-sm;
+    background: none;
+    color: var(--boot-dim);
+    font: 700 clamp(17px, 2.3vw, 30px) $font-ui;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    animation: boot-blink 1.6s ease-in-out infinite;
+
+    &:focus-visible {
+      outline: 2px solid var(--boot-dim);
+      outline-offset: 4px;
+    }
+  }
+
+  &-theme {
+    position: absolute;
+    bottom: 6vh;
+    left: 50%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 96px;
+    height: 44px;
+    padding: 4px;
+    border: 2px solid var(--boot-fg);
+    border-radius: $radius-pill;
+    background: none;
+    color: var(--boot-dim);
+    transform: translateX(-50%);
+    cursor: pointer;
+    transition: border-color $theme-change ease, color $theme-change ease;
+
+    &:focus-visible {
+      outline: 2px solid var(--boot-fg);
+      outline-offset: 4px;
+    }
+
+    .round-icon {
+      position: relative;
+      justify-self: center;
+      font-size: 22px;
+      transition: color $theme-change ease, transform $theme-change ease;
+    }
+
+    &-knob {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      border-radius: $radius-pill;
+      background: var(--boot-fg);
+      transition: transform $theme-change ease, background-color $theme-change ease;
+    }
+
+    &:not(.boot-theme-dark) .boot-theme-sun,
+    &-dark .boot-theme-moon {
+      color: var(--boot-bg);
+    }
+
+    &-dark .boot-theme-knob {
+      transform: translateX(100%);
+    }
+
+    &:hover:enabled:not(.boot-theme-dark) .boot-theme-moon,
+    &-dark:hover:enabled .boot-theme-sun {
+      color: var(--boot-fg);
+      transform: scale(1.15);
+    }
+  }
+
+  &-squares {
+    @include cover;
+    overflow: hidden;
+  }
+
+  &-square {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 24%;
+    background: var(--boot-fg);
+    opacity: var(--alpha);
+    transform: rotate(var(--tilt));
+    transition: background-color $theme-change ease;
+    animation: boot-float var(--duration) ease-in-out var(--delay) infinite alternate;
+
+    $squares: (
+      (top left, 90, 6, 8, -12deg, 0.07, 7s, 0s),
+      (top left, 46, 15, 22, 18deg, 0.05, 9s, -3s),
+      (top right, 70, 7, 10, 14deg, 0.06, 8s, -1s),
+      (top right, 38, 17, 5, -20deg, 0.04, 10s, -5s),
+      (bottom left, 64, 9, 9, 10deg, 0.06, 9s, -2s),
+      (bottom left, 34, 4, 24, -16deg, 0.04, 7s, -4s),
+      (bottom right, 100, 5, 7, -8deg, 0.07, 10s, -6s),
+      (bottom right, 42, 16, 20, 22deg, 0.05, 8s, -1.5s),
+    );
+
+    @for $i from 1 through list.length($squares) {
+      $corner: list.nth(list.nth($squares, $i), 1);
+      $size: list.nth(list.nth($squares, $i), 2);
+      $x: list.nth(list.nth($squares, $i), 3);
+      $y: list.nth(list.nth($squares, $i), 4);
+      $tilt: list.nth(list.nth($squares, $i), 5);
+      $alpha: list.nth(list.nth($squares, $i), 6);
+      $duration: list.nth(list.nth($squares, $i), 7);
+      $delay: list.nth(list.nth($squares, $i), 8);
+
+      &:nth-child(#{$i}) {
+        #{list.nth($corner, 1)}: #{$y}vh;
+        #{list.nth($corner, 2)}: #{$x}vw;
+        --size: #{$size}px;
+        --tilt: #{$tilt};
+        --alpha: #{$alpha};
+        --duration: #{$duration};
+        --delay: #{$delay};
+      }
+    }
+  }
+}
+
+@keyframes boot-blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes boot-float {
+  to {
+    transform: translateY(-14px) rotate(calc(var(--tilt) + 8deg));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot,
+  .boot-theme,
+  .boot-theme .round-icon,
+  .boot-theme-knob,
+  .boot-square {
+    transition: none;
+  }
+
+  .boot-hint,
+  .boot-square {
+    animation: none;
+  }
+}

@@ -1,0 +1,32 @@
+@use 'theme' as *;
+
+// folder name shown as a title, edited in place by clicking it
+.folder-name {
+  flex: 1;
+  min-width: 0;
+  padding: 2px 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: inset 0 -2px 0 transparent;
+  color: $ink-strong;
+  font: 700 24px $font-title;
+  outline: none;
+  text-overflow: ellipsis;
+  cursor: text;
+  transition: box-shadow $fast;
+
+  // the default name reads like any other name
+  &::placeholder {
+    color: inherit;
+    opacity: 1;
+  }
+
+  &:hover {
+    box-shadow: inset 0 -2px 0 rgba($grey-2, 0.5);
+  }
+
+  &:focus {
+    box-shadow: inset 0 -2px 0 $accent;
+  }
+}

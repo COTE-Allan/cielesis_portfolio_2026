@@ -1,0 +1,55 @@
+@use 'sass:math';
+@use 'theme' as *;
+
+$gap: 10px;   // between the columns of the home grid (Menu.jsx)
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns), z($cell));
+  // slots are narrower than their column.
+  justify-items: center;
+
+  // the home grid: a card under the icons. it keeps its size at every zoom:
+  // Menu.jsx sets the zoom so the columns fill its width, and shows as many rows.
+  // its height is set by its width (the proportions of 4 columns of slots):
+  // rows sized by their slots would make it a few pixels taller or shorter at each zoom.
+  &-main {
+    --padding: 24px;
+
+    grid-template-rows: repeat(var(--columns), minmax(0, 1fr));
+    align-items: center;
+    gap: z($gap);
+    box-sizing: content-box;
+    width: calc(min(#{$menu-grid}, 100%) - 2 * var(--padding));
+    aspect-ratio: math.div(4 * $cell + 3 * $gap, 4 * $slot + 3 * $gap);
+    padding: var(--padding);
+    border-radius: $radius-lg;
+    background: $gradient-grey;
+    box-shadow: $shadow-grid;
+  }
+
+  // inside a modal: scrolls, with room around the icons for their hover effect
+  // (which the scroll area would cut). the negative margin keeps the grid in place.
+  &-panel {
+    --room: #{z(12px)};
+
+    // centred when the header is wider than the columns (few columns at a big zoom)
+    justify-content: center;
+    gap: z(14px);
+    max-height: 60vh;
+    overflow: hidden auto;
+    padding: var(--room);
+    margin: calc(-1 * var(--room));
+  }
+}
+
+@include mobile {
+  .slot-grid-main {
+    --padding: 16px;
+  }
+
+  .slot-grid-panel {
+    grid-template-columns: repeat(var(--columns-mobile, var(--columns)), minmax(z($cell-min), 1fr));
+    gap: 12px;
+  }
+}
