@@ -228,6 +228,7 @@ $tablet: 1024px;
 // into the panel's own padding, so the content keeps its width and place.
 @mixin panel-scroll($gap: 12px) {
   max-height: calc(100vh - 120px);
+  max-height: calc(100dvh - 120px);
   margin-right: -$gap;
   padding-right: $gap;
   overflow-y: auto;

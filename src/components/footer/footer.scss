@@ -20,4 +20,15 @@
             opacity: 1;
         }
     }
+
+    @include tablet {
+        position: static;
+        flex: none;
+        align-items: center;
+        padding: 0 16px 16px;
+        font-size: 14px;
+        & > * {
+            margin-top: 3px;
+        }
+    }
 }

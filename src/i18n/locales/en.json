@@ -30,6 +30,8 @@
     "location": "Le Havre",
     "country": "France",
     "status": "Open to work",
+    "behance": "Behance",
+    "contact": "Contact me",
     "skills": {
       "webDeveloperDesigner": "Web Developer/Designer",
       "artist": "Artist",
@@ -102,8 +104,10 @@
     "projectMenu": "Project links"
   },
   "folders": {
-    "folder-games": "My games",
-    "folder-socials": "Socials"
+    "folder-games": "Games",
+    "folder-socials": "Links",
+    "folder-websites": "Websites",
+    "folder-videos": "Videos i made"
   },
   "items": {
     "icon-VN": {
@@ -114,6 +118,16 @@
       "label": "Explosive Knight TAKES Flying Pawn",
       "desc": "A 1v1 chess game with more than 40 pieces with weird and unique effects, made in two weeks for a gamejam."
     },
+    "icon-babelfest": {
+      "label": "Babelfest",
+      "desc": "Babelfest was a card game made in JavaScript, designed to be a massive collaboration including any artists that wanted to be a part of it."
+    },
+    "icon-lofi-cafe": {
+      "label": "Cielesis's Lofi Cafe",
+      "desc": "This small app is a radio directly connected to multiple live feeds on YouTube, to listen to Lofi, Jazz and other chill songs."
+    },
+    "icon-alternative": {"label": "Fondation Alternative"},
+    "icon-denshattack": {"label": "Denshattack Station"},
     "icon-mail": {"label": "Contact me!"},
     "icon-nexus": {"label": "Mods on Nexus"},
     "icon-linkedin": {"label": "LinkedIn"},
@@ -123,6 +137,8 @@
     "icon-x": {"label": "Twitter/X"},
     "icon-behance": {"label": "Behance"},
     "icon-github": {"label": "GitHub"},
+    "icon-video-vn-devlog-1": {"label": "Void Nebula Devlog #1"},
+    "icon-video-ocean": {"label": "1m30 of ocean"},
     "icon-badge-case": {"label": "Badges"}
   },
   "settings": {

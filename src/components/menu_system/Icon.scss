@@ -14,9 +14,16 @@
   color: $white;
   font: 600 z(14px) $font-ui;
   cursor: grab;
-  touch-action: none;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
   user-select: none;
   transition: transform $normal, box-shadow $normal;
+
+  img {
+    -webkit-touch-callout: none;
+  }
 
   &::before {
     @include cover;
@@ -24,8 +31,17 @@
     box-shadow: $shadow-rim;
   }
 
-  &:hover:not([data-dragging]) {
-    transform: scale(1.1);
+  @media (hover: hover) {
+    &:hover:not([data-dragging]) {
+      transform: scale(1.1);
+    }
+  }
+
+  @media (hover: none) {
+    &:active:not([data-dragging]) {
+      transform: scale(0.92);
+      transition: transform 300ms ease-out;
+    }
   }
 
   &[data-dragging] {

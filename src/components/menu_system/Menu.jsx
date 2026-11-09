@@ -1,6 +1,6 @@
 import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {DragDropProvider} from '@dnd-kit/react';
-import {Feedback} from '@dnd-kit/dom';
+import {Feedback, PointerActivationConstraints, PointerSensor} from '@dnd-kit/dom';
 import {useModal} from '../modal/useModal';
 import {BadgeCaseModal} from './BadgeCaseModal';
 import {FolderModal} from './FolderModal';
@@ -64,6 +64,21 @@ const plugins = (defaults) => [
   Feedback.configure({dropAnimation: {duration: SWAP_DURATION, easing: SWAP_EASING}}),
 ];
 
+const LONG_PRESS_MS = 300;
+const LONG_PRESS_TOLERANCE = 8;
+
+const {Delay, Distance} = PointerActivationConstraints;
+
+const sensors = (defaults) => [
+  ...defaults.filter((sensor) => sensor !== PointerSensor),
+  PointerSensor.configure({
+    activationConstraints: (event) =>
+      event.pointerType === 'mouse'
+        ? [new Delay({value: 200, tolerance: 10}), new Distance({value: 5})]
+        : [new Delay({value: LONG_PRESS_MS, tolerance: LONG_PRESS_TOLERANCE})],
+  }),
+];
+
 function isOutside(element, {x, y}) {
   const rect = element?.getBoundingClientRect();
   return Boolean(rect) && (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom);
@@ -109,6 +124,14 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
 
   // the grid zooms in, then its icons one by one (before the first paint, so they never flash).
   useLayoutEffect(() => playGridIntro(gridRef.current), []);
+
+  useEffect(() => {
+    const blockScroll = (event) => {
+      if (dragGuard.current) event.preventDefault();
+    };
+    window.addEventListener('touchmove', blockScroll, {passive: false});
+    return () => window.removeEventListener('touchmove', blockScroll);
+  }, []);
 
   useLayoutEffect(() => {
     const observer = new ResizeObserver(([entry]) => setGridWidth(entry.contentRect.width));
@@ -245,8 +268,10 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   return (
     <DragDropProvider
       plugins={plugins}
+      sensors={sensors}
       onDragStart={(event) => {
         playSound('grab_icon');
+        if (event.nativeEvent?.pointerType === 'touch') navigator.vibrate?.(15);
         dragGuard.current = true;
         enteredPanel.current = false;
         setDragId(event.operation.source?.id ?? null);

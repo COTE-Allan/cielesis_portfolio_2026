@@ -1,5 +1,6 @@
 import {t} from '../../i18n/i18n';
 import {RoundIcon} from '../icons/RoundIcon';
+import {Button} from '../button/Button';
 import {Panel, PanelHeader} from '../menu_system/Panel';
 import './ProfileModal.scss';
 import ProfilePic from '../../assets/others/allan_cote_profile_picture.webp'
@@ -13,6 +14,8 @@ const PROFILE = {
     {icon: 'work', key: 'profile.status'},
   ],
   skills: ['webDeveloperDesigner', 'artist', 'author', 'gameDeveloper', 'graphist'],
+  behance: 'https://www.behance.net/allancote1',
+  mail: 'mailto:ctn.email.pro@gmail.com',
 };
 
 export function ProfileModal({modal}) {
@@ -61,6 +64,17 @@ export function ProfileModal({modal}) {
               <li key={skill} className="profile-skill">{t(`profile.skills.${skill}`)}</li>
             ))}
           </ul>
+
+          <div className="profile-links">
+            <Button href={PROFILE.behance} target="_blank" rel="noopener noreferrer">
+              <RoundIcon name="palette" />
+              {t('profile.behance')}
+            </Button>
+            <Button href={PROFILE.mail}>
+              <RoundIcon name="mail" />
+              {t('profile.contact')}
+            </Button>
+          </div>
         </div>
       )}
     </Panel>

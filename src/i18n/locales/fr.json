@@ -30,6 +30,8 @@
     "location": "",
     "country": "",
     "status": "",
+    "behance": "Behance",
+    "contact": "Me contacter",
     "skills": {
       "webDeveloper": "",
       "webDesigner": "",
@@ -101,8 +103,10 @@
     "projectMenu": ""
   },
   "folders": {
-    "folder-games": "",
-    "folder-socials": ""
+    "folder-games": "Jeux",
+    "folder-socials": "Liens",
+    "folder-websites": "Sites web",
+    "folder-videos": "Vidéos"
   },
   "items": {
     "icon-VN": {
@@ -150,6 +154,12 @@
     },
     "icon-github": {
       "label": ""
+    },
+    "icon-video-vn-devlog-1": {
+      "label": "Void Nebula Devlog #1"
+    },
+    "icon-video-ocean": {
+      "label": "1m30 d'océan"
     },
     "icon-badge-case": {
       "label": ""

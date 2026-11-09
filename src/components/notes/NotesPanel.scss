@@ -171,5 +171,10 @@
     &-list {
       grid-template-columns: minmax(0, 1fr);
     }
+
+    &-text {
+      height: 120px;
+      font-size: 16px;
+    }
   }
 }

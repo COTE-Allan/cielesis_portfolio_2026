@@ -205,6 +205,11 @@ $knob: $switch-height - 2 * $knob-gap;
     &-list {
       padding: 2px 12px;
     }
+
+    &-select select {
+      min-width: 0;
+      font-size: 16px;
+    }
   }
 }
 

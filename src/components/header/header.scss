@@ -103,4 +103,50 @@
             color: $teal
         }
     }
+
+    @include tablet {
+        position: relative;
+        top: auto;
+        left: auto;
+        z-index: 1;
+        flex: none;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 12px 12px 0;
+        transform: none;
+        gap: 8px;
+    }
+
+    @include mobile {
+        font-size: 15px;
+
+        &-profile, &-system {
+            padding: 6px 12px;
+        }
+
+        &-profile {
+            min-width: 0;
+
+            &-picture {
+                height: 30px;
+            }
+        }
+
+        &-profile-open &-profile-welcome {
+            max-width: 120px;
+            text-overflow: ellipsis;
+        }
+
+        &-system {
+            flex: none;
+
+            & > * {
+                margin: 0 3px;
+            }
+        }
+
+        & &-wifi-label, & &-date {
+            display: none;
+        }
+    }
 }

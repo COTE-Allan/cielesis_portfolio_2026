@@ -67,6 +67,8 @@ $theme-transition: ();
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -191,5 +193,6 @@ $scrollbar-gloss: rgba($white, 0.8) 0%, rgba($white, 0.3) 45%, rgba($white, 0) 5
   max-width: 100%;
   min-height: 100svh;
   margin: 0 auto;
+  overflow-x: clip;
   text-align: center;
 }

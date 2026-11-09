@@ -225,4 +225,48 @@
     }
   }
 
+  @include tablet {
+    &-img {
+      width: min(80%, 640px);
+    }
+
+    &-content {
+      right: 0;
+      left: 0;
+    }
+
+    &-desc &-text {
+      width: min(#{$card-width}, 100vw - 32px);
+    }
+
+    &-controls {
+      width: min(#{$controls-width}, 100%);
+    }
+  }
+
+  @include mobile {
+    &-img {
+      top: 45%;
+      width: 92%;
+    }
+
+    &-desc &-text {
+      padding: 12px 18px;
+      font-size: 16px;
+    }
+
+    &-open {
+      font-size: 20px;
+    }
+
+    &-menu-list {
+      min-width: 0;
+      width: max-content;
+      max-width: calc(100vw - 24px);
+    }
+
+    &-menu-link {
+      font-size: 16px;
+    }
+  }
 }

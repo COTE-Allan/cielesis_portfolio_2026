@@ -49,7 +49,14 @@ $gap: 10px;   // between the columns of the home grid (Menu.jsx)
   }
 
   .slot-grid-panel {
-    grid-template-columns: repeat(var(--columns-mobile, var(--columns)), minmax(z($cell-min), 1fr));
+    grid-template-columns: repeat(var(--columns-mobile, var(--columns)), minmax(0, 1fr));
     gap: 12px;
+    max-height: 55dvh;
+
+    .slot {
+      width: min(#{z($slot)}, 100% - 6px);
+      height: auto;
+      aspect-ratio: 1;
+    }
   }
 }

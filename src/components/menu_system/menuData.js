@@ -25,9 +25,13 @@ import socialMalt from '../../assets/socials/socials_malt_icon.webp';
 import socialTwitch from '../../assets/socials/socials_twitch_icon.webp';
 import socialX from '../../assets/socials/socials_x_icon.webp';
 import socialYoutube from '../../assets/socials/socials_youtube_icon.webp';
+import socialBluesky from '../../assets/socials/socials_bluesky.png';
 
 import mailMiniature from '../../assets/others/mail_miniature.png';
 import nexusMniature from '../../assets/others/nexus_miniature.png';
+
+import oceanMiniature from '../../assets/videos/ocean_miniature.jpg';
+import vnDevlog1Miniature from '../../assets/videos/vn_devlog_1_miniature.jpg';
 
 export const MAIN = 'main';
 export const ZOOM_LEVELS = [5, 4, 3];
@@ -62,6 +66,18 @@ export const ITEMS = {
       {id: 'press', label: 'See on Behance', link: 'https://www.behance.net/gallery/249653707/Explosive-Knight-TAKES-Flying-Pawn'},
     ],
   },
+  'icon-babelfest': {
+    symbol: 'style',
+    link: 'https://babelfest.fr/',
+    isApp: true,
+    menu: [
+      {id: 'trailer', link: 'https://youtu.be/xMIN6jj21eA?si=WGRfDX2gtUrkKGcs'},
+      {id: 'press', label: 'See on Behance', link: 'https://www.behance.net/gallery/258214519/Babelfest'},
+    ],
+  },
+  'icon-lofi-cafe': {symbol: 'local_cafe', link: 'https://lofi-cafe.cielesis.fr/', isApp: true},
+  'icon-alternative': {symbol: 'inventory_2', link: 'https://alternative.cielesis.fr/archives', isLink: true},
+  'icon-denshattack': {symbol: 'train', link: 'https://denshattack-station.cielesis.fr/', isLink: true},
   'icon-nexus': {image: nexusMniature, isLink: true, link: 'https://www.nexusmods.com/profile/cielesis1/mods'},
   'icon-mail': {image: mailMiniature, isLink: true, link: 'mailto:ctn.email.pro@gmail.com'},
   'icon-linkedin': {image: socialLinkedin, link: 'https://www.linkedin.com/in/cielesis/', isLink: true},
@@ -71,6 +87,9 @@ export const ITEMS = {
   'icon-behance': {image: socialBehance, link: 'https://www.behance.net/allancote1', isLink: true},
   'icon-malt': {image: socialMalt, link: 'https://www.malt.fr/profile/allancote1', isLink: true},
   'icon-github': {image: socialGithub, link: 'https://github.com/COTE-Allan', isLink: true},
+  'icon-bluesky': {image: socialBluesky, link: 'https://bsky.app/profile/cielesis-dev.bsky.social', isLink: true},
+  'icon-video-vn-devlog-1': {image: vnDevlog1Miniature, link: 'https://www.youtube.com/watch?v=26Jw-pbi1Vk', isLink: true},
+  'icon-video-ocean': {image: oceanMiniature, link: 'https://youtu.be/0ooX-6AeozE', isLink: true},
   [BADGE_CASE_ICON]: {symbol: 'workspace_premium', isBadgeCase: true},
 };
 
@@ -91,14 +110,15 @@ export const BADGES = {
 
 export const DEFAULT_LAYOUT = {
   [MAIN]: [
-    'folder-games', null, null, null,
+    'folder-games', 'folder-websites', 'folder-videos', null,
     null, null, BADGE_CASE_ICON, 'folder-socials',
     'icon-mail'
   ],
-  'folder-games': ['icon-VN', 'icon-TAKES', 'icon-nexus'],
+  'folder-games': ['icon-VN', 'icon-TAKES', 'icon-babelfest', 'icon-nexus'],
+  'folder-websites': ['icon-lofi-cafe', 'icon-alternative', 'icon-denshattack'],
+  'folder-videos': ['icon-video-vn-devlog-1', 'icon-video-ocean'],
   'folder-socials': [
-    'icon-linkedin', 'icon-twitch', 'icon-youtube', 'icon-x',
-    'icon-malt', 'icon-behance', 'icon-github',
+    'icon-linkedin', 'icon-twitch', 'icon-youtube', 'icon-x', 'icon-behance', 'icon-bluesky', 'icon-malt', 'icon-github',
   ],
   [PINS]: {
     'folder-games': 'badge-controller',

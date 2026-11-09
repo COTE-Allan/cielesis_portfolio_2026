@@ -66,7 +66,7 @@ export function ProjectCard({modal, onClose, item}) {
               preload="auto"
               onAnimationStart={onLogoAnimationStart}
             />
-          ) : (
+          ) : (item.logo || item.image) && (
             <img
               className={logoClass}
               src={item.logo || item.image}

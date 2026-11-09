@@ -7,7 +7,14 @@ $tab-height: 32px;
   // room for the tab, so the panel and its tab are centred together
   margin-top: $tab-height;
   max-height: calc(100vh - #{$tab-height});
+  max-height: calc(100dvh - #{$tab-height});
   padding: 24px;
+
+  @include mobile {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px;
+  }
 
   &-header {
     margin-bottom: 16px;

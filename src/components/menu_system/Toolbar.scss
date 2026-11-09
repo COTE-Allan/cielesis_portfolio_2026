@@ -31,8 +31,12 @@
     cursor: pointer;
     transition: transform $fast, opacity $fast, color $fast;
 
-    &:hover:enabled {
-      transform: translateY(-2px);
+    -webkit-tap-highlight-color: transparent;
+
+    @media (hover: hover) {
+      &:hover:enabled {
+        transform: translateY(-2px);
+      }
     }
 
     &:active:enabled {
@@ -153,6 +157,38 @@
       &:hover:enabled {
         color: $ink-hover;
       }
+    }
+  }
+
+  @include mobile {
+    gap: 8px;
+    height: 54px;
+    padding-right: 8px;
+
+    &-theme {
+      width: 48px;
+
+      .round-icon {
+        font-size: 24px;
+      }
+    }
+
+    &-tools {
+      gap: 6px;
+    }
+
+    &-tool {
+      width: 34px;
+      height: 34px;
+
+      .round-icon {
+        font-size: 30px;
+      }
+    }
+
+    &-zoom-button {
+      width: 28px;
+      height: 28px;
     }
   }
 }
