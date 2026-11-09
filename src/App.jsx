@@ -8,6 +8,7 @@ import { Footer } from './components/footer/Footer'
 import { getSettings } from './components/settings/settings'
 import { useLanguage } from './i18n/i18n'
 import { playSound } from './components/sound/sound'
+import { startMusic } from './components/music/music'
 
 const EMPTY_DELAY = 600;
 
@@ -21,6 +22,7 @@ function App() {
 
     const timer = setTimeout(() => setPhase('ready'), EMPTY_DELAY);
     playSound('boot');
+    if (getSettings().musicOnStart) startMusic();
     return () => clearTimeout(timer);
   }, [phase]);
 

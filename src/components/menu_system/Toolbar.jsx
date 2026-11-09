@@ -1,7 +1,9 @@
 import {useRef} from 'react';
 import {RoundIcon} from '../icons/RoundIcon';
 import {t} from '../../i18n/i18n';
+import {DrawingPad} from '../drawing/DrawingPad';
 import {useModal} from '../modal/useModal';
+import {NotesPanel} from '../notes/NotesPanel';
 import {useMusic} from '../music/music';
 import {MusicPlayer} from '../music/MusicPlayer';
 import {SettingsModal} from '../settings/SettingsModal';
@@ -41,6 +43,8 @@ export function Toolbar({zoom, maxZoom, onZoom, onResetLayout}) {
   const dark = useSettings().theme === 'dark';
   const settings = useModal();
   const musicPlayer = useModal();
+  const drawing = useModal();
+  const notes = useModal();
   const {playing} = useMusic();
   const ref = useRef(null);
   useIntroAnimation(ref, 'toolbar');
@@ -68,17 +72,31 @@ export function Toolbar({zoom, maxZoom, onZoom, onResetLayout}) {
         <ToolButton
           icon="music_note"
           label={t('toolbar.music')}
-          className={`toolbar-tool music${playing ? ' toolbar-tool-playing' : ''}`}
+          className={`toolbar-tool toolbar-tool-music${playing ? ' toolbar-tool-playing' : ''}`}
           hoverSound="hover"
           aria-haspopup="dialog"
           onClick={() => musicPlayer.show()}
         />
-        <ToolButton icon="brush" label={t('toolbar.drawing')} className="toolbar-tool brush" hoverSound="hover" />
-        <ToolButton icon="note_stack" label={t('toolbar.notes')} className="toolbar-tool notes" hoverSound="hover" />
+        <ToolButton
+          icon="brush"
+          label={t('toolbar.drawing')}
+          className="toolbar-tool toolbar-tool-brush"
+          hoverSound="hover"
+          aria-haspopup="dialog"
+          onClick={() => drawing.show()}
+        />
+        <ToolButton
+          icon="note_stack"
+          label={t('toolbar.notes')}
+          className="toolbar-tool toolbar-tool-notes"
+          hoverSound="hover"
+          aria-haspopup="dialog"
+          onClick={() => notes.show()}
+        />
         <ToolButton
           icon="settings"
           label={t('toolbar.settings')}
-          className="toolbar-tool settings"
+          className="toolbar-tool toolbar-tool-settings"
           hoverSound="hover"
           aria-haspopup="dialog"
           onClick={() => settings.show()}
@@ -105,6 +123,8 @@ export function Toolbar({zoom, maxZoom, onZoom, onResetLayout}) {
       </div>
     </nav>
     <MusicPlayer modal={musicPlayer} />
+    <DrawingPad modal={drawing} />
+    <NotesPanel modal={notes} />
     <SettingsModal modal={settings} onResetLayout={onResetLayout} />
     </>
   );

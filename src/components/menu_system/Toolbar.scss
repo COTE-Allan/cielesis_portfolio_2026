@@ -108,8 +108,8 @@
       font-size: 34px;
     }
 
-    &.music {
-      color: $teal
+    &-music {
+      color: $teal;
     }
 
     // the note bobs while the music plays.
@@ -120,14 +120,17 @@
         animation: none;
       }
     }
-    &.brush {
+
+    &-brush {
       color: $red;
     }
-    &.settings {
-      color: $orange
+
+    &-settings {
+      color: $orange;
     }
-    &.notes {
-      color: $green
+
+    &-notes {
+      color: $green;
     }
   }
 

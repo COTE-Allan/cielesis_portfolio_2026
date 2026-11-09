@@ -1,6 +1,5 @@
 @use 'theme' as *;
 
-// folder name shown as a title, edited in place by clicking it
 .folder-name {
   flex: 1;
   min-width: 0;
@@ -16,7 +15,6 @@
   cursor: text;
   transition: box-shadow $fast;
 
-  // the default name reads like any other name
   &::placeholder {
     color: inherit;
     opacity: 1;

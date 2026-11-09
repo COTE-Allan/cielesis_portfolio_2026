@@ -14,6 +14,7 @@ const DEFAULTS = {
   sounds: true,
   // between 0 and 1.
   soundVolume: 0.5,
+  musicOnStart: false,
 };
 
 const systemMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -34,6 +35,7 @@ function load() {
     bootScreen: pick('bootScreen', isBoolean),
     sounds: pick('sounds', isBoolean),
     soundVolume: pick('soundVolume', isVolume),
+    musicOnStart: pick('musicOnStart', isBoolean),
   };
 }
 

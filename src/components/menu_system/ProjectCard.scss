@@ -1,6 +1,5 @@
 @use 'theme' as *;
 
-// separator between two buttons of the controls, on one edge of a button.
 @mixin separator($side) {
   content: '';
   position: absolute;
@@ -12,10 +11,7 @@
   mix-blend-mode: overlay;
 }
 
-// the modal itself is invisible: its content is laid out on the whole screen.
-// (it stays a column so the fixed content is centered horizontally.)
-// clicks go through it and the logo to the backdrop, which closes the project:
-// only the description and the controls catch them.
+
 .project {
   display: flex;
   flex-direction: column;
@@ -31,10 +27,9 @@
     pointer-events: auto;
   }
 
-  // `translate`, not `transform`: the zoom animations set the transform.
   &-img {
     position: fixed;
-    top: 50%;
+    top: 55%;
     left: 50%;
     width: 60%;
     border-radius: $radius-lg $radius-lg 0 0;
@@ -71,10 +66,7 @@
     white-space: normal;
   }
 
-  // entrance, one after the other: the controls slide up, then the description
-  // inflates, then the logo. (on exit, all use the modal's duration.)
-  // its transform is not kept once in place (animate.css keeps it): the controls would stay
-  // a stacking context, and the menu list in it would go under the description.
+
   &-controls.animate__slideInUp {
     --animate-duration: 350ms;
     animation-fill-mode: backwards;
@@ -90,7 +82,6 @@
     animation-delay: 500ms;
   }
 
-  // its buttons all stretch to the height of the tallest one.
   &-controls {
     display: flex;
     align-items: stretch;
@@ -105,7 +96,6 @@
     flex: none;
     border-radius: $radius 0 0 0;
 
-    // separator with the next button.
     &::after {
       @include separator(right);
     }
@@ -117,12 +107,10 @@
     font-size: 24px;
   }
 
-  // end of the controls, mirroring the back button: the menu button, or empty.
   &-end {
     flex: none;
     border-radius: 0 $radius 0 0;
 
-    // separator with the previous button.
     &::after {
       @include separator(left);
     }
@@ -131,7 +119,6 @@
   &-end-empty {
     cursor: default;
 
-    // no hover shade: it is not a button.
     &::before {
       display: none;
     }
@@ -141,20 +128,17 @@
     }
   }
 
-  // holds the menu button (stretched like the others) and the list it opens above it.
   &-menu {
     position: relative;
     display: flex;
     flex: none;
 
-    // the button fills the wrapper, which the controls stretch.
     .project-end {
       flex: 1;
     }
   }
 
-  // burger and cross stacked on the same cell: on toggling, one turns away and shrinks
-  // while the other turns in (same motion as the toolbar's theme button, Toolbar.scss).
+
   &-menu-icon {
     display: grid;
 
@@ -185,8 +169,7 @@
     }
   }
 
-  // above the description (z-index 1, same stacking context: .project-content),
-  // aligned on the right edge of the controls.
+
   &-menu-list {
     --animate-duration: 150ms;
     position: absolute;
@@ -203,7 +186,6 @@
     background: $gradient-white;
     box-shadow: $shadow-card;
 
-    // closing: its links can no longer be clicked while it fades out.
     &[data-closing] {
       pointer-events: none;
     }
@@ -224,7 +206,6 @@
     text-transform: uppercase;
     white-space: nowrap;
 
-    // darkens the link on hover, like the buttons.
     &::before {
       @include cover;
       background: $hover-shade;

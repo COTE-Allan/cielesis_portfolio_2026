@@ -117,6 +117,24 @@ export function togglePlay() {
   else player.pause();
 }
 
+export function startMusic() {
+  if (!SONGS.length || state.playing) return;
+
+  const player = getAudio();
+  if (!player.src) load(state.index);
+
+  player.play().catch(() => {
+    const retry = () => {
+      window.removeEventListener('pointerdown', retry, true);
+      window.removeEventListener('keydown', retry, true);
+      if (player.paused) play();
+    };
+
+    window.addEventListener('pointerdown', retry, true);
+    window.addEventListener('keydown', retry, true);
+  });
+}
+
 function randomIndex() {
   if (SONGS.length < 2) return state.index;
 
@@ -176,8 +194,10 @@ function fadeTo(target, onDone) {
   const from = fade;
   const start = performance.now();
 
+  // the first frame's `now` can be a bit before `start` (it is when the frame began):
+  // the progress is kept from going below 0, or the volume would (and setting it would throw).
   const step = (now) => {
-    const progress = Math.min((now - start) / FADE_MS, 1);
+    const progress = Math.min(Math.max((now - start) / FADE_MS, 0), 1);
     fade = from + (target - from) * progress;
     applyVolume();
 

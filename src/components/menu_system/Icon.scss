@@ -52,7 +52,6 @@
     color: $gold;
   }
 
-  // badge pinned on a folder, over its name.
   &-pinned {
     position: absolute;
     top: 25%;
@@ -60,14 +59,11 @@
     width: 60%;
     height: 60%;
     box-sizing: border-box;
-    border: 2px solid $white;
-    border-radius: 50%;
-    box-shadow: $shadow-pinned;
     object-fit: cover;
     pointer-events: none;
+    filter: drop-shadow($shadow-icon);
   }
 
-  // drawn as a flat folder: its body with a tab, the name on the body.
   &-folder {
     isolation: isolate;
     background: none;
@@ -80,7 +76,6 @@
       filter: drop-shadow($shadow-lift);
     }
 
-    // body
     &::before {
       inset: 22% 6% 10%;
       border-radius: 0 z($radius-sm) z($radius-sm) z($radius-sm);
@@ -88,17 +83,17 @@
       box-shadow: none;
     }
 
-    // tab, overlapping the body a little so no seam shows
     &::after {
       content: '';
       position: absolute;
       top: 14%;
       left: 6%;
       width: 42%;
-      height: 9%;
+      height: 16%;
       border-radius: z($radius-sm) 0 0 0;
       background: $teal;
-      clip-path: polygon(0 0, 75% 0, 100% 100%, 0 100%);
+      // goes well under the body so no seam shows between them while scaled.
+      clip-path: polygon(0 0, 75% 0, 100% 56.25%, 100% 100%, 0 100%);
       pointer-events: none;
     }
 
@@ -115,7 +110,6 @@
     }
   }
 
-  // no icon shadows (resting, rim or lifted): only the badge image keeps its own.
   &-badge {
     border-radius: 50%;
     background: none;
@@ -142,9 +136,7 @@
 
     .icon-img {
       box-sizing: border-box;
-      border: z(3px) solid $white;
-      border-radius: 50%;
-      box-shadow: $shadow-badge;
+      filter: drop-shadow($shadow-icon);
     }
   }
 }

@@ -1,0 +1,148 @@
+@use 'theme' as *;
+
+.drawing {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: $card-width;
+  max-width: 100%;
+  @include panel-scroll;
+  margin: -8px -12px -10px -8px;
+  padding: 8px 12px 10px 8px;
+  color: $ink;
+
+  .panel-header {
+    margin-bottom: 0;
+  }
+
+  &-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: $ink-strong;
+    font-size: 20px;
+
+    .round-icon {
+      color: $red;
+    }
+  }
+
+  &-canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    border-radius: $radius-md;
+    background: $white;
+    box-shadow: $shadow-hole, 0 0 0 1px rgba($black, 0.1);
+    cursor: crosshair;
+    touch-action: none;
+
+    &[data-eraser] {
+      cursor: cell;
+    }
+  }
+
+  &-colors {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &-swatch {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 3px solid $white;
+    border-radius: 50%;
+    background: var(--swatch);
+    box-shadow: $shadow-icon;
+    cursor: pointer;
+    transition: transform $fast;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &[aria-pressed='true'] {
+      transform: scale(1.15);
+      box-shadow: $shadow-icon, 0 0 0 2px $teal;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $teal;
+      outline-offset: 3px;
+    }
+  }
+
+  &-tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  &-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  &-tool {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: $gradient-white;
+    box-shadow: $shadow-icon;
+    color: $ink-soft;
+    cursor: pointer;
+    transition: transform $fast, color $fast;
+
+    .round-icon {
+      font-size: 22px;
+    }
+
+    &:hover:enabled {
+      color: $ink-hover;
+      transform: translateY(-2px);
+    }
+
+    &:active:enabled {
+      transform: translateY(1px);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &[aria-pressed='true'] {
+      background: $gradient-grey;
+      box-shadow: $shadow-hole;
+      color: $teal;
+      transform: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $teal;
+      outline-offset: 3px;
+    }
+  }
+
+  &-dot {
+    width: var(--dot);
+    height: var(--dot);
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  @include mobile {
+    &-swatch {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}

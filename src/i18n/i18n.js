@@ -64,11 +64,17 @@ function detectLanguage() {
 let language = isLanguage(read(LANGUAGE_KEY)) ? read(LANGUAGE_KEY) : detectLanguage();
 const listeners = new Set();
 
-const applyLanguage = () => {
-  document.documentElement.lang = language;
-};
+const OG_LOCALES = {en: 'en_US', fr: 'fr_FR'};
 
-applyLanguage();
+const setMeta = (selector, content) => document.head.querySelector(selector)?.setAttribute('content', content);
+
+// the tab title and the description follow the language, for the visitor and for crawlers that run scripts.
+function applyLanguage() {
+  document.documentElement.lang = language;
+  document.title = t('meta.title');
+  setMeta('meta[name="description"]', t('meta.description'));
+  if (OG_LOCALES[language]) setMeta('meta[property="og:locale"]', OG_LOCALES[language]);
+}
 
 export const getLanguage = () => language;
 
@@ -112,3 +118,5 @@ export function t(key, values) {
   if (!values) return text;
   return text.replace(/\{(\w+)\}/g, (match, name) => (name in values ? String(values[name]) : match));
 }
+
+applyLanguage();

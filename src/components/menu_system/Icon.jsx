@@ -16,7 +16,7 @@ function iconClass({isFolder, isBadge}) {
 // (showing the badge pinned on it instead of its name, if any).
 // link icons open their url directly, so they are announced as links.
 // its name shows in a tooltip on mouse hover or keyboard focus (not while dragged).
-export function Icon({id, label, image, symbol, isFolder, isBadge, isLink, pinnedImage, onOpen}) {
+export function Icon({id, label, image, symbol, isFolder, isBadge, isLink, pixelArt, pinnedImage, pinnedPixelArt, onOpen}) {
   const {ref, isDragging} = useDraggable({id, type: isBadge ? BADGE_TYPE : undefined});
   const anchorRef = useRef(null);
   const [hinted, setHinted] = useState(false);
@@ -60,10 +60,17 @@ export function Icon({id, label, image, symbol, isFolder, isBadge, isLink, pinne
         }
         {
           !isFolder && !symbol &&
-        <img className='icon-img' src={image} alt="" draggable={false} />
+        <img className={`icon-img${pixelArt ? ' icon-pixel-art' : ''}`} src={image} alt="" draggable={false} />
         }
       </section>
-      {pinnedImage && <img className='icon-pinned' src={pinnedImage} alt="" draggable={false} />}
+      {pinnedImage && (
+        <img
+          className={`icon-pinned${pinnedPixelArt ? ' icon-pixel-art' : ''}`}
+          src={pinnedImage}
+          alt=""
+          draggable={false}
+        />
+      )}
       <Tooltip anchorRef={anchorRef} open={hinted && !isDragging} label={label} />
     </button>
   );

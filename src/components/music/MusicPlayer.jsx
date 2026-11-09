@@ -173,7 +173,16 @@ export function MusicPlayer({modal}) {
                         }}
                       >
                         <span className="music-track-number">
-                          {current && music.playing ? <RoundIcon name="graphic_eq" /> : track.index + 1}
+                          {current && music.playing ? (
+                            <span className="music-eq" aria-hidden="true">
+                              <span />
+                              <span />
+                              <span />
+                              <span />
+                            </span>
+                          ) : (
+                            track.index + 1
+                          )}
                         </span>
                         <span className="music-track-title">{track.title}</span>
                         {track.artist && <span className="music-track-artist">{track.artist}</span>}

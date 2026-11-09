@@ -178,12 +178,24 @@ $knob: $switch-height - 2 * $knob-gap;
 
   &-reset {
     flex: none;
+    gap: 4px;
     min-width: 90px;
     font-size: 14px;
     box-shadow: $shadow-icon;
 
     &-armed {
       color: $red;
+    }
+
+    &-done {
+      color: $teal;
+      animation: settings-reset-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    &-check.round-icon {
+      min-height: 0;
+      font-size: 18px;
+      animation: settings-reset-check 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
   }
 
@@ -193,5 +205,18 @@ $knob: $switch-height - 2 * $knob-gap;
     &-list {
       padding: 2px 12px;
     }
+  }
+}
+
+@keyframes settings-reset-pop {
+  from {
+    transform: scale(0.85);
+  }
+}
+
+@keyframes settings-reset-check {
+  from {
+    transform: scale(0) rotate(-120deg);
+    opacity: 0;
   }
 }

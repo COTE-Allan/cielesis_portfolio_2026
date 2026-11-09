@@ -7,8 +7,9 @@ import {Panel, PanelHeader} from '../menu_system/Panel';
 import {reducesMotion, resetSettings, setSetting, useSettings} from './settings';
 import './SettingsModal.scss';
 
-// a reset button waits this long for its confirmation click.
+// a reset button waits this long for its confirmation click, then shows it is done for this long.
 const CONFIRM_MS = 3000;
+const DONE_MS = 1600;
 
 // one line of a group: its label and description, then its control.
 function Row({label, description, children}) {
@@ -108,19 +109,19 @@ function VolumeSlider({volume, disabled}) {
 
 // asks for a second click before running `onConfirm`.
 function ResetButton({label, description, onConfirm}) {
-  const [armed, setArmed] = useState(false);
+  const [state, setState] = useState('idle');
 
   useEffect(() => {
-    if (!armed) return undefined;
+    if (state === 'idle') return undefined;
 
-    const timer = setTimeout(() => setArmed(false), CONFIRM_MS);
+    const timer = setTimeout(() => setState('idle'), state === 'armed' ? CONFIRM_MS : DONE_MS);
     return () => clearTimeout(timer);
-  }, [armed]);
+  }, [state]);
 
   const click = () => {
-    if (!armed) return setArmed(true);
+    if (state !== 'armed') return setState('armed');
 
-    setArmed(false);
+    setState('done');
     onConfirm();
   };
 
@@ -128,12 +129,13 @@ function ResetButton({label, description, onConfirm}) {
     <Row label={label} description={description}>
       {({labelledBy, describedBy}) => (
         <Button
-          className={`settings-reset${armed ? ' settings-reset-armed' : ''}`}
+          className={`settings-reset settings-reset-${state}`}
           aria-labelledby={labelledBy}
           aria-describedby={describedBy}
           onClick={click}
         >
-          {armed ? t('settings.reset.confirm') : t('settings.reset.button')}
+          {state === 'done' && <RoundIcon name="check_circle" filled className="settings-reset-check" />}
+          {t(`settings.reset.${state === 'idle' ? 'button' : state === 'armed' ? 'confirm' : 'done'}`)}
         </Button>
       )}
     </Row>
@@ -210,6 +212,12 @@ export function SettingsModal({modal, onResetLayout}) {
               }}
             />
             <VolumeSlider volume={settings.soundVolume} disabled={!settings.sounds} />
+            <Toggle
+              label={t('settings.sound.musicOnStart')}
+              description={t('settings.sound.musicOnStartDescription')}
+              checked={settings.musicOnStart}
+              onChange={toggle('musicOnStart')}
+            />
           </Group>
 
           <Group icon="accessibility_new" title={t('settings.accessibility.title')}>

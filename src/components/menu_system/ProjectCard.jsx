@@ -1,18 +1,46 @@
+import {useEffect, useRef} from 'react';
 import {t} from '../../i18n/i18n';
 import {Button} from '../button/Button';
 import {RoundIcon} from '../icons/RoundIcon';
 import {Modal} from '../modal/Modal';
+import {loadSound, playJingle} from '../sound/sound';
 import {ProjectMenu} from './ProjectMenu';
 import '../tooltip/Tooltip.scss';
 import './ProjectCard.scss';
 
-// project opened from its icon: logo, description, back and open buttons,
-// and the menu of its links (ProjectMenu) when it has one.
-// `modal` is the useModal() of the project, `onClose` closes it from Escape or the backdrop.
-// the modal only fades: its parts come in one after the other (ProjectCard.scss),
-// and all leave together.
+// Safari draws the transparent parts of a webm in black.
+const SUPPORTS_ALPHA_WEBM = !/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 export function ProjectCard({modal, onClose, item}) {
   const animation = (enter, exit) => `animate__animated animate__${modal.isOpen ? enter : exit}`;
+  const jingle = item?.jingle;
+  const stopJingle = useRef(null);
+  const videoRef = useRef(null);
+  const logoVideo = SUPPORTS_ALPHA_WEBM ? item?.logoVideo : undefined;
+  const logoClass = `project-img ${animation('zoomIn', 'zoomOut')}`;
+
+  const onLogoAnimationStart = (event) => {
+    if (!modal.isOpen || event.animationName !== 'zoomIn') return;
+
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+    if (jingle) {
+      stopJingle.current?.();
+      stopJingle.current = playJingle(jingle);
+    }
+  };
+
+  useEffect(() => {
+    if (!modal.isOpen || !jingle) return undefined;
+
+    loadSound(jingle);
+    return () => {
+      stopJingle.current?.();
+      stopJingle.current = null;
+    };
+  }, [modal.isOpen, jingle]);
 
   return (
     <Modal
@@ -26,14 +54,28 @@ export function ProjectCard({modal, onClose, item}) {
     >
       {item && (
         <>
-          <img
-            className={`project-img ${animation('zoomIn', 'zoomOut')}`}
-            src={item.logo || item.image}
-            alt={item.label}
-          />
+          {logoVideo ? (
+            <video
+              ref={videoRef}
+              className={logoClass}
+              src={logoVideo}
+              aria-label={item.label}
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onAnimationStart={onLogoAnimationStart}
+            />
+          ) : (
+            <img
+              className={logoClass}
+              src={item.logo || item.image}
+              alt={item.label}
+              onAnimationStart={onLogoAnimationStart}
+            />
+          )}
 
           <div className="project-content">
-            {/* styled like a tooltip, its dot on the controls. */}
             {item.desc && (
               <div className={`project-desc ${animation('zoomIn', 'zoomOut')}`}>
                 <p className="tooltip-bubble project-text">{item.desc}</p>
@@ -60,7 +102,6 @@ export function ProjectCard({modal, onClose, item}) {
               {item.menu?.length ? (
                 <ProjectMenu entries={item.menu} />
               ) : (
-                // empty end, the size of the back button (same icon, hidden), so the bar is symmetric.
                 <div className="button project-end project-end-empty" aria-hidden="true">
                   <RoundIcon name="arrow_left" />
                 </div>

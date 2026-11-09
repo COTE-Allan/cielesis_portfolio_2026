@@ -33,6 +33,7 @@ export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout,
                   id={pinnedId}
                   image={BADGES[pinnedId].image}
                   label={BADGES[pinnedId].label}
+                  pixelArt={BADGES[pinnedId].pixelArt}
                   isBadge
                 />
               ) : (

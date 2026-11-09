@@ -12,7 +12,7 @@ const PROFILE = {
     {icon: 'flag', key: 'profile.country'},
     {icon: 'work', key: 'profile.status'},
   ],
-  skills: ['webDeveloper', 'webDesigner', 'artist', 'gameDeveloper'],
+  skills: ['webDeveloperDesigner', 'artist', 'author', 'gameDeveloper', 'graphist'],
 };
 
 export function ProfileModal({modal}) {

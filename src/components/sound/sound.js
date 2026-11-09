@@ -11,19 +11,30 @@ const URLS = Object.fromEntries(
 
 // the same sound played again this soon is skipped (a mouse sweeping over the icons).
 const MIN_GAP_MS = 40;
+// a jingle cut short (its project closed) fades out this fast.
+const JINGLE_FADE_S = 0.3;
 
-// files are downloaded right away, but decoded on their first play:
+// files are kept by url. the sound effects are downloaded right away, the jingles when asked
+// (loadSound), and all are decoded on their first play:
 // decoding needs an audio context, which browsers only start after a click or a key press.
-const downloads = new Map(
-  Object.entries(URLS).map(([name, url]) => [
-    name,
-    fetch(url)
-      .then((response) => response.arrayBuffer())
-      .catch(() => null),
-  ])
-);
+const downloads = new Map();
 const buffers = new Map();
 const lastPlayed = new Map();
+
+export function loadSound(url) {
+  if (!downloads.has(url)) {
+    downloads.set(
+      url,
+      fetch(url)
+        .then((response) => response.arrayBuffer())
+        .catch(() => null)
+    );
+  }
+
+  return downloads.get(url);
+}
+
+Object.values(URLS).forEach(loadSound);
 
 let context = null;
 let master = null;
@@ -40,45 +51,79 @@ function getContext() {
   return context;
 }
 
-function decode(name) {
-  if (!buffers.has(name)) {
-    const promise = downloads
-      .get(name)
-      .then((data) => (data ? context.decodeAudioData(data.slice(0)) : null));
-    promise.catch(() => buffers.delete(name));
-    buffers.set(name, promise);
+function decode(url) {
+  if (!buffers.has(url)) {
+    const promise = loadSound(url).then((data) => (data ? context.decodeAudioData(data.slice(0)) : null));
+    promise.catch(() => buffers.delete(url));
+    buffers.set(url, promise);
   }
 
-  return buffers.get(name);
+  return buffers.get(url);
 }
 
 // before the first click or key press, the browser would only queue the sounds
 // (and play them all at once later): they are dropped instead.
 const canStart = () => navigator.userActivation?.hasBeenActive ?? true;
 
+const canPlay = () => {
+  const {sounds, soundVolume} = getSettings();
+  return sounds && soundVolume > 0 && canStart();
+};
+
+// plays the file at `url` (once it is decoded), through its own gain node.
+// returns stop(fade): stops it, fading it out over `fade` seconds (0: at once).
+function start(url, {pitch = 0} = {}) {
+  const audio = getContext();
+  if (!audio) return () => {};
+
+  let stopped = false;
+  let stopPlaying = null;
+
+  Promise.all([decode(url), audio.state === 'running' ? null : audio.resume()])
+    .then(([buffer]) => {
+      if (!buffer || stopped) return;
+
+      const source = audio.createBufferSource();
+      const gain = audio.createGain();
+      source.buffer = buffer;
+      source.playbackRate.value = 2 ** (pitch / 12);
+      source.connect(gain).connect(master);
+      master.gain.value = getSettings().soundVolume;
+      source.start();
+
+      stopPlaying = (fade) => {
+        const end = audio.currentTime + fade;
+        gain.gain.setValueAtTime(gain.gain.value, audio.currentTime);
+        gain.gain.linearRampToValueAtTime(0, end);
+        source.stop(end);
+      };
+    })
+    .catch(() => {});
+
+  return (fade = 0) => {
+    if (stopped) return;
+    stopped = true;
+    stopPlaying?.(fade);
+  };
+}
+
 // `throttle: false` plays it even right after the same sound (see MIN_GAP_MS).
 // `pitch`: in semitones, higher (and shorter) above 0, lower below.
 export function playSound(name, {throttle = true, pitch = 0} = {}) {
-  const {sounds, soundVolume} = getSettings();
-  if (!sounds || soundVolume <= 0 || !Object.hasOwn(URLS, name) || !canStart()) return;
+  if (!Object.hasOwn(URLS, name) || !canPlay()) return;
 
   const now = performance.now();
   if (throttle && now - (lastPlayed.get(name) ?? -Infinity) < MIN_GAP_MS) return;
   lastPlayed.set(name, now);
 
-  const audio = getContext();
-  if (!audio) return;
+  start(URLS[name], {pitch});
+}
 
-  Promise.all([decode(name), audio.state === 'running' ? null : audio.resume()])
-    .then(([buffer]) => {
-      if (!buffer) return;
+// a project's jingle (its url), with the sound effects' settings.
+// returns a function that stops it with a short fade out.
+export function playJingle(url) {
+  if (!url || !canPlay()) return () => {};
 
-      const source = audio.createBufferSource();
-      source.buffer = buffer;
-      source.playbackRate.value = 2 ** (pitch / 12);
-      source.connect(master);
-      master.gain.value = getSettings().soundVolume;
-      source.start();
-    })
-    .catch(() => {});
+  const stop = start(url);
+  return () => stop(JINGLE_FADE_S);
 }

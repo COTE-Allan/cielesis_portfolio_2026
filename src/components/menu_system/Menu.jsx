@@ -37,7 +37,7 @@ const CLICK_GUARD_MS = 100;
 const HOVER_OPEN_MS = 500;
 // the main grid keeps its size at every zoom level (ZOOM_LEVELS):
 // icons, badges and folders scale to fill it.
-const DEFAULT_ZOOM = 1;
+const DEFAULT_ZOOM = ZOOM_LEVELS.length - 1;
 // width of a column and of the gap between columns at scale 1 ($cell and $gap in SlotGrid.scss).
 const CELL_WIDTH = 96;
 const CELL_GAP = 10;
@@ -118,7 +118,7 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
 
   const columns = ZOOM_LEVELS[zoom];
   // folders and the badge case get more columns when the icons are smaller,
-  // so they keep about the same width at every zoom level (3 and 6 at the default zoom).
+  // so they keep about the same width at every zoom level (3 and 5 at the default zoom).
   // folders never go under 3 columns (the max zoom would give 2).
   const folderColumns = Math.max(columns - 1, 3);
   const badgeCaseColumns = columns + 2;

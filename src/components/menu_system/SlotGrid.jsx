@@ -36,7 +36,9 @@ export function SlotGrid({ref, layout, names, containerId, columns, mobileColumn
                 isFolder={item.isFolder}
                 isBadge={item.isBadge}
                 isLink={item.isLink}
+                pixelArt={item.pixelArt}
                 pinnedImage={pinned?.image}
+                pinnedPixelArt={pinned?.pixelArt}
                 onOpen={() => onOpen(itemId)}
               />
             )}
