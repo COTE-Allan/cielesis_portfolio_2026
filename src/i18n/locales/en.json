@@ -107,7 +107,17 @@
     "folder-games": "Games",
     "folder-socials": "Links",
     "folder-websites": "Websites",
-    "folder-videos": "Videos i made"
+    "folder-videos": "Videos i made",
+    "folder-webcomics": "Webcomics",
+    "folder-pro": "Professional projects"
+  },
+  "folderDescs": {
+    "folder-games": "The games I made, from a full Steam release to gamejam entries, plus my mods.",
+    "folder-socials": "Where to find me and follow what I'm working on.",
+    "folder-websites": "Websites and web apps I designed and built.",
+    "folder-videos": "Trailers, devlogs and other videos I edited.",
+    "folder-webcomics": "Comics I wrote and drew, to read online.",
+    "folder-pro": "Work I did for clients and organisations."
   },
   "items": {
     "icon-VN": {
@@ -127,6 +137,14 @@
       "desc": "This small app is a radio directly connected to multiple live feeds on YouTube, to listen to Lofi, Jazz and other chill songs."
     },
     "icon-alternative": {"label": "Fondation Alternative"},
+    "icon-mission-locale": {
+      "label": "Mission Locale",
+      "desc": "While I was working at the Mission Locale, I had the opportunity to lead a complete visual rebranding."
+    },
+    "icon-webcomic-alternative": {
+      "label": "Alternative",
+      "desc": "This webcomic is a science fantasy story written and drawn entirely by me. The first volume is available in print."
+    },
     "icon-denshattack": {"label": "Denshattack Station"},
     "icon-mail": {"label": "Contact me!"},
     "icon-nexus": {"label": "Mods on Nexus"},
@@ -139,6 +157,8 @@
     "icon-github": {"label": "GitHub"},
     "icon-video-vn-devlog-1": {"label": "Void Nebula Devlog #1"},
     "icon-video-ocean": {"label": "1m30 of ocean"},
+    "icon-video-vn-demo-trailer": {"label": "Void Nebula Demo Trailer"},
+    "icon-video-takes-trailer": {"label": "TAKES Trailer"},
     "icon-badge-case": {"label": "Badges"}
   },
   "settings": {

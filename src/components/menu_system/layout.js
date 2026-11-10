@@ -8,6 +8,7 @@ const PIN_PREFIX = 'pin:';
 const FOLDER_PREFIX = 'folder-';
 // default folders can have any name (folder-games), created ones are numbered (folder-1).
 const FOLDER_PATTERN = /^folder-[\w-]+$/;
+const CREATED_FOLDER_PATTERN = /^folder-\d+$/;
 const LAYOUT_KEY = 'home-menu-layout';
 const NAMES_KEY = 'home-menu-folder-names';
 const ZOOM_KEY = 'home-menu-zoom';
@@ -50,7 +51,8 @@ export function getItem(id, names) {
     return {...ITEMS[id], label: t(`items.${id}.label`), desc: hasText(desc) ? t(desc) : undefined, menu};
   }
 
-  return {label: names[id]?.trim() || defaultFolderLabel(id), isFolder: true};
+  const desc = `folderDescs.${id}`;
+  return {label: names[id]?.trim() || defaultFolderLabel(id), desc: hasText(desc) ? t(desc) : undefined, isFolder: true};
 }
 
 // --- SLOT IDS ---
@@ -140,8 +142,8 @@ function trimMain(main) {
   return slots.slice(0, slots.findLastIndex(Boolean) + 1);
 }
 
-// compacts folders and the badge case, trims main, and removes the folders left
-// with less than two items: their tile in main is replaced by their only item (if any).
+// compacts folders and the badge case, trims main, and removes the created folders left
+// with less than two items (the default ones, when empty): their tile in main is replaced by their only item (if any).
 // pins of missing folders go back in the case.
 function cleanLayout(layout) {
   const folders = {};
@@ -152,7 +154,8 @@ function cleanLayout(layout) {
 
   for (const id of folderIds(layout)) {
     const items = layout[id].filter(Boolean);
-    if (items.length >= MIN_FOLDER_ITEMS) folders[id] = items;
+    const minItems = CREATED_FOLDER_PATTERN.test(id) ? MIN_FOLDER_ITEMS : 1;
+    if (items.length >= minItems) folders[id] = items;
     else removed.set(id, items[0] ?? null);
   }
 

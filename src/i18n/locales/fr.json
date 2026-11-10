@@ -106,7 +106,17 @@
     "folder-games": "Jeux",
     "folder-socials": "Liens",
     "folder-websites": "Sites web",
-    "folder-videos": "Vidéos"
+    "folder-videos": "Vidéos",
+    "folder-webcomics": "Webcomics",
+    "folder-pro": "Projets pro"
+  },
+  "folderDescs": {
+    "folder-games": "Les jeux que j'ai créés, d'une sortie complète sur Steam aux projets de gamejam, et mes mods.",
+    "folder-socials": "Où me trouver et suivre ce sur quoi je travaille.",
+    "folder-websites": "Des sites et applis web que j'ai conçus et développés.",
+    "folder-videos": "Trailers, devlogs et autres vidéos que j'ai montés.",
+    "folder-webcomics": "Les BD que j'ai écrites et dessinées, à lire en ligne.",
+    "folder-pro": "Des projets réalisés pour des clients et des structures."
   },
   "items": {
     "icon-VN": {
@@ -115,6 +125,14 @@
     },
     "icon-TAKES": {
       "label": ""
+    },
+    "icon-mission-locale": {
+      "label": "Mission Locale",
+      "desc": "Pendant que j'étais employé à la Mission Locale, j'ai eu l'occasion de mener une refonte complète de son identité visuelle."
+    },
+    "icon-webcomic-alternative": {
+      "label": "Alternative",
+      "desc": "Ce webcomic est une histoire de science fantasy entièrement écrite et dessinée par moi. Le premier tome est disponible en version papier."
     },
     "icon-3": {
       "label": ""
@@ -160,6 +178,12 @@
     },
     "icon-video-ocean": {
       "label": "1m30 d'océan"
+    },
+    "icon-video-vn-demo-trailer": {
+      "label": "Trailer de la démo Void Nebula"
+    },
+    "icon-video-takes-trailer": {
+      "label": "Trailer de TAKES"
     },
     "icon-badge-case": {
       "label": ""

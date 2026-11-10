@@ -17,7 +17,8 @@ export function ProjectCard({modal, onClose, item}) {
   const stopJingle = useRef(null);
   const videoRef = useRef(null);
   const logoVideo = SUPPORTS_ALPHA_WEBM ? item?.logoVideo : undefined;
-  const logoClass = `project-img ${animation('zoomIn', 'zoomOut')}`;
+  const logoAnimation = animation('zoomIn', 'zoomOut');
+  const logoClass = `project-img ${logoAnimation}`;
 
   const onLogoAnimationStart = (event) => {
     if (!modal.isOpen || event.animationName !== 'zoomIn') return;
@@ -66,13 +67,17 @@ export function ProjectCard({modal, onClose, item}) {
               preload="auto"
               onAnimationStart={onLogoAnimationStart}
             />
-          ) : (item.logo || item.image) && (
+          ) : item.logo ? (
             <img
               className={logoClass}
-              src={item.logo || item.image}
+              src={item.logo}
               alt={item.label}
               onAnimationStart={onLogoAnimationStart}
             />
+          ) : (
+            <h2 className={`project-title ${logoAnimation}`} onAnimationStart={onLogoAnimationStart}>
+              {item.label}
+            </h2>
           )}
 
           <div className="project-content">

@@ -13,6 +13,7 @@ import './FolderModal.scss';
 // `columns` follows the zoom of the menu (Menu.jsx).
 export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout, names, columns, onRename, onOpen}) {
   const pinnedId = folderId && layout[PINS][folderId];
+  const folder = folderId ? getItem(folderId, names) : undefined;
 
   return (
     <Panel
@@ -21,7 +22,7 @@ export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout,
       onClose={onClose}
       onExited={modal.onExited}
       keepMounted={keepMounted}
-      label={folderId ? getItem(folderId, names).label : undefined}
+      label={folder?.label}
     >
       {folderId && (
         <>
@@ -52,6 +53,8 @@ export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout,
               }}
             />
           </PanelHeader>
+
+          {folder.desc && <p className="folder-desc">{folder.desc}</p>}
 
           <SlotGrid
             layout={layout}

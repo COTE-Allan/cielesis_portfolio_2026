@@ -7,6 +7,19 @@ import takesMiniature from '../../assets/projects/takes/takes_miniature.png'
 import takesLogoVideo from '../../assets/projects/takes/takes_logo.webm';
 import takesJingle from '../../assets/projects/takes/takes_jingle.wav';
 
+import babelfestMiniature from '../../assets/projects/babelfest/babelfest_miniature.png';
+import babelfestLogoVideo from '../../assets/projects/babelfest/babelfest_logo.webm';
+import babelfestJingle from '../../assets/projects/babelfest/babelfest_jingle.wav';
+
+import lofiRadioMiniature from '../../assets/projects/lofi_radio/lofi_radio_miniature.png';
+import lofiRadioJingle from '../../assets/projects/lofi_radio/lofi_radio_jingle.wav';
+
+import alternativeMiniature from '../../assets/projects/alternative/alternative_miniature.png';
+import alternativeJingle from '../../assets/projects/alternative/alternative_jingle.wav';
+
+import mlMiniature from '../../assets/projects/ml/ml_miniature.png';
+import mlJingle from '../../assets/projects/ml/ml_jingle.wav';
+
 import badgeKali from '../../assets/badges/badge_kali.png';
 import badgeShare from '../../assets/badges/badge_share.png';
 import badgeController from '../../assets/badges/badge_controller.png';
@@ -17,6 +30,7 @@ import badgeDragonKing from '../../assets/badges/badge_dragon_king.png';
 import badgeExplosiveKnight from '../../assets/badges/badge_explosive_knight.png';
 import badgeDecoratedKing from '../../assets/badges/badge_decorated_king.png';
 import badgeZombieQueen from '../../assets/badges/badge_zombie_queen.png';
+import badgeProfilePicture from '../../assets/badges/badge_profile_picture.png';
 
 import socialBehance from '../../assets/socials/socials_behance_icon.webp';
 import socialGithub from '../../assets/socials/socials_github_icon.webp';
@@ -29,9 +43,13 @@ import socialBluesky from '../../assets/socials/socials_bluesky.png';
 
 import mailMiniature from '../../assets/others/mail_miniature.png';
 import nexusMniature from '../../assets/others/nexus_miniature.png';
+import fondationAlternativeMiniature from '../../assets/others/fondation_alternative_miniature.png';
+import denshattackMiniature from '../../assets/others/denshattack_station_miniature.png';
 
 import oceanMiniature from '../../assets/videos/ocean_miniature.jpg';
 import vnDevlog1Miniature from '../../assets/videos/vn_devlog_1_miniature.jpg';
+import vnDemoTrailerMiniature from '../../assets/videos/vn_demo_trailer_miniature.jpg';
+import takesTrailerMiniature from '../../assets/videos/takes_trailer_miniature.jpg';
 
 export const MAIN = 'main';
 export const ZOOM_LEVELS = [5, 4, 3];
@@ -67,7 +85,9 @@ export const ITEMS = {
     ],
   },
   'icon-babelfest': {
-    symbol: 'style',
+    image: babelfestMiniature,
+    logoVideo: babelfestLogoVideo,
+    jingle: babelfestJingle,
     link: 'https://babelfest.fr/',
     isApp: true,
     menu: [
@@ -75,9 +95,21 @@ export const ITEMS = {
       {id: 'press', label: 'See on Behance', link: 'https://www.behance.net/gallery/258214519/Babelfest'},
     ],
   },
-  'icon-lofi-cafe': {symbol: 'local_cafe', link: 'https://lofi-cafe.cielesis.fr/', isApp: true},
-  'icon-alternative': {symbol: 'inventory_2', link: 'https://alternative.cielesis.fr/archives', isLink: true},
-  'icon-denshattack': {symbol: 'train', link: 'https://denshattack-station.cielesis.fr/', isLink: true},
+  'icon-mission-locale': {
+    image: mlMiniature,
+    jingle: mlJingle,
+    link: 'https://www.behance.net/gallery/249240195/Mission-Locale-Visual-Rebranding',
+    isApp: true,
+  },
+  'icon-webcomic-alternative': {
+    image: alternativeMiniature,
+    jingle: alternativeJingle,
+    link: 'https://www.mangadraft.com/manga/alternative',
+    isApp: true,
+  },
+  'icon-lofi-cafe': {image: lofiRadioMiniature, jingle: lofiRadioJingle, link: 'https://lofi-cafe.cielesis.fr/', isApp: true},
+  'icon-alternative': {image: fondationAlternativeMiniature, link: 'https://alternative.cielesis.fr/archives', isLink: true},
+  'icon-denshattack': {image: denshattackMiniature, link: 'https://denshattack-station.cielesis.fr/', isLink: true},
   'icon-nexus': {image: nexusMniature, isLink: true, link: 'https://www.nexusmods.com/profile/cielesis1/mods'},
   'icon-mail': {image: mailMiniature, isLink: true, link: 'mailto:ctn.email.pro@gmail.com'},
   'icon-linkedin': {image: socialLinkedin, link: 'https://www.linkedin.com/in/cielesis/', isLink: true},
@@ -90,6 +122,8 @@ export const ITEMS = {
   'icon-bluesky': {image: socialBluesky, link: 'https://bsky.app/profile/cielesis-dev.bsky.social', isLink: true},
   'icon-video-vn-devlog-1': {image: vnDevlog1Miniature, link: 'https://www.youtube.com/watch?v=26Jw-pbi1Vk', isLink: true},
   'icon-video-ocean': {image: oceanMiniature, link: 'https://youtu.be/0ooX-6AeozE', isLink: true},
+  'icon-video-vn-demo-trailer': {image: vnDemoTrailerMiniature, link: 'https://www.youtube.com/watch?v=YRS3CHkJFTc', isLink: true},
+  'icon-video-takes-trailer': {image: takesTrailerMiniature, link: 'https://www.youtube.com/watch?v=oXzcTaKokes', isLink: true},
   [BADGE_CASE_ICON]: {symbol: 'workspace_premium', isBadgeCase: true},
 };
 
@@ -105,18 +139,21 @@ export const BADGES = {
   'badge-explosive-knight': {label: 'Explosive Knight', image: badgeExplosiveKnight, pixelArt: true, isBadge: true},
   'badge-decorated-king': {label: 'Decorated King', image: badgeDecoratedKing, pixelArt: true, isBadge: true},
   'badge-zombie-queen': {label: 'Zombie Queen', image: badgeZombieQueen, pixelArt: true, isBadge: true},
+  'badge-profile-picture': {label: 'Allan', image: badgeProfilePicture, pixelArt: false, isBadge: true},
 };
 
 
 export const DEFAULT_LAYOUT = {
   [MAIN]: [
-    'folder-games', 'folder-websites', 'folder-videos', null,
-    null, null, BADGE_CASE_ICON, 'folder-socials',
+    'folder-games', 'folder-websites', 'folder-videos', 'folder-webcomics',
+    'badge-profile-picture', 'folder-pro', BADGE_CASE_ICON, 'folder-socials',
     'icon-mail'
   ],
   'folder-games': ['icon-VN', 'icon-TAKES', 'icon-babelfest', 'icon-nexus'],
   'folder-websites': ['icon-lofi-cafe', 'icon-alternative', 'icon-denshattack'],
-  'folder-videos': ['icon-video-vn-devlog-1', 'icon-video-ocean'],
+  'folder-videos': ['icon-video-vn-demo-trailer', 'icon-video-takes-trailer', 'icon-video-vn-devlog-1', 'icon-video-ocean'],
+  'folder-webcomics': ['icon-webcomic-alternative'],
+  'folder-pro': ['icon-mission-locale'],
   'folder-socials': [
     'icon-linkedin', 'icon-twitch', 'icon-youtube', 'icon-x', 'icon-behance', 'icon-bluesky', 'icon-malt', 'icon-github',
   ],
