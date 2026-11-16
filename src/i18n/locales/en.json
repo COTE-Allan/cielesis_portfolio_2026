@@ -20,7 +20,8 @@
     "openProfile": "Open profile",
     "pictureAlt": "Profile picture of the creator of the website",
     "welcome": "Welcome, User!",
-    "internet": "Internet"
+    "internet": "Internet",
+    "offline": "Offline"
   },
   "profile": {
     "title": "Profile",
@@ -161,6 +162,28 @@
     "icon-video-takes-trailer": {"label": "TAKES Trailer"},
     "icon-badge-case": {"label": "Badges"}
   },
+  "projectLinks": {
+    "trailer": "Watch the trailer",
+    "pressKit": "Press kit",
+    "behance": "See on Behance"
+  },
+  "badges": {
+    "badge-controller": "Controller",
+    "badge-kali": "Kali",
+    "badge-share": "Share",
+    "badge-origami": "Origami",
+    "badge-flying-pawn": "Flying Pawn",
+    "badge-crab-pawn": "Crab Pawn",
+    "badge-dragon-king": "Dragon King",
+    "badge-explosive-knight": "Explosive Knight",
+    "badge-decorated-king": "Decorated King",
+    "badge-zombie-queen": "Zombie Queen",
+    "badge-profile-picture": "Allan",
+    "badge-clapperboard": "Clapperboard",
+    "badge-internet": "Internet",
+    "badge-works": "Works",
+    "badge-comic": "Comic"
+  },
   "settings": {
     "title": "Settings",
     "language": {
@@ -189,8 +212,6 @@
       "title": "Accessibility",
       "motion": "Reduce motion",
       "motionDescription": "Turns off animations. Follows your system until changed.",
-      "focus": "Highlight focus",
-      "focusDescription": "A bold outline around the element selected with the keyboard.",
       "warning": "Safety warning",
       "warningDescription": "Shows the flashing lights warning when the site opens."
     },

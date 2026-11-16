@@ -1,112 +1,114 @@
 {
   "meta": {
-    "title": "",
-    "description": ""
+    "title": "Allan “Cielesis” Cote · Portfolio de développeur web et jeux vidéo",
+    "description": "Portfolio d'Allan “Cielesis” Cote, développeur web, designer et développeur de jeux vidéo au Havre. Créateur de Void Nebula. Ouvert aux offres et aux collaborations."
   },
   "common": {
-    "close": "",
-    "switchToLight": "",
-    "switchToDark": "",
-    "darkMode": ""
+    "close": "Fermer",
+    "switchToLight": "Passer en mode clair",
+    "switchToDark": "Passer en mode sombre",
+    "darkMode": "Mode sombre"
   },
   "boot": {
-    "title": "",
-    "text": "",
-    "darkQuestion": "",
-    "darkHint": "",
-    "continue": ""
+    "title": "Avertissement - Épilepsie et sécurité",
+    "text": "Ce site contient des couleurs clignotantes\net de grandes zones de blanc vif.",
+    "darkQuestion": "Vous préférez le mode sombre ?",
+    "darkHint": "Cliquez sur la lune en bas de l'écran.",
+    "continue": "Cliquez n'importe où pour continuer."
   },
   "header": {
-    "openProfile": "",
-    "pictureAlt": "",
+    "openProfile": "Ouvrir le profil",
+    "pictureAlt": "Photo de profil du créateur du site",
     "welcome": "Bienvenue, Utilisateur !",
-    "internet": ""
+    "internet": "Internet",
+    "offline": "Hors-ligne"
   },
   "profile": {
-    "title": "",
-    "pictureAlt": "",
-    "role": "",
-    "bio": "",
-    "location": "",
-    "country": "",
-    "status": "",
+    "title": "Profil",
+    "pictureAlt": "Photo de profil de {name}",
+    "role": "Créateur numérique",
+    "bio": "Je suis développeur et designer, spécialisé dans le web et le jeu vidéo, et j'adore créer des choses pour Internet. Ouvert aux offres et aux collaborations.",
+    "location": "Le Havre",
+    "country": "France",
+    "status": "Ouvert aux offres",
     "behance": "Behance",
     "contact": "Me contacter",
     "skills": {
-      "webDeveloper": "",
-      "webDesigner": "",
-      "artist": "",
-      "gameDeveloper": ""
+      "webDeveloperDesigner": "Développeur/Designer web",
+      "artist": "Artiste",
+      "author": "Auteur",
+      "gameDeveloper": "Développeur de jeux vidéo",
+      "graphist": "Graphiste"
     }
   },
   "toolbar": {
-    "label": "",
-    "music": "",
-    "drawing": "",
-    "notes": "",
-    "settings": "",
-    "size": "",
-    "zoomOut": "",
-    "zoomIn": "",
-    "zoomInFull": ""
+    "label": "Barre d'outils du menu",
+    "music": "Musique",
+    "drawing": "Dessin",
+    "notes": "Notes",
+    "settings": "Paramètres",
+    "size": "Taille du menu",
+    "zoomOut": "Dézoomer",
+    "zoomIn": "Zoomer",
+    "zoomInFull": "Trop d'icônes pour zoomer"
   },
   "music": {
-    "title": "",
-    "empty": "",
-    "controls": "",
-    "play": "",
-    "pause": "",
-    "next": "",
-    "previous": "",
-    "shuffle": "",
-    "loop": "",
-    "mute": "",
-    "volume": "",
-    "seek": "",
-    "tracks": ""
+    "title": "Musique",
+    "empty": "Aucune musique pour l'instant.",
+    "controls": "Commandes du lecteur",
+    "play": "Lecture",
+    "pause": "Pause",
+    "next": "Musique suivante",
+    "previous": "Musique précédente",
+    "shuffle": "Aléatoire",
+    "loop": "Répéter cette musique",
+    "mute": "Couper le son",
+    "volume": "Volume de la musique",
+    "seek": "Position dans la musique",
+    "tracks": "Musiques"
   },
   "drawing": {
-    "title": "",
-    "canvas": "",
-    "colors": "",
+    "title": "Dessin",
+    "canvas": "Feuille de dessin",
+    "colors": "Couleurs",
     "color": {
-      "black": "",
-      "red": "",
-      "orange": "",
-      "green": "",
-      "teal": "",
-      "blue": "",
-      "purple": ""
+      "black": "Noir",
+      "red": "Rouge",
+      "orange": "Orange",
+      "green": "Vert",
+      "teal": "Bleu-vert",
+      "blue": "Bleu",
+      "purple": "Violet"
     },
-    "size": "",
-    "sizeValue": "",
-    "eraser": "",
-    "undo": "",
-    "clear": "",
-    "download": ""
+    "size": "Taille du pinceau",
+    "sizeValue": "Taille {size}",
+    "eraser": "Gomme",
+    "undo": "Annuler",
+    "clear": "Effacer la feuille",
+    "download": "Télécharger en image"
   },
   "notes": {
-    "title": "",
-    "add": "",
-    "empty": "",
-    "placeholder": "",
-    "note": "",
-    "delete": ""
+    "title": "Notes",
+    "add": "Nouvelle note",
+    "empty": "Aucune note pour l'instant.",
+    "placeholder": "Écrivez quelque chose...",
+    "note": "Note {number}",
+    "delete": "Supprimer la note"
   },
   "menu": {
-    "folder": "",
-    "folderName": "",
-    "pinHint": "",
-    "badges": "",
-    "closeProject": "",
-    "openProject": "",
-    "projectMenu": ""
+    "folder": "Dossier {number}",
+    "folderName": "Nom du dossier",
+    "pinHint": "Déposez un badge ici pour l'épingler sur ce dossier",
+    "badges": "Badges",
+    "closeProject": "Fermer le projet",
+    "openProject": "Ouvrir le projet",
+    "projectMenu": "Liens du projet"
   },
   "folders": {
     "folder-games": "Jeux",
     "folder-socials": "Liens",
     "folder-websites": "Sites web",
-    "folder-videos": "Vidéos",
+    "folder-videos": "Mes vidéos",
     "folder-webcomics": "Webcomics",
     "folder-pro": "Projets pro"
   },
@@ -120,12 +122,22 @@
   },
   "items": {
     "icon-VN": {
-      "label": "",
-      "desc": ""
+      "label": "Void Nebula",
+      "desc": "L'un de mes plus gros projets : un jeu vidéo fait de A à Z, avec plus de 2000 heures de travail. C'est un roguelike deckbuilding de science-fiction avec de la personnalisation de cartes."
     },
     "icon-TAKES": {
-      "label": ""
+      "label": "Explosive Knight TAKES Flying Pawn",
+      "desc": "Un jeu d'échecs en 1v1 avec plus de 40 pièces aux effets étranges et uniques, réalisé en deux semaines pour une gamejam."
     },
+    "icon-babelfest": {
+      "label": "Babelfest",
+      "desc": "Babelfest était un jeu de cartes en JavaScript, pensé comme une grande collaboration ouverte à tous les artistes qui voulaient y participer."
+    },
+    "icon-lofi-cafe": {
+      "label": "Cielesis's Lofi Cafe",
+      "desc": "Cette petite appli est une radio reliée à plusieurs lives YouTube, pour écouter du Lofi, du Jazz et d'autres musiques calmes."
+    },
+    "icon-alternative": {"label": "Fondation Alternative"},
     "icon-mission-locale": {
       "label": "Mission Locale",
       "desc": "Pendant que j'étais employé à la Mission Locale, j'ai eu l'occasion de mener une refonte complète de son identité visuelle."
@@ -134,106 +146,87 @@
       "label": "Alternative",
       "desc": "Ce webcomic est une histoire de science fantasy entièrement écrite et dessinée par moi. Le premier tome est disponible en version papier."
     },
-    "icon-3": {
-      "label": ""
-    },
-    "icon-4": {
-      "label": ""
-    },
-    "icon-5": {
-      "label": ""
-    },
-    "icon-6": {
-      "label": ""
-    },
-    "icon-7": {
-      "label": ""
-    },
-    "icon-8": {
-      "label": ""
-    },
-    "icon-linkedin": {
-      "label": ""
-    },
-    "icon-malt": {
-      "label": ""
-    },
-    "icon-youtube": {
-      "label": ""
-    },
-    "icon-twitch": {
-      "label": ""
-    },
-    "icon-x": {
-      "label": ""
-    },
-    "icon-behance": {
-      "label": ""
-    },
-    "icon-github": {
-      "label": ""
-    },
-    "icon-video-vn-devlog-1": {
-      "label": "Void Nebula Devlog #1"
-    },
-    "icon-video-ocean": {
-      "label": "1m30 d'océan"
-    },
-    "icon-video-vn-demo-trailer": {
-      "label": "Trailer de la démo Void Nebula"
-    },
-    "icon-video-takes-trailer": {
-      "label": "Trailer de TAKES"
-    },
-    "icon-badge-case": {
-      "label": ""
-    }
+    "icon-denshattack": {"label": "Denshattack Station"},
+    "icon-mail": {"label": "Me contacter !"},
+    "icon-nexus": {"label": "Mods sur Nexus"},
+    "icon-linkedin": {"label": "LinkedIn"},
+    "icon-malt": {"label": "Malt"},
+    "icon-youtube": {"label": "YouTube"},
+    "icon-twitch": {"label": "Twitch"},
+    "icon-x": {"label": "Twitter/X"},
+    "icon-behance": {"label": "Behance"},
+    "icon-github": {"label": "GitHub"},
+    "icon-video-vn-devlog-1": {"label": "Void Nebula Devlog #1"},
+    "icon-video-ocean": {"label": "1m30 d'océan"},
+    "icon-video-vn-demo-trailer": {"label": "Trailer de la démo Void Nebula"},
+    "icon-video-takes-trailer": {"label": "Trailer de TAKES"},
+    "icon-badge-case": {"label": "Badges"}
+  },
+  "projectLinks": {
+    "trailer": "Voir le trailer",
+    "pressKit": "Kit presse",
+    "behance": "Voir sur Behance"
+  },
+  "badges": {
+    "badge-controller": "Manette",
+    "badge-kali": "Kali",
+    "badge-share": "Partage",
+    "badge-origami": "Origami",
+    "badge-flying-pawn": "Pion volant",
+    "badge-crab-pawn": "Pion crabe",
+    "badge-dragon-king": "Roi dragon",
+    "badge-explosive-knight": "Cavalier explosif",
+    "badge-decorated-king": "Roi décoré",
+    "badge-zombie-queen": "Reine zombie",
+    "badge-profile-picture": "Allan",
+    "badge-clapperboard": "Clap de cinéma",
+    "badge-internet": "Internet",
+    "badge-works": "Travaux",
+    "badge-comic": "BD"
   },
   "settings": {
-    "title": "",
+    "title": "Paramètres",
     "language": {
-      "title": "",
-      "label": "",
-      "description": ""
+      "title": "Langue",
+      "label": "Langue",
+      "description": "Les traductions manquantes s'affichent en anglais."
     },
     "display": {
-      "title": "",
-      "darkDescription": "",
-      "contrast": "",
-      "contrastDescription": "",
-      "background": "",
-      "backgroundDescription": ""
+      "title": "Affichage",
+      "darkDescription": "Des couleurs sombres, plus douces pour les yeux la nuit.",
+      "contrast": "Contraste élevé",
+      "contrastDescription": "Des couleurs de texte plus marquées.",
+      "background": "Fond uni",
+      "backgroundDescription": "Masque les tuiles animées derrière le menu."
     },
     "sound": {
-      "title": "",
-      "enabled": "",
-      "enabledDescription": "",
-      "volume": "",
-      "volumeDescription": "",
-      "musicOnStart": "",
-      "musicOnStartDescription": ""
+      "title": "Son",
+      "enabled": "Effets sonores",
+      "enabledDescription": "Les clics et les sons du menu.",
+      "volume": "Volume",
+      "volumeDescription": "Le volume des effets sonores.",
+      "musicOnStart": "Lancer la musique au démarrage",
+      "musicOnStartDescription": "Joue la musique à l'ouverture du site."
     },
     "accessibility": {
-      "title": "",
-      "motion": "",
-      "motionDescription": "",
-      "focus": "",
-      "focusDescription": "",
-      "warning": "",
-      "warningDescription": ""
+      "title": "Accessibilité",
+      "motion": "Réduire les animations",
+      "motionDescription": "Désactive les animations. Suit le réglage de votre système tant qu'il n'est pas modifié.",
+      "warning": "Avertissement de sécurité",
+      "warningDescription": "Affiche l'avertissement sur les lumières clignotantes à l'ouverture du site."
     },
     "reset": {
-      "title": "",
-      "button": "",
-      "confirm": "",
-      "done": "",
-      "layout": "",
-      "layoutDescription": "",
-      "settings": "",
-      "settingsDescription": ""
+      "title": "Réinitialiser",
+      "button": "Réinitialiser",
+      "confirm": "Sûr ?",
+      "done": "Fait",
+      "layout": "Disposition du menu",
+      "layoutDescription": "Remet les icônes, les dossiers et les badges à leur place.",
+      "settings": "Paramètres",
+      "settingsDescription": "Revient aux paramètres par défaut, sauf le thème et la langue."
     }
   },
   "footer": {
-    "name": ""
+    "name": "Portfolio"
   }
 }

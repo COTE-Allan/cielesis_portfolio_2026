@@ -3,13 +3,18 @@
 
 $waukegan-dir: '../assets/fonts/waukegan';
 
+// the font kerns a comma and a space together until the space disappears (in Chrome):
+// the comma gets its own face, and no kerning happens across faces.
 @mixin waukegan($family, $file, $weight, $style: normal) {
-  @font-face {
-    font-family: $family;
-    font-style: $style;
-    font-weight: $weight;
-    font-display: swap;
-    src: url('#{$waukegan-dir}/#{$file}.woff') format('woff');
+  @each $range in ('U+0-2B, U+2D-10FFFF', 'U+2C') {
+    @font-face {
+      font-family: $family;
+      font-style: $style;
+      font-weight: $weight;
+      font-display: swap;
+      src: url('#{$waukegan-dir}/#{$file}.woff') format('woff');
+      unicode-range: #{$range};
+    }
   }
 }
 

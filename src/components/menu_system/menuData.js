@@ -1,36 +1,42 @@
 import vnJingle from '../../assets/projects/void_nebula/vn_jingle.wav';
-import vnLogo from '../../assets/projects/void_nebula/vn_logo.png';
 import vnLogoVideo from '../../assets/projects/void_nebula/vn_logo.webm';
-import vnMiniature from '../../assets/projects/void_nebula/vn_miniature.png';
+import vnMiniature from '../../assets/projects/void_nebula/vn_miniature.webp';
 
-import takesMiniature from '../../assets/projects/takes/takes_miniature.png'
+import takesMiniature from '../../assets/projects/takes/takes_miniature.webp'
 import takesLogoVideo from '../../assets/projects/takes/takes_logo.webm';
 import takesJingle from '../../assets/projects/takes/takes_jingle.wav';
 
-import babelfestMiniature from '../../assets/projects/babelfest/babelfest_miniature.png';
+import babelfestMiniature from '../../assets/projects/babelfest/babelfest_miniature.webp';
 import babelfestLogoVideo from '../../assets/projects/babelfest/babelfest_logo.webm';
 import babelfestJingle from '../../assets/projects/babelfest/babelfest_jingle.wav';
 
-import lofiRadioMiniature from '../../assets/projects/lofi_radio/lofi_radio_miniature.png';
+import lofiRadioMiniature from '../../assets/projects/lofi_radio/lofi_radio_miniature.webp';
+import lofiRadioLogoVideo from '../../assets/projects/lofi_radio/lofi_radio_logo.webm';
 import lofiRadioJingle from '../../assets/projects/lofi_radio/lofi_radio_jingle.wav';
 
-import alternativeMiniature from '../../assets/projects/alternative/alternative_miniature.png';
+import alternativeMiniature from '../../assets/projects/alternative/alternative_miniature.webp';
+import alternativeLogoVideo from '../../assets/projects/alternative/alternative_logo.webm';
 import alternativeJingle from '../../assets/projects/alternative/alternative_jingle.wav';
 
-import mlMiniature from '../../assets/projects/ml/ml_miniature.png';
+import mlMiniature from '../../assets/projects/ml/ml_miniature.webp';
+import mlLogoVideo from '../../assets/projects/ml/ml_logo.webm';
 import mlJingle from '../../assets/projects/ml/ml_jingle.wav';
 
-import badgeKali from '../../assets/badges/badge_kali.png';
-import badgeShare from '../../assets/badges/badge_share.png';
-import badgeController from '../../assets/badges/badge_controller.png';
-import badgeOrigami from '../../assets/badges/badge_origami.png';
-import badgeFlyingPawn from '../../assets/badges/badge_flying_pawn.png';
-import badgeCrabPawn from '../../assets/badges/badge_crab_pawn.png';
-import badgeDragonKing from '../../assets/badges/badge_dragon_king.png';
-import badgeExplosiveKnight from '../../assets/badges/badge_explosive_knight.png';
-import badgeDecoratedKing from '../../assets/badges/badge_decorated_king.png';
-import badgeZombieQueen from '../../assets/badges/badge_zombie_queen.png';
-import badgeProfilePicture from '../../assets/badges/badge_profile_picture.png';
+import badgeKali from '../../assets/badges/badge_kali.webp';
+import badgeShare from '../../assets/badges/badge_share.webp';
+import badgeController from '../../assets/badges/badge_controller.webp';
+import badgeOrigami from '../../assets/badges/badge_origami.webp';
+import badgeFlyingPawn from '../../assets/badges/badge_flying_pawn.webp';
+import badgeCrabPawn from '../../assets/badges/badge_crab_pawn.webp';
+import badgeDragonKing from '../../assets/badges/badge_dragon_king.webp';
+import badgeExplosiveKnight from '../../assets/badges/badge_explosive_knight.webp';
+import badgeDecoratedKing from '../../assets/badges/badge_decorated_king.webp';
+import badgeZombieQueen from '../../assets/badges/badge_zombie_queen.webp';
+import badgeProfilePicture from '../../assets/badges/badge_profile_picture.webp';
+import badgeClapperboard from '../../assets/badges/badge_clapperboard.webp';
+import badgeInternet from '../../assets/badges/badge_internet.webp';
+import badgeWorks from '../../assets/badges/badge_works.webp';
+import badgeComic from '../../assets/badges/badge_comic.webp';
 
 import socialBehance from '../../assets/socials/socials_behance_icon.webp';
 import socialGithub from '../../assets/socials/socials_github_icon.webp';
@@ -39,12 +45,12 @@ import socialMalt from '../../assets/socials/socials_malt_icon.webp';
 import socialTwitch from '../../assets/socials/socials_twitch_icon.webp';
 import socialX from '../../assets/socials/socials_x_icon.webp';
 import socialYoutube from '../../assets/socials/socials_youtube_icon.webp';
-import socialBluesky from '../../assets/socials/socials_bluesky.png';
+import socialBluesky from '../../assets/socials/socials_bluesky.webp';
 
-import mailMiniature from '../../assets/others/mail_miniature.png';
-import nexusMniature from '../../assets/others/nexus_miniature.png';
-import fondationAlternativeMiniature from '../../assets/others/fondation_alternative_miniature.png';
-import denshattackMiniature from '../../assets/others/denshattack_station_miniature.png';
+import mailMiniature from '../../assets/others/mail_miniature.webp';
+import nexusMniature from '../../assets/others/nexus_miniature.webp';
+import fondationAlternativeMiniature from '../../assets/others/fondation_alternative_miniature.webp';
+import denshattackMiniature from '../../assets/others/denshattack_station_miniature.webp';
 
 import oceanMiniature from '../../assets/videos/ocean_miniature.jpg';
 import vnDevlog1Miniature from '../../assets/videos/vn_devlog_1_miniature.jpg';
@@ -62,15 +68,14 @@ export const BADGE_CASE_ICON = 'icon-badge-case';
 export const ITEMS = {
   'icon-VN': {
     image: vnMiniature,
-    logo: vnLogo,
     logoVideo: vnLogoVideo,
     jingle: vnJingle,
     link: 'https://store.steampowered.com/app/4212830/Void_Nebula/',
     isApp: true,
     menu: [
       {id: 'trailer', link: 'https://www.youtube.com/watch?v=YRS3CHkJFTc'},
-      {id: 'press', label: 'Press kit', link: 'https://impress.games/press-kit/cielesis-works/void-nebula'},
-      {id: 'press', label: 'See on Behance', link: 'https://...'},
+      {id: 'pressKit', link: 'https://impress.games/press-kit/cielesis-works/void-nebula'},
+      {id: 'behance', link: 'https://...'},
     ],
   },
   'icon-TAKES': {
@@ -81,7 +86,7 @@ export const ITEMS = {
     isApp: true,
     menu: [
       {id: 'trailer', link: 'https://youtu.be/oXzcTaKokes?si=dm4bmcs8UcuLtHba'},
-      {id: 'press', label: 'See on Behance', link: 'https://www.behance.net/gallery/249653707/Explosive-Knight-TAKES-Flying-Pawn'},
+      {id: 'behance', link: 'https://www.behance.net/gallery/249653707/Explosive-Knight-TAKES-Flying-Pawn'},
     ],
   },
   'icon-babelfest': {
@@ -92,22 +97,33 @@ export const ITEMS = {
     isApp: true,
     menu: [
       {id: 'trailer', link: 'https://youtu.be/xMIN6jj21eA?si=WGRfDX2gtUrkKGcs'},
-      {id: 'press', label: 'See on Behance', link: 'https://www.behance.net/gallery/258214519/Babelfest'},
+      {id: 'behance', link: 'https://www.behance.net/gallery/258214519/Babelfest'},
     ],
   },
   'icon-mission-locale': {
     image: mlMiniature,
+    logoVideo: mlLogoVideo,
     jingle: mlJingle,
     link: 'https://www.behance.net/gallery/249240195/Mission-Locale-Visual-Rebranding',
     isApp: true,
   },
   'icon-webcomic-alternative': {
     image: alternativeMiniature,
+    logoVideo: alternativeLogoVideo,
     jingle: alternativeJingle,
     link: 'https://www.mangadraft.com/manga/alternative',
     isApp: true,
+    menu: [
+      {id: 'behance', link: 'https://www.behance.net/gallery/258352961/Alternative-A-post-apo-webcomic'},
+    ],
   },
-  'icon-lofi-cafe': {image: lofiRadioMiniature, jingle: lofiRadioJingle, link: 'https://lofi-cafe.cielesis.fr/', isApp: true},
+  'icon-lofi-cafe': {
+    image: lofiRadioMiniature,
+    logoVideo: lofiRadioLogoVideo,
+    jingle: lofiRadioJingle,
+    link: 'https://lofi-cafe.cielesis.fr/',
+    isApp: true,
+  },
   'icon-alternative': {image: fondationAlternativeMiniature, link: 'https://alternative.cielesis.fr/archives', isLink: true},
   'icon-denshattack': {image: denshattackMiniature, link: 'https://denshattack-station.cielesis.fr/', isLink: true},
   'icon-nexus': {image: nexusMniature, isLink: true, link: 'https://www.nexusmods.com/profile/cielesis1/mods'},
@@ -129,24 +145,28 @@ export const ITEMS = {
 
 
 export const BADGES = {
-  'badge-controller': {label: 'Controller', image: badgeController, pixelArt: true, isBadge: true},
-  'badge-kali': {label: 'Kali', image: badgeKali, pixelArt: true, isBadge: true},
-  'badge-share': {label: 'Share', image: badgeShare, pixelArt: false, isBadge: true},
-  'badge-origami': {label: 'Origami', image: badgeOrigami, pixelArt: true, isBadge: true},
-  'badge-flying-pawn': {label: 'Flying Pawn', image: badgeFlyingPawn, pixelArt: true, isBadge: true},
-  'badge-crab-pawn': {label: 'Crab Pawn', image: badgeCrabPawn, pixelArt: true, isBadge: true},
-  'badge-dragon-king': {label: 'Dragon King', image: badgeDragonKing, pixelArt: true, isBadge: true},
-  'badge-explosive-knight': {label: 'Explosive Knight', image: badgeExplosiveKnight, pixelArt: true, isBadge: true},
-  'badge-decorated-king': {label: 'Decorated King', image: badgeDecoratedKing, pixelArt: true, isBadge: true},
-  'badge-zombie-queen': {label: 'Zombie Queen', image: badgeZombieQueen, pixelArt: true, isBadge: true},
-  'badge-profile-picture': {label: 'Allan', image: badgeProfilePicture, pixelArt: false, isBadge: true},
+  'badge-controller': {image: badgeController, pixelArt: true, isBadge: true},
+  'badge-kali': {image: badgeKali, pixelArt: true, isBadge: true},
+  'badge-share': {image: badgeShare, pixelArt: false, isBadge: true},
+  'badge-origami': {image: badgeOrigami, pixelArt: true, isBadge: true},
+  'badge-flying-pawn': {image: badgeFlyingPawn, pixelArt: true, isBadge: true},
+  'badge-crab-pawn': {image: badgeCrabPawn, pixelArt: true, isBadge: true},
+  'badge-dragon-king': {image: badgeDragonKing, pixelArt: true, isBadge: true},
+  'badge-explosive-knight': {image: badgeExplosiveKnight, pixelArt: true, isBadge: true},
+  'badge-decorated-king': {image: badgeDecoratedKing, pixelArt: true, isBadge: true},
+  'badge-zombie-queen': {image: badgeZombieQueen, pixelArt: true, isBadge: true},
+  'badge-profile-picture': {image: badgeProfilePicture, pixelArt: false, isBadge: true},
+  'badge-clapperboard': {image: badgeClapperboard, pixelArt: false, isBadge: true},
+  'badge-internet': {image: badgeInternet, pixelArt: false, isBadge: true},
+  'badge-works': {image: badgeWorks, pixelArt: false, isBadge: true},
+  'badge-comic': {image: badgeComic, pixelArt: false, isBadge: true},
 };
 
 
 export const DEFAULT_LAYOUT = {
   [MAIN]: [
-    'folder-games', 'folder-websites', 'folder-videos', 'folder-webcomics',
-    'badge-profile-picture', 'folder-pro', BADGE_CASE_ICON, 'folder-socials',
+    'folder-pro', 'folder-websites', 'folder-videos', 'folder-games',
+    'badge-profile-picture', 'folder-webcomics', BADGE_CASE_ICON, 'folder-socials',
     'icon-mail'
   ],
   'folder-games': ['icon-VN', 'icon-TAKES', 'icon-babelfest', 'icon-nexus'],
@@ -160,5 +180,9 @@ export const DEFAULT_LAYOUT = {
   [PINS]: {
     'folder-games': 'badge-controller',
     'folder-socials': 'badge-share',
+    'folder-videos': 'badge-clapperboard',
+    'folder-websites': 'badge-internet',
+    'folder-pro': 'badge-works',
+    'folder-webcomics': 'badge-comic',
   },
 };

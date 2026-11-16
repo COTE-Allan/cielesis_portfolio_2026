@@ -68,6 +68,15 @@
             padding: 5px 30px;
             border-radius: 10px;
             color: white;
+            transition: background-color $normal;
+        }
+
+        &-offline &-label {
+            background-color: $grey-2;
+        }
+
+        &-offline .header-icon-wifi {
+            color: $grey-2;
         }
     }
 
@@ -100,7 +109,8 @@
             }
         }
         &-wifi {
-            color: $teal
+            color: $teal;
+            transition: color $normal;
         }
     }
 

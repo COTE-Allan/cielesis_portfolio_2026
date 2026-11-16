@@ -4,7 +4,7 @@ import {BadgePin} from './BadgePin';
 import {Icon} from './Icon';
 import {Panel, PanelHeader} from './Panel';
 import {SlotGrid} from './SlotGrid';
-import {BADGES, PINS} from './menuData';
+import {PINS} from './menuData';
 import {MAX_NAME_LENGTH, defaultFolderLabel, getItem, toPinId} from './layout';
 import './FolderModal.scss';
 
@@ -14,6 +14,7 @@ import './FolderModal.scss';
 export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout, names, columns, onRename, onOpen}) {
   const pinnedId = folderId && layout[PINS][folderId];
   const folder = folderId ? getItem(folderId, names) : undefined;
+  const pinned = pinnedId && getItem(pinnedId);
 
   return (
     <Panel
@@ -27,14 +28,14 @@ export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout,
       {folderId && (
         <>
           <PanelHeader onClose={modal.hide}>
-            <BadgePin id={toPinId(folderId)} disabled={!modal.isOpen} className="badge-pin-header">
-              {pinnedId ? (
+            <BadgePin id={toPinId(folderId, 'header')} disabled={!modal.isOpen} className="badge-pin-header">
+              {pinned ? (
                 <Icon
                   key={pinnedId}
                   id={pinnedId}
-                  image={BADGES[pinnedId].image}
-                  label={BADGES[pinnedId].label}
-                  pixelArt={BADGES[pinnedId].pixelArt}
+                  image={pinned.image}
+                  label={pinned.label}
+                  pixelArt={pinned.pixelArt}
                   isBadge
                 />
               ) : (

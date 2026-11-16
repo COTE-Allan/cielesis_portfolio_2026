@@ -2,11 +2,17 @@
 @use 'theme' as *;
 
 
+// sizes in --u: 1vw down to a 16:9 screen, then a share of the height, so narrow
+// screens show the middle of the cylinder instead of a squeezed one.
 $step: 5deg;
-$radius: 100vw;
+$radius: 100;
 $strip-width: 2 * $radius * math.sin(math.div($step, 2));
 $apothem: $radius * math.cos(math.div($step, 2));
 $strip-height: 280vh;
+
+@function u($value) {
+  @return calc(#{$value} * var(--u));
+}
 
 @function tiles($period, $size, $radius, $opacity) {
   $offset: math.div($period - $size, 2);
@@ -14,12 +20,13 @@ $strip-height: 280vh;
 }
 
 .background {
+  --u: max(1vw, 1.78vh);
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   background: $scene;
-  perspective: 40vw;
+  perspective: u(40);
   pointer-events: none;
   opacity: .6;
 
@@ -38,7 +45,7 @@ $strip-height: 280vh;
     --period: 110px;
     --duration: 14s;
     --direction: reverse;
-    transform: translateZ(-15vw);
+    transform: translateZ(u(-15));
 
     .background-tiles {
       background-image: tiles(110, 82, 20, 0.45);
@@ -60,14 +67,14 @@ $strip-height: 280vh;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: calc($strip-width + 1px);
+  width: calc(#{u($strip-width)} + 1px);
   height: $strip-height;
-  margin: math.div(-$strip-height, 2) 0 0 math.div(-$strip-width, 2);
+  margin: math.div(-$strip-height, 2) 0 0 u(math.div(-$strip-width, 2));
   overflow: hidden;
   transform:
-    translateZ(calc($radius * cos(var(--count) * $step / 2)))
-    rotateY(calc(((var(--strips) - 1) / 2 - var(--i)) * $step))
-    translateZ(-$apothem);
+    translateZ(calc(#{u($radius)} * cos(var(--count) * #{$step} / 2)))
+    rotateY(calc(((var(--strips) - 1) / 2 - var(--i)) * #{$step}))
+    translateZ(u(-$apothem));
 }
 
 .background-tiles {
@@ -75,7 +82,7 @@ $strip-height: 280vh;
   inset: 0 calc(-1 * var(--period));
   // dimmer on the dark theme (global.scss).
   opacity: var(--tiles);
-  background-position: calc(var(--i) * -1 * $strip-width) center;
+  background-position: calc(var(--i) * #{u(-$strip-width)}) center;
   animation: background-scroll var(--duration) linear infinite var(--direction);
   will-change: transform;
   transition: opacity $theme-change ease;

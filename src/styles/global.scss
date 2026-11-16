@@ -112,12 +112,6 @@ $theme-transition: ();
       scroll-behavior: auto !important;
     }
   }
-
-  // over the outlines of the components.
-  &[data-focus='strong'] :focus-visible {
-    outline: 3px solid $orange !important;
-    outline-offset: 3px !important;
-  }
 }
 
 // scrollbars: a thin glassy aqua pill (Aero style) on a clear track, faint until hovered.

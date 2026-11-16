@@ -4,7 +4,7 @@ import {BADGES, BADGE_CASE, BADGE_CASE_ICON, ITEMS, MAIN, MAX_MAIN_SLOTS, PINS} 
 
 const MIN_FOLDER_ITEMS = 2;
 const SLOT_SEPARATOR = ':';
-const PIN_PREFIX = 'pin:';
+const PIN_PATTERN = /^pin:(?:tile|header):(.+)$/;
 const FOLDER_PREFIX = 'folder-';
 // default folders can have any name (folder-games), created ones are numbered (folder-1).
 const FOLDER_PATTERN = /^folder-[\w-]+$/;
@@ -39,15 +39,11 @@ export const defaultFolderLabel = (folderId) =>
 
 // what a slot shows, with its texts in the current language.
 export function getItem(id, names) {
-  if (isBadge(id)) return BADGES[id];
+  if (isBadge(id)) return {...BADGES[id], label: t(`badges.${id}`)};
   if (!isFolder(id)) {
     if (!ITEMS[id]) return undefined;
     const desc = `items.${id}.desc`;
-    // menu entries: their text is items.<id>.menu.<entry id>, or their `label` when it has none.
-    const menu = ITEMS[id].menu?.map((entry) => {
-      const key = `items.${id}.menu.${entry.id}`;
-      return {...entry, label: hasText(key) ? t(key) : entry.label ?? entry.id};
-    });
+    const menu = ITEMS[id].menu?.map((entry) => ({...entry, label: t(`projectLinks.${entry.id}`)}));
     return {...ITEMS[id], label: t(`items.${id}.label`), desc: hasText(desc) ? t(desc) : undefined, menu};
   }
 
@@ -88,16 +84,14 @@ export function itemAt(layout, slotId) {
   return slot ? layout[slot.containerId][slot.index] ?? null : null;
 }
 
-// a pin is the spot of a folder where a badge can be attached.
-export const toPinId = (folderId) => `${PIN_PREFIX}${folderId}`;
+// a pin is the spot of a folder where a badge can be attached: on its tile
+// or in the header of the open folder. both can be mounted at once, so each has its own id.
+export const toPinId = (folderId, spot) => `pin:${spot}:${folderId}`;
 
 function parsePinId(layout, id) {
-  const value = String(id ?? '');
-  const folderId = value.slice(PIN_PREFIX.length);
+  const folderId = String(id ?? '').match(PIN_PATTERN)?.[1];
 
-  return value.startsWith(PIN_PREFIX) && isFolder(folderId) && Object.hasOwn(layout, folderId)
-    ? folderId
-    : null;
+  return isFolder(folderId) && Object.hasOwn(layout, folderId) ? folderId : null;
 }
 
 // --- LAYOUT ---
@@ -216,6 +210,7 @@ function normalizeLayout(source) {
 
 // badge dropped on the pin of a folder: the badge already pinned there
 // (if any) takes the place of the dropped one.
+// refused when the badge comes from that folder and the folder would be removed without it.
 function pinBadge(layout, from, badgeId, folderId) {
   if (!isBadge(badgeId) || from.pinOf === folderId) return layout;
 
@@ -223,7 +218,8 @@ function pinBadge(layout, from, badgeId, folderId) {
   place(next, from, layout[PINS][folderId] ?? null);
   next[PINS][folderId] = badgeId;
 
-  return cleanLayout(next);
+  const cleaned = cleanLayout(next);
+  return Object.hasOwn(cleaned, folderId) ? cleaned : layout;
 }
 
 // returns the layout after dropping `sourceId` on slot or pin `targetId`,

@@ -9,7 +9,6 @@ const DEFAULTS = {
   reduceMotion: null,
   highContrast: false,
   plainBackground: false,
-  strongFocus: false,
   bootScreen: true,
   sounds: true,
   // between 0 and 1.
@@ -31,7 +30,6 @@ function load() {
     reduceMotion: pick('reduceMotion', isBoolean),
     highContrast: pick('highContrast', isBoolean),
     plainBackground: pick('plainBackground', isBoolean),
-    strongFocus: pick('strongFocus', isBoolean),
     bootScreen: pick('bootScreen', isBoolean),
     sounds: pick('sounds', isBoolean),
     soundVolume: pick('soundVolume', isVolume),
@@ -56,9 +54,7 @@ function applySettings(settings) {
   setAttribute('theme', settings.theme);
   setAttribute('motion', reducesMotion(settings) ? 'reduce' : 'full');
   setAttribute('contrast', settings.highContrast && 'high');
-  setAttribute('background', settings.plainBackground && 'plain');
-  setAttribute('focus', settings.strongFocus && 'strong');
-}
+  setAttribute('background', settings.plainBackground && 'plain');}
 
 let settings = load();
 const listeners = new Set();

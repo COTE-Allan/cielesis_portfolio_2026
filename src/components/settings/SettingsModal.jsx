@@ -10,6 +10,7 @@ import './SettingsModal.scss';
 // a reset button waits this long for its confirmation click, then shows it is done for this long.
 const CONFIRM_MS = 3000;
 const DONE_MS = 1600;
+const RESET_LABELS = [['idle', 'button'], ['armed', 'confirm'], ['done', 'done']];
 
 // one line of a group: its label and description, then its control.
 function Row({label, description, children}) {
@@ -134,8 +135,14 @@ function ResetButton({label, description, onConfirm}) {
           aria-describedby={describedBy}
           onClick={click}
         >
-          {state === 'done' && <RoundIcon name="check_circle" filled className="settings-reset-check" />}
-          {t(`settings.reset.${state === 'idle' ? 'button' : state === 'armed' ? 'confirm' : 'done'}`)}
+          <span className="settings-reset-labels">
+            {RESET_LABELS.map(([key, text]) => (
+              <span key={key} className="settings-reset-label" aria-hidden={key !== state} data-active={key === state}>
+                {key === 'done' && <RoundIcon name="check_circle" filled className="settings-reset-check" />}
+                {t(`settings.reset.${text}`)}
+              </span>
+            ))}
+          </span>
         </Button>
       )}
     </Row>
@@ -226,12 +233,6 @@ export function SettingsModal({modal, onResetLayout}) {
               description={t('settings.accessibility.motionDescription')}
               checked={reducesMotion(settings)}
               onChange={toggle('reduceMotion')}
-            />
-            <Toggle
-              label={t('settings.accessibility.focus')}
-              description={t('settings.accessibility.focusDescription')}
-              checked={settings.strongFocus}
-              onChange={toggle('strongFocus')}
             />
             <Toggle
               label={t('settings.accessibility.warning')}

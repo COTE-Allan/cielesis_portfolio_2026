@@ -142,7 +142,7 @@ $knob: $switch-height - 2 * $knob-gap;
       padding: 7px 36px 7px 16px;
       border: none;
       border-radius: $radius-pill;
-      background: $gradient-white;
+      background: $gradient-white $card;
       box-shadow: $shadow-icon;
       color: $ink-strong;
       font: 600 15px $font-ui;
@@ -153,6 +153,13 @@ $knob: $switch-height - 2 * $knob-gap;
         outline: 2px solid $teal;
         outline-offset: 3px;
       }
+    }
+
+    // the opened list is drawn by the browser: Chrome paints it from these colours,
+    // not from the gradient, and would show the light text of the dark theme on white.
+    option {
+      background-color: $card;
+      color: $ink-strong;
     }
 
     &-arrow.round-icon {
@@ -178,7 +185,6 @@ $knob: $switch-height - 2 * $knob-gap;
 
   &-reset {
     flex: none;
-    gap: 4px;
     min-width: 90px;
     font-size: 14px;
     box-shadow: $shadow-icon;
@@ -192,9 +198,26 @@ $knob: $switch-height - 2 * $knob-gap;
       animation: settings-reset-pop 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
+    &-labels {
+      display: grid;
+    }
+
+    &-label {
+      grid-area: 1 / 1;
+      @include center;
+      gap: 4px;
+
+      &[data-active='false'] {
+        visibility: hidden;
+      }
+    }
+
     &-check.round-icon {
       min-height: 0;
       font-size: 18px;
+    }
+
+    &-done &-check {
       animation: settings-reset-check 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
     }
   }

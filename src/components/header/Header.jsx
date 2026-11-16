@@ -56,18 +56,19 @@ function useBattery(fallback = 56) {
     return state;
 }
 
-function useWifiIcon() {
-    const getIcon = () => {
-        if (!navigator.onLine) return "wifi_off";
-        const type = navigator.connection?.effectiveType;
-        if (type === "slow-2g" || type === "2g") return "wifi_1_bar";
-        if (type === "3g") return "wifi_2_bar";
-        return "wifi";
-    };
-    const [icon, setIcon] = useState(getIcon);
+function getConnection() {
+    if (!navigator.onLine) return { online: false, icon: "wifi_off" };
+    const type = navigator.connection?.effectiveType;
+    if (type === "slow-2g" || type === "2g") return { online: true, icon: "wifi_1_bar" };
+    if (type === "3g") return { online: true, icon: "wifi_2_bar" };
+    return { online: true, icon: "wifi" };
+}
+
+function useConnection() {
+    const [connection, setConnection] = useState(getConnection);
 
     useEffect(() => {
-        const update = () => setIcon(getIcon());
+        const update = () => setConnection(getConnection());
         window.addEventListener("online", update);
         window.addEventListener("offline", update);
         navigator.connection?.addEventListener("change", update);
@@ -78,7 +79,7 @@ function useWifiIcon() {
         };
     }, []);
 
-    return icon;
+    return connection;
 }
 
 // welcome message: shown on mount and on each hover, then collapses after `duration` ms
@@ -119,7 +120,7 @@ function batteryTone({ level, charging }) {
 export function Header() {
     const now = useClock();
     const battery = useBattery();
-    const wifiIcon = useWifiIcon();
+    const connection = useConnection();
     const [welcomeOpen, showWelcome] = useWelcome();
     const profile = useModal();
     const ref = useRef(null);
@@ -153,10 +154,10 @@ export function Header() {
                 <span className="header-profile-welcome">{t("header.welcome")}</span>
             </section>
             <section className="header-system">
-                <div className="header-wifi">
-                    <RoundIcon name={wifiIcon} className="header-icon-wifi" />
+                <div className={`header-wifi${connection.online ? "" : " header-wifi-offline"}`}>
+                    <RoundIcon name={connection.icon} className="header-icon-wifi" />
                     <span className="header-wifi-label">
-                        {t("header.internet")}
+                        {t(connection.online ? "header.internet" : "header.offline")}
                     </span>
                 </div>
                 <div className="header-battery">

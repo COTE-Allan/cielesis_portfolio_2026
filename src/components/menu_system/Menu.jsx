@@ -247,7 +247,12 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
 
     if (event.canceled) return;
 
-    const {source, target} = event.operation;
+    const {source, target, position} = event.operation;
+    // dropped away from the grid (and from the open panel): the item goes back where it was.
+    const panelRef = folder.isOpen ? folderRef : badgeCase.isOpen ? badgeCaseRef : null;
+    const onGrid = [gridRef, panelRef].some((ref) => ref?.current && !isOutside(ref.current, position.current));
+    if (!onGrid) return;
+
     const next = applyDrop(layout, source?.id, target?.id);
     if (next === layout) return;
 

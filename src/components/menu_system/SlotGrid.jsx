@@ -43,7 +43,7 @@ export function SlotGrid({ref, layout, names, containerId, columns, mobileColumn
               />
             )}
             {item?.isFolder && showPins && (
-              <BadgePin id={toPinId(itemId)} disabled={disabled} className="badge-pin-tile">
+              <BadgePin id={toPinId(itemId, 'tile')} disabled={disabled} className="badge-pin-tile">
                 <RoundIcon name="push_pin" filled />
               </BadgePin>
             )}
