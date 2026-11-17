@@ -52,10 +52,10 @@ import nexusMniature from '../../assets/others/nexus_miniature.webp';
 import fondationAlternativeMiniature from '../../assets/others/fondation_alternative_miniature.webp';
 import denshattackMiniature from '../../assets/others/denshattack_station_miniature.webp';
 
-import oceanMiniature from '../../assets/videos/ocean_miniature.jpg';
-import vnDevlog1Miniature from '../../assets/videos/vn_devlog_1_miniature.jpg';
-import vnDemoTrailerMiniature from '../../assets/videos/vn_demo_trailer_miniature.jpg';
-import takesTrailerMiniature from '../../assets/videos/takes_trailer_miniature.jpg';
+import oceanMiniature from '../../assets/videos/ocean_miniature.webp';
+import vnDevlog1Miniature from '../../assets/videos/vn_devlog_1_miniature.webp';
+import vnDemoTrailerMiniature from '../../assets/videos/vn_demo_trailer_miniature.webp';
+import takesTrailerMiniature from '../../assets/videos/takes_trailer_miniature.webp';
 
 export const MAIN = 'main';
 export const ZOOM_LEVELS = [5, 4, 3];
@@ -137,7 +137,7 @@ export const ITEMS = {
   'icon-github': {image: socialGithub, link: 'https://github.com/COTE-Allan', isLink: true},
   'icon-bluesky': {image: socialBluesky, link: 'https://bsky.app/profile/cielesis-dev.bsky.social', isLink: true},
   'icon-video-vn-devlog-1': {image: vnDevlog1Miniature, link: 'https://www.youtube.com/watch?v=26Jw-pbi1Vk', isLink: true},
-  'icon-video-ocean': {image: oceanMiniature, link: 'https://youtu.be/0ooX-6AeozE', isLink: true},
+  'icon-video-ocean': {image: oceanMiniature, link: 'https://youtu.be/8_supJStapg', isLink: true},
   'icon-video-vn-demo-trailer': {image: vnDemoTrailerMiniature, link: 'https://www.youtube.com/watch?v=YRS3CHkJFTc', isLink: true},
   'icon-video-takes-trailer': {image: takesTrailerMiniature, link: 'https://www.youtube.com/watch?v=oXzcTaKokes', isLink: true},
   [BADGE_CASE_ICON]: {symbol: 'workspace_premium', isBadgeCase: true},
