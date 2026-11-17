@@ -12,7 +12,7 @@ import {playSound} from '../sound/sound';
 import {useIntroAnimation} from './introAnimation';
 import './Toolbar.scss';
 
-// `sound`: played on click (sound.js), `hoverSound`: on mouse hover (none by default).
+// toolbar button with a click sound and an optional hover sound.
 function ToolButton({icon, label, className, sound = 'click', hoverSound, onClick, children, ...props}) {
   const handleClick = (event) => {
     playSound(sound);
@@ -38,7 +38,7 @@ function ToolButton({icon, label, className, sound = 'click', hoverSound, onClic
 }
 
 
-// `onResetLayout` puts the menu back as it is on a first visit (from the settings).
+// toolbar of the menu.
 export function Toolbar({zoom, maxZoom, onZoom, onResetLayout}) {
   const dark = useSettings().theme === 'dark';
   const settings = useModal();
@@ -49,15 +49,11 @@ export function Toolbar({zoom, maxZoom, onZoom, onResetLayout}) {
   const ref = useRef(null);
   useIntroAnimation(ref, 'toolbar');
 
-  // global.scss picks the page colours from data-theme (set by settings.js).
   const toggleTheme = () => setSetting('theme', dark ? 'light' : 'dark');
 
-  // the modals are siblings of the toolbar: the toolbar's intro transform
-  // would make it the containing block of the fixed backdrop.
   return (
     <>
     <nav ref={ref} className="toolbar" aria-label={t('toolbar.label')}>
-      {/* both icons stay mounted so one can turn out while the other turns in (Toolbar.scss) */}
       <ToolButton
         label={dark ? t('common.switchToLight') : t('common.switchToDark')}
         className={`toolbar-theme${dark ? ' toolbar-theme-dark' : ''}`}

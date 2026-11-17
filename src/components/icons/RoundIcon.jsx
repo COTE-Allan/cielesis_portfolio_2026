@@ -1,7 +1,6 @@
 import './RoundIcon.scss';
 
-// rounded icon from the Material Symbols Rounded library (loaded in index.html).
-// `name` is the icon name from https://fonts.google.com/icons?icon.style=Rounded
+// rounded icon from the material symbols rounded library, named as on fonts.google.com/icons.
 export function RoundIcon({name, filled = false, className = '', ...props}) {
   return (
     <span

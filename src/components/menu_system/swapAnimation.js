@@ -1,7 +1,6 @@
 import {reducedMotion} from './introAnimation';
 
-// FLIP animation: icons slide (and resize) from their old position to the new one
-// after a drop or a zoom change.
+// flip animation sliding icons from their old position to the new one after a drop or a zoom change.
 
 export const SWAP_DURATION = 250;
 export const SWAP_EASING = 'cubic-bezier(0.25, 1, 0.5, 1)';
@@ -18,8 +17,7 @@ export function captureIconRects(skipId) {
   return {rects, skipId: String(skipId), duration: SWAP_DURATION};
 }
 
-// before a zoom change of `grid`: its empty slots also fade in at their new place.
-// `skipId`: the icon being dragged, if any, is left alone.
+// measures the icons before a zoom change of `grid`, leaving out the dragged one.
 export const captureZoom = (grid, skipId) => ({...captureIconRects(skipId), duration: ZOOM_DURATION, grid});
 
 export function playSwapAnimation(snapshot) {
@@ -36,7 +34,6 @@ export function playSwapAnimation(snapshot) {
     const after = element.getBoundingClientRect();
     if (!after.width || !after.height) continue;
 
-    // from center to center: icons scale around their center.
     const dx = before.left + before.width / 2 - (after.left + after.width / 2);
     const dy = before.top + before.height / 2 - (after.top + after.height / 2);
     const sx = before.width / after.width;

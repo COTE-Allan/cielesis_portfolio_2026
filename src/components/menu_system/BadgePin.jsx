@@ -5,8 +5,7 @@ import "./BadgePin.scss";
 
 export const BADGE_TYPE = 'badge';
 
-// spot of a folder where a badge can be pinned, instead of being dropped inside.
-// only accepts badges, and wins over the slot underneath while the pointer is on it.
+// spot of a folder where a badge can be pinned, winning over the slot underneath.
 export function BadgePin({id, disabled = false, className = '', children}) {
   const {ref, isDropTarget} = useDroppable({
     id,

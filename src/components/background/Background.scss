@@ -2,8 +2,7 @@
 @use 'theme' as *;
 
 
-// sizes in --u: 1vw down to a 16:9 screen, then a share of the height, so narrow
-// screens show the middle of the cylinder instead of a squeezed one.
+// sizes in --u, which keeps the middle of the cylinder on narrow screens.
 $step: 5deg;
 $radius: 100;
 $strip-width: 2 * $radius * math.sin(math.div($step, 2));
@@ -80,7 +79,6 @@ $strip-height: 280vh;
 .background-tiles {
   position: absolute;
   inset: 0 calc(-1 * var(--period));
-  // dimmer on the dark theme (global.scss).
   opacity: var(--tiles);
   background-position: calc(var(--i) * #{u(-$strip-width)}) center;
   animation: background-scroll var(--duration) linear infinite var(--direction);
@@ -91,7 +89,6 @@ $strip-height: 280vh;
     animation: none;
   }
 
-  // "plain background" setting: the tiles fade out and stop.
   :root[data-background='plain'] & {
     opacity: 0;
     animation-play-state: paused;

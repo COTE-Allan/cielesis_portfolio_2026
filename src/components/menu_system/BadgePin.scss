@@ -17,7 +17,6 @@
     border-color: $white;
   }
 
-  // shown on folder tiles while a badge is dragged.
   &-tile {
     position: absolute;
     top: 0;
@@ -32,7 +31,6 @@
     animation: badge-pin-in $normal ease-out;
   }
 
-  // in the header of an open folder: holds the pinned badge.
   &-header {
     flex: none;
     width: z(48px);

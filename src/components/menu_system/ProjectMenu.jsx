@@ -4,12 +4,9 @@ import {Button} from '../button/Button';
 import {RoundIcon} from '../icons/RoundIcon';
 import {playSound} from '../sound/sound';
 
-// burger button at the end of the project controls, opening a list of links above it.
-// `entries`: [{id, label, link}]. closes on a second click, a click outside, Escape
-// (which then leaves the project open) or a chosen link.
+// burger button opening a list of links above the project controls.
 export function ProjectMenu({entries}) {
   const [open, setOpen] = useState(false);
-  // the list stays mounted while its exit animation plays (like Modal.jsx).
   const [listShown, setListShown] = useState(false);
   if (open && !listShown) setListShown(true);
   const rootRef = useRef(null);
@@ -22,7 +19,6 @@ export function ProjectMenu({entries}) {
     const handlePointerDown = (event) => {
       if (!rootRef.current?.contains(event.target)) setOpen(false);
     };
-    // on window, capturing: runs before the modal's listener, which would close the project.
     const handleKeyDown = (event) => {
       if (event.key !== 'Escape') return;
       event.stopPropagation();
@@ -49,7 +45,6 @@ export function ProjectMenu({entries}) {
         aria-expanded={open}
         aria-controls={listId}
       >
-        {/* both icons stay mounted so one can turn out while the other turns in (ProjectCard.scss) */}
         <span className={`project-menu-icon${open ? ' project-menu-icon-open' : ''}`} aria-hidden="true">
           <RoundIcon name="menu" className="project-menu-icon-burger" />
           <RoundIcon name="close" className="project-menu-icon-close" />

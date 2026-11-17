@@ -8,10 +8,7 @@ $thickness: 3px;   // width of the corner marks
   width: z($slot);
   height: z($slot);
   padding: $thickness;
-  // no transition on its size: zoom changes are animated by swapAnimation.js,
-  // which measures the slots at their new size.
 
-  // corner marks, shown while an item is over the slot.
   &::before {
     @include cover;
     outline: 0 solid $teal;

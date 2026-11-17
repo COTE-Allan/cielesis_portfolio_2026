@@ -12,10 +12,7 @@ function iconClass({isFolder, isBadge}) {
   return 'icon';
 }
 
-// draggable item rendered inside a slot: an app icon, a badge, or a folder
-// (showing the badge pinned on it instead of its name, if any).
-// link icons open their url directly, so they are announced as links.
-// its name shows in a tooltip on mouse hover or keyboard focus (not while dragged).
+// draggable item of a slot: an app icon, a badge, or a folder showing its pinned badge.
 export function Icon({id, label, image, symbol, isFolder, isBadge, isLink, pixelArt, pinnedImage, pinnedPixelArt, onOpen}) {
   const {ref, isDragging} = useDraggable({id, type: isBadge ? BADGE_TYPE : undefined});
   const anchorRef = useRef(null);
@@ -39,7 +36,6 @@ export function Icon({id, label, image, symbol, isFolder, isBadge, isLink, pixel
       onPointerEnter={(event) => {
         if (event.pointerType !== 'mouse') return;
         showHint(event);
-        // silent while an item is being dragged over the icons.
         if (!document.querySelector('[data-dragging]')) playSound('hover');
       }}
       onPointerLeave={hideHint}

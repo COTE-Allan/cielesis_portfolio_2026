@@ -1,10 +1,6 @@
 import {useCallback, useState} from 'react';
 
-// open/close state for a <Modal>. `data` is kept until the exit animation
-// is done, so the content doesn't vanish while the modal fades out.
-//   const project = useModal();
-//   project.show(id);
-//   <Modal open={project.isOpen} onClose={project.hide} onExited={project.onExited}>
+// open and close state for a modal, keeping its data until the exit animation is done.
 export function useModal() {
   const [data, setData] = useState(null);
   const [isOpen, setIsOpen] = useState(false);

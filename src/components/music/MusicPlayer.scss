@@ -39,7 +39,6 @@ $gloss: linear-gradient(180deg, rgba($white, 0.75) 0%, rgba($white, 0.15) 50%, r
     margin: 0;
   }
 
-  // the panel header has its own bottom margin, the gap is enough here.
   .panel-header {
     margin-bottom: 0;
   }
@@ -65,7 +64,6 @@ $gloss: linear-gradient(180deg, rgba($white, 0.75) 0%, rgba($white, 0.15) 50%, r
     font-weight: 400;
   }
 
-  // the song playing: a glossy disc, spinning while it plays, and its title.
   &-now {
     display: flex;
     align-items: center;
@@ -80,7 +78,6 @@ $gloss: linear-gradient(180deg, rgba($white, 0.75) 0%, rgba($white, 0.15) 50%, r
     border-radius: 50%;
     box-shadow: $shadow-icon;
 
-    // the gloss stays still over the spinning face.
     &::after {
       @include cover;
       border-radius: 50%;
@@ -154,7 +151,6 @@ $gloss: linear-gradient(180deg, rgba($white, 0.75) 0%, rgba($white, 0.15) 50%, r
     gap: 14px;
   }
 
-  // raised glossy round buttons; the toggles sink and turn teal when on.
   &-control {
     display: grid;
     flex: none;
@@ -200,7 +196,6 @@ $gloss: linear-gradient(180deg, rgba($white, 0.75) 0%, rgba($white, 0.15) 50%, r
     }
   }
 
-  // the mute button shows the volume level: red when muted, not teal.
   &-mute[aria-pressed='true'],
   &-mute[aria-pressed='true']:hover {
     color: $red;
@@ -222,7 +217,6 @@ $gloss: linear-gradient(180deg, rgba($white, 0.75) 0%, rgba($white, 0.15) 50%, r
     }
   }
 
-  // the songs, in a well; scrolls past a few of them.
   &-list {
     max-height: $list-height;
     margin: 0;

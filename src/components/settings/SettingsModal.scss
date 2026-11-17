@@ -15,7 +15,6 @@ $knob: $switch-height - 2 * $knob-gap;
   color: $ink;
   text-align: left;
 
-  // the panel header has its own bottom margin, the gap is enough here.
   .panel-header {
     margin-bottom: 0;
   }
@@ -49,7 +48,6 @@ $knob: $switch-height - 2 * $knob-gap;
     }
   }
 
-  // the rows sit in a well, like the bio of the profile.
   &-list {
     margin: 0;
     padding: 4px 16px;
@@ -89,7 +87,6 @@ $knob: $switch-height - 2 * $knob-gap;
     }
   }
 
-  // on/off pill: a sunken track, teal when on, with a glossy knob sliding in it.
   &-switch {
     position: relative;
     flex: none;
@@ -129,7 +126,6 @@ $knob: $switch-height - 2 * $knob-gap;
     }
   }
 
-  // native select (keyboard and phone pickers for free), dressed as a glossy pill.
   &-select {
     position: relative;
     flex: none;
@@ -155,8 +151,6 @@ $knob: $switch-height - 2 * $knob-gap;
       }
     }
 
-    // the opened list is drawn by the browser: Chrome paints it from these colours,
-    // not from the gradient, and would show the light text of the dark theme on white.
     option {
       background-color: $card;
       color: $ink-strong;
@@ -172,7 +166,6 @@ $knob: $switch-height - 2 * $knob-gap;
     }
   }
 
-  // volume: a sunken track like the switch, with the same glossy knob.
   &-range {
     flex: none;
     width: 140px;

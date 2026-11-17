@@ -1,5 +1,4 @@
-// JSON values in localStorage. both fail silently: storage can be unavailable
-// (private mode, quota...), the site then keeps its in-memory state.
+// json values in localstorage, failing silently when storage is unavailable.
 
 export function read(key) {
   try {
@@ -12,7 +11,8 @@ export function read(key) {
 export function write(key, value) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
+    return true;
   } catch {
-    // keep the in-memory state.
+    return false;
   }
 }

@@ -13,7 +13,7 @@ const FADE_MS = 600;
 
 function parseName(path) {
   const name = path.split('/').pop().replace(/\.[^.]+$/, '');
-  const clean = name.replace(/^\d+\s*[-._)]?\s*/, '').replace(/_/g, ' ').trim() || name;
+  const clean = name.replace(/^\d+\s*[-._)]\s*/, '').replace(/_/g, ' ').trim() || name;
   const [artist, ...title] = clean.split(' - ');
 
   return title.length ? {artist: artist.trim(), title: title.join(' - ').trim()} : {artist: '', title: clean};
@@ -28,7 +28,7 @@ const isVolume = (value) => typeof value === 'number' && value >= 0 && value <= 
 
 const saved = read(STORAGE_KEY) ?? {};
 
-// `shuffle`: "next" picks a random song. `loop`: the current song plays again and again.
+// player state, where shuffle picks a random next song and loop repeats the current one.
 let state = {
   index: 0,
   playing: false,
@@ -37,7 +37,7 @@ let state = {
   muted: isBoolean(saved.muted) ? saved.muted : false,
   volume: isVolume(saved.volume) ? saved.volume : 0.5,
 };
-// apart from the state: it changes several times a second, only the progress bar needs it.
+// playback time, kept apart from the state since it changes several times a second.
 let time = {current: 0, duration: 0};
 
 const stateListeners = new Set();
@@ -194,8 +194,6 @@ function fadeTo(target, onDone) {
   const from = fade;
   const start = performance.now();
 
-  // the first frame's `now` can be a bit before `start` (it is when the frame began):
-  // the progress is kept from going below 0, or the volume would (and setting it would throw).
   const step = (now) => {
     const progress = Math.min(Math.max((now - start) / FADE_MS, 0), 1);
     fade = from + (target - from) * progress;
@@ -221,8 +219,7 @@ export function fadeOutMusic() {
   });
 }
 
-// the music paused by fadeOutMusic plays again, its volume coming back up.
-// called before the fade out is over, it stops it (the music never paused).
+// the paused music plays again with its volume coming back up, or a running fade out is cancelled.
 export function fadeInMusic() {
   if (pausedByFade) {
     pausedByFade = false;

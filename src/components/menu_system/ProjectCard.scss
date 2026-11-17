@@ -58,7 +58,6 @@
     align-items: center;
   }
 
-  // description bubble with its line and dot (Tooltip.scss), the dot on the controls' top edge.
   &-desc {
     position: relative;
     z-index: 1;
@@ -66,7 +65,6 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: -5px;
-    // inflates from the dot, like the tooltips.
     transform-origin: 50% 100%;
   }
 

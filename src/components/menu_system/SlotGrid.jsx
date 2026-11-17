@@ -7,10 +7,6 @@ import {getItem, slotCount, toPinId, toSlotId} from './layout';
 import './SlotGrid.scss';
 
 // grid of slots of one container: the main grid, a folder or the badge case.
-// `variant`: 'main' (card on the home page) or 'panel' (scrolls inside a modal).
-// `rows`: rows of the main grid.
-// `mobileColumns`: columns of a panel grid on phones (defaults to `columns`).
-// `showPins`: folder tiles show a spot to pin the badge being dragged.
 export function SlotGrid({ref, layout, names, containerId, columns, mobileColumns, rows, variant, disabled, showPins, onOpen}) {
   return (
     <div

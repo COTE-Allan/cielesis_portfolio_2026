@@ -29,7 +29,7 @@ function volumeIcon({muted, volume}) {
   return volume < 0.5 ? 'volume_down' : 'volume_up';
 }
 
-// round button of the player. `pressed`: on/off state of a toggle (shuffle, loop, mute).
+// round button of the player, `pressed` being the state of a toggle.
 function Control({icon, label, pressed, className = '', onClick}) {
   return (
     <button
@@ -75,8 +75,7 @@ function Progress() {
   );
 }
 
-// panel of the music player, opened from the toolbar. `modal` is its useModal().
-// the music keeps playing once it is closed (music.js).
+// panel of the music player, opened from the toolbar.
 export function MusicPlayer({modal}) {
   const music = useMusic();
   const song = SONGS[music.index];

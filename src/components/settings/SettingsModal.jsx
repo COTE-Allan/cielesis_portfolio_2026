@@ -27,7 +27,7 @@ function Row({label, description, children}) {
   );
 }
 
-// `sound`: played on click (sound.js), null for none.
+// on/off switch with a label, playing `sound` on click.
 function Toggle({label, description, checked, onChange, sound = 'click'}) {
   return (
     <Row label={label} description={description}>
@@ -79,7 +79,7 @@ function LanguageSelect() {
   );
 }
 
-// volume of the sounds, in steps of 5%. a click plays at the new volume once the slider is let go.
+// slider for the sound volume, in steps of 5%.
 function VolumeSlider({volume, disabled}) {
   const percent = Math.round(volume * 100);
   const preview = () => playSound('click');
@@ -108,7 +108,7 @@ function VolumeSlider({volume, disabled}) {
   );
 }
 
-// asks for a second click before running `onConfirm`.
+// asks for a second click before confirming.
 function ResetButton({label, description, onConfirm}) {
   const [state, setState] = useState('idle');
 
@@ -163,8 +163,7 @@ function Group({icon, title, children}) {
   );
 }
 
-// settings of the site, opened from the toolbar. `modal` is the useModal() of the settings.
-// `onResetLayout` puts the menu back as it is on a first visit.
+// settings of the site, opened from the toolbar.
 export function SettingsModal({modal, onResetLayout}) {
   const settings = useSettings();
   const toggle = (name) => (value) => setSetting(name, value);
@@ -207,7 +206,6 @@ export function SettingsModal({modal, onResetLayout}) {
           </Group>
 
           <Group icon="volume_up" title={t('settings.sound.title')}>
-            {/* the click plays once the sounds are on, so turning them on is heard. */}
             <Toggle
               label={t('settings.sound.enabled')}
               description={t('settings.sound.enabledDescription')}

@@ -43,7 +43,6 @@ export function ProfileModal({modal}) {
             </div>
           </div>
 
-          {/* paragraphs are separated by an empty line in the text. */}
           <div className="profile-bio">
             {t('profile.bio').split(/\n\s*\n/).map((paragraph, i) => (
               <p key={i}>{paragraph}</p>

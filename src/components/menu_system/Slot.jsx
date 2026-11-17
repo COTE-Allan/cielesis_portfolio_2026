@@ -2,8 +2,7 @@ import {useDroppable} from '@dnd-kit/react';
 import {closestCenter} from '@dnd-kit/collision';
 import "./Slot.scss";
 
-// droppable slot that always resolves to the closest slot while dragging.
-// disabled slots are ignored (e.g. the main grid while a folder covers it).
+// droppable slot resolving to the closest slot while dragging, ignored when disabled.
 export function Slot({id, disabled = false, children}) {
   const {ref, isDropTarget} = useDroppable({id, disabled, collisionDetector: closestCenter});
 

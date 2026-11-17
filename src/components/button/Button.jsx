@@ -1,8 +1,7 @@
 import {playSound} from '../sound/sound';
 import './Button.scss';
 
-// white gradient button. renders a link when `href` is given.
-// `sound`: played on click (sound.js), null for none.
+// white gradient button, rendered as a link when `href` is given.
 export function Button({href, className = '', sound = 'click', onClick, children, ...props}) {
   const classes = `button ${className}`;
   const handleClick = (event) => {

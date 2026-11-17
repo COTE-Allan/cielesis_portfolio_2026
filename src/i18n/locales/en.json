@@ -182,7 +182,9 @@
     "badge-clapperboard": "Clapperboard",
     "badge-internet": "Internet",
     "badge-works": "Works",
-    "badge-comic": "Comic"
+    "badge-comic": "Comic",
+    "badge-cielesis-works": "Cielesis Works",
+    "badge-clemie": "Clémie"
   },
   "settings": {
     "title": "Settings",

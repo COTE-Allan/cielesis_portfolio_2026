@@ -8,8 +8,7 @@
 $tiles-light: 1;
 $tiles-dark: 0.25;
 
-// registered, so the browser can animate them (and the gradients made of them)
-// from one theme to the other.
+// registers the theme colours so the browser can animate them between themes.
 @each $name, $value in $theme-light {
   @property --#{$name} {
     syntax: '<color>';
@@ -72,22 +71,17 @@ $theme-transition: ();
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // every element inherits the animated colours.
   transition: $theme-transition;
 
   @include tablet {
     font-size: 16px;
   }
 
-  // the settings set these attributes (settings.js; index.html restores them before the first paint).
-
-  // light until dark is chosen, whatever the system's theme.
   &[data-theme='dark'] {
     @include theme($theme-dark, $tiles-dark);
     color-scheme: dark;
   }
 
-  // after the theme, so it overrides its colours.
   &[data-contrast='high'] {
     @include colors($contrast-light);
   }
@@ -96,8 +90,6 @@ $theme-transition: ();
     @include colors($contrast-dark);
   }
 
-  // every animation and transition ends at once (still firing their end events,
-  // which the modals and the boot screen wait for).
   &[data-motion='reduce'] {
     transition: none;
 
@@ -114,12 +106,11 @@ $theme-transition: ();
   }
 }
 
-// scrollbars: a thin glassy aqua pill (Aero style) on a clear track, faint until hovered.
-// the thumb is a colour gradient with a white gloss over its first half, across its width.
+// scrollbars: a thin glassy aqua pill on a clear track, faint until hovered.
 $scrollbar: 10px;
 $scrollbar-gloss: rgba($white, 0.8) 0%, rgba($white, 0.3) 45%, rgba($white, 0) 55%;
 
-// `$angle`: 90deg for a vertical bar (gloss on the left), 180deg for a horizontal one (gloss on top).
+// thumb gradient with a white gloss, at 90deg for a vertical bar and 180deg for a horizontal one.
 @mixin scrollbar-thumb($alpha, $angle) {
   background:
     linear-gradient($angle, $scrollbar-gloss) padding-box,
@@ -155,7 +146,6 @@ $scrollbar-gloss: rgba($white, 0.8) 0%, rgba($white, 0.3) 45%, rgba($white, 0) 5
 }
 
 ::-webkit-scrollbar-thumb {
-  // the transparent border leaves a gap around the pill, so it looks thinner.
   border: 2px solid transparent;
   border-radius: $radius-pill;
   box-shadow:
@@ -171,7 +161,7 @@ $scrollbar-gloss: rgba($white, 0.8) 0%, rgba($white, 0.3) 45%, rgba($white, 0) 5
   }
 }
 
-// Firefox only takes colours.
+// firefox only takes colours.
 @supports not selector(::-webkit-scrollbar) {
   * {
     scrollbar-width: thin;

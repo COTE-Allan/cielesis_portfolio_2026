@@ -15,7 +15,6 @@
   text-transform: uppercase;
   cursor: pointer;
 
-  // darkens the button on hover.
   &::before {
     @include cover;
     background: $hover-shade;

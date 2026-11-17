@@ -8,7 +8,7 @@ import {ProjectMenu} from './ProjectMenu';
 import '../tooltip/Tooltip.scss';
 import './ProjectCard.scss';
 
-// Safari draws the transparent parts of a webm in black.
+// safari draws the transparent parts of a webm in black.
 const SUPPORTS_ALPHA_WEBM = !/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 export function ProjectCard({modal, onClose, item}) {

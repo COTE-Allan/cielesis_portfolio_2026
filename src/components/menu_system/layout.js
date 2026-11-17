@@ -30,8 +30,7 @@ const folderIds = (layout) => Object.keys(layout).filter(isFolder);
 
 const containerIds = (layout) => [MAIN, BADGE_CASE, ...folderIds(layout)];
 
-// name of a folder until the visitor renames it: its predefined name (folders.<id>),
-// or "Folder 1", "Folder 2"... for the created ones.
+// default name of a folder until the visitor renames it.
 export const defaultFolderLabel = (folderId) =>
   hasText(`folders.${folderId}`)
     ? t(`folders.${folderId}`)
@@ -56,8 +55,7 @@ export function getItem(id, names) {
 export const toSlotId = (containerId, index) =>
   `${containerId}${SLOT_SEPARATOR}${index}`;
 
-// main shows a full grid of `columns` × `rows` slots (see fitMain).
-// folders and the badge case show one extra empty slot at the end, to drop new items in.
+// number of slots of a container, with one extra empty slot for folders and the badge case.
 export const slotCount = (layout, containerId, columns, rows) =>
   containerId === MAIN ? columns * rows : layout[containerId].length + 1;
 
@@ -69,7 +67,6 @@ function parseSlotId(layout, id) {
   const cut = value.lastIndexOf(SLOT_SEPARATOR);
   const containerId = value.slice(0, cut);
   const index = Number(value.slice(cut + 1));
-  // the main slots depend on the zoom.
   const max = containerId === MAIN ? MAX_MAIN_SLOTS : slotCount(layout, containerId);
 
   if (cut === -1 || !containerIds(layout).includes(containerId)) return null;
@@ -84,8 +81,7 @@ export function itemAt(layout, slotId) {
   return slot ? layout[slot.containerId][slot.index] ?? null : null;
 }
 
-// a pin is the spot of a folder where a badge can be attached: on its tile
-// or in the header of the open folder. both can be mounted at once, so each has its own id.
+// id of a spot where a badge can be pinned on a folder, on its tile or in its open header.
 export const toPinId = (folderId, spot) => `pin:${spot}:${folderId}`;
 
 function parsePinId(layout, id) {
@@ -96,7 +92,7 @@ function parsePinId(layout, id) {
 
 // --- LAYOUT ---
 
-// where an item is: {containerId, index} in a slot, or {pinOf: folderId} when pinned.
+// where an item is: a container and an index in a slot, or the folder it is pinned on.
 function findItem(layout, itemId) {
   if (itemId == null) return null;
 
@@ -116,7 +112,7 @@ function copyLayout(layout) {
   return next;
 }
 
-// puts `itemId` (or nothing, when null) at a place returned by findItem.
+// puts an item, or nothing when null, at a place where an item was found.
 function place(layout, at, itemId) {
   if (!at.pinOf) layout[at.containerId][at.index] = itemId;
   else if (itemId) layout[PINS][at.pinOf] = itemId;
@@ -136,13 +132,10 @@ function trimMain(main) {
   return slots.slice(0, slots.findLastIndex(Boolean) + 1);
 }
 
-// compacts folders and the badge case, trims main, and removes the created folders left
-// with less than two items (the default ones, when empty): their tile in main is replaced by their only item (if any).
-// pins of missing folders go back in the case.
+// compacts folders and the badge case, trims main, and removes the folders left too empty.
 function cleanLayout(layout) {
   const folders = {};
   const pins = {};
-  // removed folder id -> item taking its place in main, or null.
   const removed = new Map();
   const badgeCase = layout[BADGE_CASE].filter(Boolean);
 
@@ -166,9 +159,7 @@ function cleanLayout(layout) {
   };
 }
 
-// turns any saved value into a valid layout: unknown or duplicated ids are
-// dropped, icons missing from it are placed in the first free slot of main,
-// and badges missing from it go in the badge case.
+// turns any saved value into a valid layout, placing missing icons in main and missing badges in the badge case.
 function normalizeLayout(source) {
   const seen = new Set();
   const claim = (id) => !seen.has(id) && seen.add(id);
@@ -208,9 +199,7 @@ function normalizeLayout(source) {
   return cleaned;
 }
 
-// badge dropped on the pin of a folder: the badge already pinned there
-// (if any) takes the place of the dropped one.
-// refused when the badge comes from that folder and the folder would be removed without it.
+// pins a badge on a folder, swapping it with the badge already pinned there.
 function pinBadge(layout, from, badgeId, folderId) {
   if (!isBadge(badgeId) || from.pinOf === folderId) return layout;
 
@@ -222,8 +211,7 @@ function pinBadge(layout, from, badgeId, folderId) {
   return Object.hasOwn(cleaned, folderId) ? cleaned : layout;
 }
 
-// returns the layout after dropping `sourceId` on slot or pin `targetId`,
-// or the same layout object when nothing changes.
+// returns the layout after dropping an item on a slot or a pin, or the same object when nothing changes.
 export function applyDrop(layout, sourceId, targetId) {
   const from = findItem(layout, sourceId);
   if (!from) return layout;
@@ -238,7 +226,6 @@ export function applyDrop(layout, sourceId, targetId) {
   const moved = sourceId;
   const target = layout[to.containerId][to.index] ?? null;
 
-  // folders cannot be nested, and only badges go in the badge case.
   if (isFolder(moved) && to.containerId !== MAIN) return layout;
   if (!isBadge(moved) && to.containerId === BADGE_CASE) return layout;
 
@@ -246,17 +233,13 @@ export function applyDrop(layout, sourceId, targetId) {
   place(next, from, null);
 
   if (!isFolder(moved) && isFolder(target)) {
-    // icon onto a folder tile: append it inside.
     if (target === from.containerId) return layout;
     next[target].push(moved);
   } else if (isBadge(moved) && target === BADGE_CASE_ICON) {
-    // badge onto the badge case icon: put it back in the case.
     next[BADGE_CASE].push(moved);
   } else if (to.containerId !== MAIN && from.containerId !== to.containerId) {
-    // icon into a slot of another folder (or of the badge case): insert it there.
     next[to.containerId].splice(to.index, 0, moved);
   } else if (!isFolder(moved) && target && to.containerId === MAIN) {
-    // icon onto an icon in main: group them in a new folder.
     const folderId = createFolderId(layout);
     next[folderId] = [target, moved];
     next[MAIN][to.index] = folderId;
@@ -268,8 +251,7 @@ export function applyDrop(layout, sourceId, targetId) {
   return cleanLayout(next);
 }
 
-// returns the layout with the main items past its first `slots` slots moved to its free
-// slots, or the same layout object when none is past them. main must hold at most `slots` items.
+// moves the main items past its first slots to its free slots, or returns the same object when none is past them.
 export function fitMain(layout, slots) {
   if (layout[MAIN].length <= slots) return layout;
 
@@ -299,7 +281,7 @@ export const loadLayout = (defaults) => normalizeLayout(read(LAYOUT_KEY) ?? defa
 // the layout as it is on a first visit, whatever was saved.
 export const initialLayout = (defaults) => normalizeLayout(defaults);
 export const saveLayout = (layout) => write(LAYOUT_KEY, layout);
-// only the names given by the visitor: the others come from defaultFolderLabel.
+// only the names given by the visitor, the others being the default labels.
 export const loadNames = (layout) => pickNames(read(NAMES_KEY) ?? {}, layout);
 export const saveNames = (names) => write(NAMES_KEY, names);
 

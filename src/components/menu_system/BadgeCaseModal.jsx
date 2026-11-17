@@ -5,9 +5,7 @@ import {SlotGrid} from './SlotGrid';
 import {BADGE_CASE} from './menuData';
 import './BadgeCaseModal.scss';
 
-// the badges not pinned on a folder.
-// `modal` is the useModal() of the case, `onClose` closes it from Escape or the backdrop.
-// `columns` follows the zoom of the menu (Menu.jsx).
+// panel holding the badges not pinned on a folder.
 export function BadgeCaseModal({ref, modal, onClose, keepMounted, layout, names, columns, onOpen}) {
   return (
     <Panel

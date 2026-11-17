@@ -2,13 +2,10 @@ import {useEffect, useEffectEvent, useState} from 'react';
 import 'animate.css';
 import './Modal.scss';
 
-// open modals, most recent last: Escape only closes the top-most one.
+// open modals, most recent last, so escape only closes the top-most one.
 const stack = [];
 
-// generic dialog with animate.css in/out animations.
-// stays mounted while its exit animation plays (and after it, as long as
-// `keepMounted` is true), then calls `onExited` so the owner can drop its content.
-// `keepMounted` never mounts a modal that is already gone.
+// generic dialog with animated entrance and exit, staying mounted until its exit animation is done.
 export function Modal({
   open,
   onClose,
@@ -22,7 +19,6 @@ export function Modal({
   ref,
   children,
 }) {
-  // 'shown' -> (closed + exit animation done) 'exited' -> (not kept) 'gone'
   const [phase, setPhase] = useState(open ? 'shown' : 'gone');
   if (open && phase !== 'shown') setPhase('shown');
   if (phase === 'exited' && !keepMounted) setPhase('gone');

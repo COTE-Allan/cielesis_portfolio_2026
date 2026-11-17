@@ -8,9 +8,7 @@ import {PINS} from './menuData';
 import {MAX_NAME_LENGTH, defaultFolderLabel, getItem, toPinId} from './layout';
 import './FolderModal.scss';
 
-// open folder: its pinned badge, its (editable) name and its icons.
-// `modal` is the useModal() of the folder, `onClose` closes it from Escape or the backdrop.
-// `columns` follows the zoom of the menu (Menu.jsx).
+// open folder with its pinned badge, its editable name and its icons.
 export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout, names, columns, onRename, onOpen}) {
   const pinnedId = folderId && layout[PINS][folderId];
   const folder = folderId ? getItem(folderId, names) : undefined;
@@ -37,6 +35,7 @@ export function FolderModal({ref, modal, onClose, keepMounted, folderId, layout,
                   label={pinned.label}
                   pixelArt={pinned.pixelArt}
                   isBadge
+                  onOpen={() => onOpen(pinnedId)}
                 />
               ) : (
                 <RoundIcon name="push_pin" title={t('menu.pinHint')} />

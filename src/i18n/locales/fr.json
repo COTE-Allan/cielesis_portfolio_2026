@@ -182,7 +182,9 @@
     "badge-clapperboard": "Clap de cinéma",
     "badge-internet": "Internet",
     "badge-works": "Travaux",
-    "badge-comic": "BD"
+    "badge-comic": "BD",
+    "badge-cielesis-works": "Cielesis Works",
+    "badge-clemie": "Clémie"
   },
   "settings": {
     "title": "Paramètres",

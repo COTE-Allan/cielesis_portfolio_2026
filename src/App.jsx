@@ -9,13 +9,20 @@ import { getSettings } from './components/settings/settings'
 import { useLanguage } from './i18n/i18n'
 import { playSound } from './components/sound/sound'
 import { startMusic } from './components/music/music'
+import { BADGES, ITEMS } from './components/menu_system/menuData'
+import { preloadImages } from './components/tools/preload'
 
 const EMPTY_DELAY = 600;
+
+// images of the menu items and badges, loaded while the boot screen shows.
+const MENU_IMAGES = [...Object.values(ITEMS), ...Object.values(BADGES)].map((item) => item.image);
 
 function App() {
 
   const [phase, setPhase] = useState(() => (getSettings().bootScreen ? 'boot' : 'empty'));
   useLanguage();
+
+  useEffect(() => preloadImages(MENU_IMAGES), []);
 
   useEffect(() => {
     if (phase !== 'empty') return undefined;

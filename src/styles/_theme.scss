@@ -148,7 +148,7 @@ $tablet: 1024px;
 
 /* --- HELPERS --- */
 
-// scales a size with the menu zoom (--zoom, set on .home by Menu.jsx).
+// scales a size with the menu zoom set on .home.
 @function z($value) {
   @return calc($value * var(--zoom, 1));
 }
@@ -160,16 +160,14 @@ $tablet: 1024px;
   justify-content: center;
 }
 
-// styles for when animations are reduced: the "reduce motion" setting,
-// or the system's preference when it is not set (data-motion, set by settings.js).
+// styles for when animations are reduced, by the setting or the system preference.
 @mixin reduced-motion {
   :root[data-motion='reduce'] & {
     @content;
   }
 }
 
-// <input type="range">: a sunken track, teal up to the value (--value, a percentage
-// set inline by the component), with a glossy knob.
+// glossy range input with a sunken track filled up to --value.
 @mixin glossy-range($height: 30px, $knob: 24px, $track: 10px) {
   height: $height;
   margin: 0;
@@ -223,9 +221,7 @@ $tablet: 1024px;
   }
 }
 
-// content of a panel, scrolling when too tall (the panel can't scroll itself: it would clip its tab).
-// the padding puts a gap between the content and the scrollbar; the negative margin pushes both
-// into the panel's own padding, so the content keeps its width and place.
+// scrolling content of a panel, keeping its width and place next to the scrollbar.
 @mixin panel-scroll($gap: 12px) {
   max-height: calc(100vh - 120px);
   max-height: calc(100dvh - 120px);

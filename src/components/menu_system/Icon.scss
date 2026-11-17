@@ -108,7 +108,6 @@
       height: 16%;
       border-radius: z($radius-sm) 0 0 0;
       background: $teal;
-      // goes well under the body so no seam shows between them while scaled.
       clip-path: polygon(0 0, 75% 0, 100% 56.25%, 100% 100%, 0 100%);
       pointer-events: none;
     }

@@ -1,10 +1,4 @@
-// keeps the translation files in step with en.json, the reference.
-//   npm run i18n           updates every language and shows how much is translated
-//   npm run i18n -- fr es  same, creating fr.json and es.json first if they don't exist
-//
-// in each language file: keys missing from it are added with "" (to translate),
-// and translations of keys removed from en.json move to "_unused", so they are not lost
-// (they come back if the key is added again). en.json itself is never changed.
+// keeps the translation files in step with en.json, run with npm run i18n followed by optional language codes.
 
 import {existsSync, readdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {join, relative} from 'node:path';
@@ -15,7 +9,7 @@ const LOCALES = join(SOURCES, 'i18n', 'locales');
 const REFERENCE = 'en';
 const UNUSED = '_unused';
 
-// without the byte order mark some Windows editors add (the file is written back without it).
+// reads a json file without the byte order mark some windows editors add.
 const readJson = (file) => JSON.parse(readFileSync(file, 'utf8').replace(/^﻿/, ''));
 const writeJson = (file, value) => writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 
@@ -47,7 +41,6 @@ function rebuild(reference, flat, prefix = '') {
 function sync(code, reference) {
   const file = join(LOCALES, `${code}.json`);
   const current = existsSync(file) ? readJson(file) : {};
-  // the unused texts can be used again.
   const flat = {...current[UNUSED], ...flatten(current)};
   const keys = flatten(reference);
 
@@ -65,7 +58,7 @@ function sync(code, reference) {
   console.log(`  ${code}: ${done}/${total} translated (${Math.floor((done / total) * 100)}%)${unusedNote}`);
 }
 
-// t('some.key') written in the code but missing from en.json.
+// keys used in the code but missing from en.json.
 function missingKeys(keys) {
   const missing = [];
   const walk = (folder) => {

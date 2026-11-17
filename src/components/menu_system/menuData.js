@@ -37,6 +37,8 @@ import badgeClapperboard from '../../assets/badges/badge_clapperboard.webp';
 import badgeInternet from '../../assets/badges/badge_internet.webp';
 import badgeWorks from '../../assets/badges/badge_works.webp';
 import badgeComic from '../../assets/badges/badge_comic.webp';
+import badgeCielesisWorks from '../../assets/badges/badge_cielesis_works.webp';
+import badgeClemie from '../../assets/badges/badge_clemie.webp';
 
 import socialBehance from '../../assets/socials/socials_behance_icon.webp';
 import socialGithub from '../../assets/socials/socials_github_icon.webp';
@@ -160,6 +162,8 @@ export const BADGES = {
   'badge-internet': {image: badgeInternet, pixelArt: false, isBadge: true},
   'badge-works': {image: badgeWorks, pixelArt: false, isBadge: true},
   'badge-comic': {image: badgeComic, pixelArt: false, isBadge: true},
+  'badge-cielesis-works': {image: badgeCielesisWorks, pixelArt: false, isBadge: true},
+  'badge-clemie': {image: badgeClemie, pixelArt: false, isBadge: true},
 };
 
 
@@ -169,7 +173,7 @@ export const DEFAULT_LAYOUT = {
     'badge-profile-picture', 'folder-webcomics', BADGE_CASE_ICON, 'folder-socials',
     'icon-mail'
   ],
-  'folder-games': ['icon-VN', 'icon-TAKES', 'icon-babelfest', 'icon-nexus'],
+  'folder-games': ['icon-VN', 'badge-cielesis-works', 'icon-TAKES', 'icon-babelfest', 'icon-nexus'],
   'folder-websites': ['icon-lofi-cafe', 'icon-alternative', 'icon-denshattack'],
   'folder-videos': ['icon-video-vn-demo-trailer', 'icon-video-takes-trailer', 'icon-video-vn-devlog-1', 'icon-video-ocean'],
   'folder-webcomics': ['icon-webcomic-alternative'],

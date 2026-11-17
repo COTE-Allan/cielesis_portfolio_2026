@@ -3,10 +3,7 @@ import {createPortal} from 'react-dom';
 import 'animate.css';
 import './Tooltip.scss';
 
-// name bubble above `anchorRef`, linked by a line to a dot on its top edge.
-// rendered in the body so no scroll area (folders, badge case) cuts it,
-// and moved to the anchor every frame while open (scroll, hover scale, zoom...).
-// pops in with the same zoomIn as the modals.
+// name bubble above its anchor, rendered in the body and following it while open.
 export function Tooltip({anchorRef, open, label, duration = 200}) {
   const ref = useRef(null);
 

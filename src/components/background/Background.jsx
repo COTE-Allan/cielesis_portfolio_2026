@@ -2,8 +2,7 @@ import './Background.scss';
 
 // strips of the front layer: they set the depth of the cylinder.
 const STRIPS = 15;
-// strips of each layer. the back one is further away, so it looks narrower
-// and needs more strips to reach the edges of the screen.
+// strips of each layer, the back one needing more to reach the edges of the screen.
 const LAYERS = {back: 19, front: STRIPS};
 
 export function Background() {

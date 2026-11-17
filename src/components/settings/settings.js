@@ -11,7 +11,6 @@ const DEFAULTS = {
   plainBackground: false,
   bootScreen: true,
   sounds: true,
-  // between 0 and 1.
   soundVolume: 0.5,
   musicOnStart: false,
 };

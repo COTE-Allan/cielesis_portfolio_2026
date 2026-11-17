@@ -4,7 +4,6 @@ $tab-height: 32px;
 
 .panel {
   position: relative;
-  // room for the tab, so the panel and its tab are centred together
   margin-top: $tab-height;
   max-height: calc(100vh - #{$tab-height});
   max-height: calc(100dvh - #{$tab-height});
@@ -20,7 +19,6 @@ $tab-height: 32px;
     margin-bottom: 16px;
   }
 
-  // close button sticking out of the top edge of the panel, like a folder tab
   &-tab {
     position: absolute;
     bottom: 100%;

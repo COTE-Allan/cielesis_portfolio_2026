@@ -9,7 +9,7 @@ import ProfilePic from '../../assets/others/allan_cote_profile_picture.webp'
 import "./header.scss"
 
 const pad = (n) => String(n).padStart(2, "0");
-// short name of the day in the current language (Sun, dim., So...).
+// short name of the day in the current language.
 const weekday = (date) => new Intl.DateTimeFormat(getLanguage(), { weekday: "short" }).format(date);
 
 // current date, refreshed at each new minute
@@ -30,7 +30,7 @@ function useClock() {
     return now;
 }
 
-// battery level (0-100) and charging state, static fallback when the Battery API is unavailable (Firefox, Safari)
+// battery level (0-100) and charging state, with a static fallback when the battery api is missing, blocked or invalid.
 function useBattery(fallback = 56) {
     const [state, setState] = useState({ level: fallback, charging: false });
 
@@ -38,20 +38,26 @@ function useBattery(fallback = 56) {
         if (!navigator.getBattery) return;
         let battery;
         let cancelled = false;
-        const update = () => setState({ level: Math.round(battery.level * 100), charging: battery.charging });
+        const update = () => {
+            const valid = Number.isFinite(battery.level) && battery.level >= 0 && battery.level <= 1;
+            setState({
+                level: valid ? Math.round(battery.level * 100) : fallback,
+                charging: valid && battery.charging === true,
+            });
+        };
         navigator.getBattery().then((b) => {
             if (cancelled) return;
             battery = b;
             update();
             battery.addEventListener("levelchange", update);
             battery.addEventListener("chargingchange", update);
-        });
+        }).catch(() => {});
         return () => {
             cancelled = true;
             battery?.removeEventListener("levelchange", update);
             battery?.removeEventListener("chargingchange", update);
         };
-    }, []);
+    }, [fallback]);
 
     return state;
 }
@@ -82,8 +88,7 @@ function useConnection() {
     return connection;
 }
 
-// welcome message: shown on mount and on each hover, then collapses after `duration` ms
-// (on mount, counted from the end of the header's entrance).
+// welcome message shown on mount and on each hover, then collapsed after `duration` ms.
 function useWelcome(duration = 2500) {
     const [open, setOpen] = useState(true);
     const timer = useRef();
@@ -131,8 +136,6 @@ export function Header() {
         profile.show();
     };
 
-    // the modal is a sibling of the header, not a child: the header's transform
-    // would make it the containing block of the fixed backdrop.
     return (
         <>
         <header ref={ref} className="header">

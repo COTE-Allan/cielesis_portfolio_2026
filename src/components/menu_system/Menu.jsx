@@ -3,6 +3,7 @@ import {DragDropProvider} from '@dnd-kit/react';
 import {Feedback, PointerActivationConstraints, PointerSensor} from '@dnd-kit/dom';
 import {useModal} from '../modal/useModal';
 import {BadgeCaseModal} from './BadgeCaseModal';
+import {BadgeViewer} from './BadgeViewer';
 import {FolderModal} from './FolderModal';
 import {ProjectCard} from './ProjectCard';
 import {SlotGrid} from './SlotGrid';
@@ -35,10 +36,9 @@ import './Menu.scss';
 const CLICK_GUARD_MS = 100;
 // hovering a folder tile this long while dragging an icon opens it.
 const HOVER_OPEN_MS = 500;
-// the main grid keeps its size at every zoom level (ZOOM_LEVELS):
-// icons, badges and folders scale to fill it.
+// default zoom level, the main grid keeping its size while its items scale to fill it.
 const DEFAULT_ZOOM = ZOOM_LEVELS.length - 1;
-// width of a column and of the gap between columns at scale 1 ($cell and $gap in SlotGrid.scss).
+// width of a column and of the gap between columns at scale 1, as in the slot grid styles.
 const CELL_WIDTH = 96;
 const CELL_GAP = 10;
 // width of the main grid's icons until it is measured ($menu-grid).
@@ -50,8 +50,7 @@ const fitScale = (width, columns) => width / (columns * CELL_WIDTH + (columns - 
 // slots of the main grid at a zoom level.
 const capacity = (zoom) => ZOOM_LEVELS[zoom] ** 2;
 
-// biggest zoom level, up to `zoom`, whose grid holds every item of main
-// (the first one always does: main holds at most MAX_MAIN_SLOTS items).
+// biggest zoom level, up to `zoom`, whose grid holds every item of main.
 function fittingZoom(layout, zoom) {
   let fitting = zoom;
   while (fitting > 0 && mainCount(layout) > capacity(fitting)) fitting -= 1;
@@ -93,14 +92,13 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   const [layout, setLayout] = useState(initial.layout);
   const [names, setNames] = useState(() => loadNames(layout));
   const [zoom, setZoom] = useState(initial.zoom);
-  // content width of the main grid: smaller than GRID_WIDTH on small screens.
   const [gridWidth, setGridWidth] = useState(GRID_WIDTH);
-  // id of the item being dragged, or null.
   const [dragId, setDragId] = useState(null);
 
   const folder = useModal();
   const badgeCase = useModal();
   const project = useModal();
+  const badge = useModal();
 
   const gridRef = useRef(null);
   const folderRef = useRef(null);
@@ -108,7 +106,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   const snapshot = useRef(null);
   const dragGuard = useRef(false);
   const hoverTimer = useRef(null);
-  // whether the pointer has been inside the open folder (or badge case) during this drag.
   const enteredPanel = useRef(false);
 
   useLayoutEffect(() => {
@@ -116,13 +113,11 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     snapshot.current = null;
   }, [layout, zoom]);
 
-  // the music fades out while a project is open, and comes back once it is closed.
   useEffect(() => {
     if (project.isOpen) fadeOutMusic();
     else fadeInMusic();
   }, [project.isOpen]);
 
-  // the grid zooms in, then its icons one by one (before the first paint, so they never flash).
   useLayoutEffect(() => playGridIntro(gridRef.current), []);
 
   useEffect(() => {
@@ -140,15 +135,11 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   }, []);
 
   const columns = ZOOM_LEVELS[zoom];
-  // folders and the badge case get more columns when the icons are smaller,
-  // so they keep about the same width at every zoom level (3 and 5 at the default zoom).
-  // folders never go under 3 columns (the max zoom would give 2).
   const folderColumns = Math.max(columns - 1, 3);
   const badgeCaseColumns = columns + 2;
   const dragging = dragId !== null;
   const panelOpen = folder.isOpen || badgeCase.isOpen;
 
-  // wraps a handler so it is ignored during (and just after) a drag.
   const guarded = (handler) => (...args) => {
     if (!dragGuard.current) handler(...args);
   };
@@ -158,8 +149,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     saveNames(next);
   };
 
-  // the items past the last slot of the new grid move to its free slots.
-  // `dragged`: id of the item being dragged, which the animation leaves alone.
   const updateZoom = (next, dragged) => {
     if (next === zoom) return;
 
@@ -174,7 +163,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     saveZoom(next);
   };
 
-  // back to the menu of a first visit: default layout, folder names and zoom.
   const resetLayout = () => {
     const fresh = initialLayout(defaultLayout);
     const nextZoom = fittingZoom(fresh, DEFAULT_ZOOM);
@@ -188,9 +176,11 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     saveZoom(nextZoom);
   };
 
-  // badges are purely cosmetic: opening one does nothing (but click).
   const openItem = guarded((id) => {
-    if (ITEMS[id]?.isApp) {
+    if (isBadge(id)) {
+      playSound('click');
+      badge.show(id);
+    } else if (ITEMS[id]?.isApp) {
       playSound('open_app');
       project.show(id);
     } else if (ITEMS[id]?.isLink) {
@@ -204,8 +194,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   });
 
   const handleDragMove = (event) => {
-    // dragging an item out of the open folder (or badge case) closes it,
-    // so the item can be dropped in the main grid.
     const panel = folder.isOpen ? folder : badgeCase;
     const ref = folder.isOpen ? folderRef : badgeCaseRef;
     if (!panel.isOpen) return;
@@ -216,7 +204,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
       enteredPanel.current = true;
     } else if (enteredPanel.current) {
       panel.hide();
-      // main has no free slot for the item: zoom out to make room for it.
       if (zoom > 0 && mainCount(layout) >= capacity(zoom)) updateZoom(zoom - 1, event.operation.source?.id);
     }
   };
@@ -224,8 +211,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
   const handleDragOver = (event) => {
     window.clearTimeout(hoverTimer.current);
 
-    // holding an icon from the main grid (or a badge from the case) over a folder
-    // tile opens the folder, so the item can be dropped in a specific slot.
     const {source, target} = event.operation;
     const folderId = target && itemAt(layout, target.id);
     const fromOutside = [MAIN, BADGE_CASE].some((id) => layout[id].includes(source?.id));
@@ -248,7 +233,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
     if (event.canceled) return;
 
     const {source, target, position} = event.operation;
-    // dropped away from the grid (and from the open panel): the item goes back where it was.
     const panelRef = folder.isOpen ? folderRef : badgeCase.isOpen ? badgeCaseRef : null;
     const onGrid = [gridRef, panelRef].some((ref) => ref?.current && !isOutside(ref.current, position.current));
     if (!onGrid) return;
@@ -285,7 +269,6 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      {/* modals are inside so they get the zoom too. */}
       <div className="home" style={{'--zoom': fitScale(gridWidth, columns)}}>
         <div className="menu">
           <Toolbar
@@ -333,11 +316,16 @@ export function Menu({defaultLayout = DEFAULT_LAYOUT}) {
           onOpen={openItem}
         />
 
-        {/* rendered after the folder and badge case so it stacks on top of them. */}
         <ProjectCard
           modal={project}
           onClose={guarded(project.hide)}
           item={project.data && getItem(project.data, names)}
+        />
+
+        <BadgeViewer
+          modal={badge}
+          onClose={guarded(badge.hide)}
+          badge={badge.data && getItem(badge.data)}
         />
       </div>
     </DragDropProvider>

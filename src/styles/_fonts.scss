@@ -1,10 +1,8 @@
-// Waukegan LDO, grouped into two families so font-weight / font-style pick the right file.
-// 400 = regular, 700 = bold, 900 = black; italic = oblique.
+// waukegan ldo, grouped into two families so font-weight and font-style pick the right file.
 
 $waukegan-dir: '../assets/fonts/waukegan';
 
-// the font kerns a comma and a space together until the space disappears (in Chrome):
-// the comma gets its own face, and no kerning happens across faces.
+// declares one face, giving the comma its own face so chrome does not kern it away with the space.
 @mixin waukegan($family, $file, $weight, $style: normal) {
   @each $range in ('U+0-2B, U+2D-10FFFF', 'U+2C') {
     @font-face {

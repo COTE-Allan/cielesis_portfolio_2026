@@ -1,7 +1,6 @@
 import {getSettings} from '../settings/settings';
 
-// sound effects: one .wav file per sound in assets/audio, played by its name
-// (playSound('click') plays click.wav). `sounds` and `soundVolume` (settings.js) turn them off or down.
+// sound effects, one .wav file per sound in assets/audio, played by name.
 
 const files = import.meta.glob('../../assets/audio/*.wav', {eager: true, query: '?url', import: 'default'});
 
@@ -14,9 +13,7 @@ const MIN_GAP_MS = 40;
 // a jingle cut short (its project closed) fades out this fast.
 const JINGLE_FADE_S = 0.3;
 
-// files are kept by url. the sound effects are downloaded right away, the jingles when asked
-// (loadSound), and all are decoded on their first play:
-// decoding needs an audio context, which browsers only start after a click or a key press.
+// downloaded files by url, decoded on their first play once the browser allows audio.
 const downloads = new Map();
 const buffers = new Map();
 const lastPlayed = new Map();
@@ -61,8 +58,7 @@ function decode(url) {
   return buffers.get(url);
 }
 
-// before the first click or key press, the browser would only queue the sounds
-// (and play them all at once later): they are dropped instead.
+// whether the browser lets sounds play, which needs a click or a key press first.
 const canStart = () => navigator.userActivation?.hasBeenActive ?? true;
 
 const canPlay = () => {
@@ -70,8 +66,7 @@ const canPlay = () => {
   return sounds && soundVolume > 0 && canStart();
 };
 
-// plays the file at `url` (once it is decoded), through its own gain node.
-// returns stop(fade): stops it, fading it out over `fade` seconds (0: at once).
+// plays the file at `url` and returns a function stopping it with an optional fade out.
 function start(url, {pitch = 0} = {}) {
   const audio = getContext();
   if (!audio) return () => {};
@@ -107,8 +102,7 @@ function start(url, {pitch = 0} = {}) {
   };
 }
 
-// `throttle: false` plays it even right after the same sound (see MIN_GAP_MS).
-// `pitch`: in semitones, higher (and shorter) above 0, lower below.
+// plays a sound effect by name, with an optional pitch in semitones.
 export function playSound(name, {throttle = true, pitch = 0} = {}) {
   if (!Object.hasOwn(URLS, name) || !canPlay()) return;
 
@@ -119,8 +113,7 @@ export function playSound(name, {throttle = true, pitch = 0} = {}) {
   start(URLS[name], {pitch});
 }
 
-// a project's jingle (its url), with the sound effects' settings.
-// returns a function that stops it with a short fade out.
+// plays a project's jingle and returns a function stopping it with a short fade out.
 export function playJingle(url) {
   if (!url || !canPlay()) return () => {};
 

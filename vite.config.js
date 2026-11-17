@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [react()],
   css: {
     preprocessorOptions: {
-      // lets any .scss file do `@use 'theme' as *;` without a relative path.
       scss: {
         loadPaths: [fileURLToPath(new URL('./src/styles', import.meta.url))],
       },
